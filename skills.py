@@ -40,7 +40,7 @@ skills_data = [
             {"icon": os.path.join(current_dir, "icons", "SciPy.svg")},
             {"icon": os.path.join(current_dir, "icons", "statsmodels.svg")},
             {"icon": os.path.join(current_dir, "icons", "tableau.svg")},
-            {"icon": os.path.join(current_dir, "icons", "matplotlib.svg")},
+            {"icon": os.path.join(current_dir, "icons", "Matplotlib.svg")},
             {"icon": os.path.join(current_dir, "icons", "seaborn.svg")},
             {"icon": os.path.join(current_dir, "icons", "Ploty.svg")},
             {"icon": os.path.join(current_dir, "icons", "bokeh.svg")},
