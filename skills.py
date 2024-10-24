@@ -355,7 +355,7 @@ for section in skills_data:
 
             # Upload input data
             if deep_learning_models[model]["input_type"] == "text":
-                uploaded_file = st.file_uploader("Upload your text file", type=["txt"])
+                uploaded_file = st.file_uploader("Upload your text file", type=["txt"], key="file_uploader_1")
             elif deep_learning_models[model]["input_type"] == "image":
                 uploaded_file = st.file_uploader("Upload your image file", type=["jpg", "jpeg", "png"])
 
