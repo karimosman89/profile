@@ -96,6 +96,17 @@ skills_data = [
 
 # Header
 st.title("🛠️ Core Skills and Technologies")
+# Deep Learning Models Performance Data (hypothetical)
+performance_data = {
+    "Model": ["BERT", "GPT-3", "LSTM", "RNN", "CNN", "U-Net", "ResNet", "VGG16", "EfficientNet", "YOLO"],
+    "Text Data Accuracy (%)": [92, 95, 88, 85, 80, "-", "-", "-", "-", "-"],
+    "Image Data Accuracy (%)": ["-", "-", "-", "-", 90, 92, 95, 94, 96, 98],
+    "Video Data Accuracy (%)": ["-", "-", "-", "-", 88, "-", 90, 89, 91, 93],
+    "Training Time (hrs)": [15, 40, 10, 8, 12, 20, 25, 30, 35, 45]
+}
+
+# Create a DataFrame for performance data
+performance_df = pd.DataFrame(performance_data)
 
 # Styling for better presentation
 st.markdown("""
