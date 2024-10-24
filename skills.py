@@ -31,7 +31,7 @@ skills_data = [
             {"icon": os.path.join(current_dir, "icons", "LightGBM.svg")},
             {"icon": os.path.join(current_dir, "icons", "CatBoost.svg")},
             {"icon": os.path.join(current_dir, "icons", "tensorflow.svg")},
-            {"icon": os.path.join(current_dir, "icons", "keras.svg")},
+            {"icon": os.path.join(current_dir, "icons", "Keras.svg")},
             {"icon": os.path.join(current_dir, "icons", "pytorch.svg")},
             {"icon": os.path.join(current_dir, "icons", "mxnet.svg")},
             {"icon": os.path.join(current_dir, "icons", "coffee.svg")},
