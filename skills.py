@@ -347,28 +347,28 @@ for section in skills_data:
         for i, skill in enumerate(section["skills"]):
             cols[i].image(skill["icon"], width=50)  # Adjust width as necessary
 
-   # Handle Deep Learning Models
-if section["category"] == "Deep Learning Models":
-    for model in deep_learning_models:
-        st.subheader(model)
-        st.write(deep_learning_models[model]["description"])
+  # Handle Deep Learning Models
+    if section["category"] == "Deep Learning Models":
+        for model in deep_learning_models:
+            st.subheader(model)
+            st.write(deep_learning_models[model]["description"])
 
-        # Upload input data
-        if deep_learning_models[model]["input_type"] == "text":
-            uploaded_file = st.file_uploader(f"Upload your text file for {model}", type=["txt"], key=f"text_uploader_{model}")
-        elif deep_learning_models[model]["input_type"] == "image":
-            uploaded_file = st.file_uploader(f"Upload your image file for {model}", type=["jpg", "jpeg", "png"], key=f"image_uploader_{model}")
-
-        if uploaded_file is not None:
+            # Upload input data
             if deep_learning_models[model]["input_type"] == "text":
-                text_data = uploaded_file.read().decode("utf-8")
-                result = deep_learning_models[model]["function"](text_data)
-                st.write("Prediction Result:", result)
+                uploaded_file = st.file_uploader("Upload your text file", type=["txt"])
             elif deep_learning_models[model]["input_type"] == "image":
-                image = Image.open(uploaded_file)
-                result = deep_learning_models[model]["function"](image)
-                st.image(image, caption="Uploaded Image", use_column_width=True)
-                st.write("Prediction Result:", result)
+                uploaded_file = st.file_uploader("Upload your image file", type=["jpg", "jpeg", "png"])
+
+            if uploaded_file is not None:
+                if deep_learning_models[model]["input_type"] == "text":
+                    text_data = uploaded_file.read().decode("utf-8")
+                    result = deep_learning_models[model]["function"](text_data)
+                    st.write("Prediction Result:", result)
+                elif deep_learning_models[model]["input_type"] == "image":
+                    image = Image.open(uploaded_file)
+                    result = deep_learning_models[model]["function"](image)
+                    st.image(image, caption="Uploaded Image", use_column_width=True)
+                    st.write("Prediction Result:", result)
 
 # Optional: Display plots for each category
 st.subheader("Skill Distribution Visualizations")
