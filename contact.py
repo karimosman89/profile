@@ -5,14 +5,14 @@ def set_style():
     st.markdown("""
     <style>
         body {
-            background-color: #f0f4f8; /* Light background color for elegance */
+            background: linear-gradient(to bottom right, #eef2f3, #8e9eab); /* Soft gradient background */
             font-family: 'Arial', sans-serif;
         }
         .main {
             text-align: center;
             padding: 40px;
             margin: auto;
-            max-width: 900px; /* Max width for better readability */
+            max-width: 800px; /* Max width for better readability */
             background-color: #ffffff; /* White background for cards */
             border-radius: 15px;
             box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1); /* Softer shadow for depth */
@@ -34,7 +34,7 @@ def set_style():
             margin-bottom: 20px;
         }
         .contact-button {
-            background-color: #2e6e91; /* Button color */
+            background-color: #1e4e66; /* Darker button color for professionalism */
             color: #ffffff; 
             border-radius: 8px; 
             padding: 15px 20px; 
@@ -48,7 +48,7 @@ def set_style():
             font-size: 1.1em; /* Increased font size */
         }
         .contact-button:hover {
-            background-color: #1e4e66; /* Darker shade on hover */
+            background-color: #2e6e91; /* Lighter shade on hover */
             transform: translateY(-2px); /* Slight lift effect */
         }
         .footer {
@@ -58,15 +58,15 @@ def set_style():
             font-size: 0.9em;
         }
         .testimonial {
-            background-color: #e8f0fe; /* Light blue background for testimonials */
+            background-color: #f0f8ff; /* Light blue background for testimonials */
             padding: 20px;
             border-radius: 10px;
             margin-top: 20px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Soft shadow */
         }
         .icon {
-            width: 25px; /* Smaller icons for a more elegant look */
-            height: 25px;
+            width: 30px; /* Slightly larger icons */
+            height: 30px;
             margin-right: 10px; /* Space between icon and text */
         }
     </style>
