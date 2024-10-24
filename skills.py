@@ -19,8 +19,8 @@ skills_data = [
             {"icon": os.path.join(current_dir, "icons", "sql-azure.svg")},
             {"icon": os.path.join(current_dir, "icons", "javascript.svg")},
             {"icon": os.path.join(current_dir, "icons", "PHP.svg")},
-            {"icon": os.path.join(current_dir, "icons", "bash.svg")},
-            {"icon": os.path.join(current_dir, "icons", "go.svg")},
+            {"icon": os.path.join(current_dir, "icons", "Bash.svg")},
+            {"icon": os.path.join(current_dir, "icons", "Go.svg")},
         ],
     },
     {
