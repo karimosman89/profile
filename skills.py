@@ -1,12 +1,12 @@
 import os
 import streamlit as st
 import plotly.graph_objects as go
-from PIL import Image  # Import PIL for image handling
+from PIL import Image
 
 # Get the directory of the current script
 current_dir = os.path.dirname(__file__)
 
-# Skills Data
+# Skills Data (Paths to icon files)
 skills_data = [
     {
         "category": "Programming Languages",
@@ -101,10 +101,10 @@ skills_data = [
     },
 ]
 
-# Header
+# Header Section
 st.title("🛠️ Core Skills and Technologies")
 
-# Styling for better presentation
+# Custom CSS for styling
 st.markdown("""
 <style>
     .skills-category {
@@ -127,7 +127,7 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-# Functions to create Plotly graphs for each skill category
+# Plot Functions for Skill Distribution
 def plot_programming_languages():
     languages = ["Python", "R", "Java", "C++", "C#", "Groovy", "SQL", "JavaScript", "PHP", "Bash", "Go"]
     usage = [50, 10, 15, 20, 25, 10, 30, 35, 20, 15, 5]  # Hypothetical usage percentages
@@ -156,226 +156,58 @@ def plot_big_data_cloud():
     fig.update_layout(title='Big Data & Cloud Technologies Usage', xaxis_title='Technologies', yaxis_title='Usage (%)')
     return fig
 
-# Define deep learning model functionalities
-def your_bert_prediction_function(text_data):
-    # Placeholder for BERT prediction logic
-    return f"BERT Prediction for: {text_data[:50]}..."  # Limit output for brevity
-
-def your_gpt3_prediction_function(text_data):
-    # Placeholder for GPT-3 prediction logic
-    return f"GPT-3 Prediction for: {text_data[:50]}..."
-
-def your_lstm_prediction_function(text_data):
-    # Placeholder for LSTM prediction logic
-    return f"LSTM Prediction for: {text_data[:50]}..."
-
-def your_cnn_prediction_function(image):
-    # Placeholder for CNN prediction logic
-    return "CNN Prediction Result"
-
-def your_unet_prediction_function(image):
-    # Placeholder for U-Net prediction logic
-    return "U-Net Prediction Result"
-
-def your_resnet_prediction_function(image):
-    # Placeholder for ResNet prediction logic
-    return "ResNet Prediction Result"
-
-def your_vgg16_prediction_function(image):
-    # Placeholder for VGG16 prediction logic
-    return "VGG16 Prediction Result"
-
-def your_efficientnet_prediction_function(image):
-    # Placeholder for EfficientNet prediction logic
-    return "EfficientNet Prediction Result"
-
-def your_yolo_prediction_function(image):
-    # Placeholder for YOLO prediction logic
-    return "YOLO Prediction Result"
-
-def your_gan_prediction_function(image):
-    # Placeholder for GAN prediction logic
-    return "GAN Prediction Result"
-
-def your_vae_prediction_function(image):
-    # Placeholder for VAE prediction logic
-    return "VAE Prediction Result"
-
-def your_transformer_prediction_function(text_data):
-    # Placeholder for Transformer prediction logic
-    return f"Transformer Prediction for: {text_data[:50]}..."
-
-def your_siamese_prediction_function(text_data):
-    # Placeholder for Siamese Networks prediction logic
-    return f"Siamese Networks Prediction for: {text_data[:50]}..."
-
-def your_deep_reinforcement_learning_prediction_function(text_data):
-    # Placeholder for Deep Reinforcement Learning prediction logic
-    return f"Deep Reinforcement Learning Prediction for: {text_data[:50]}..."
-
-def your_capsule_network_prediction_function(image):
-    # Placeholder for Capsule Networks prediction logic
-    return "Capsule Network Prediction Result"
-
-def your_tgan_prediction_function(image):
-    # Placeholder for TGAN prediction logic
-    return "TGAN Prediction Result"
-
-def your_fastgan_prediction_function(image):
-    # Placeholder for FastGAN prediction logic
-    return "FastGAN Prediction Result"
-
-# Deep Learning Models Functionality
+# Functions for Deep Learning Models
 deep_learning_models = {
     "BERT": {
         "description": "Text classification using BERT.",
         "input_type": "text",
-        "model": "path_to_your_bert_model",
-        "function": your_bert_prediction_function,
+        "function": lambda text_data: f"BERT Prediction for: {text_data[:50]}...",
     },
     "GPT-3": {
         "description": "Text generation using GPT-3.",
         "input_type": "text",
-        "model": "path_to_your_gpt3_model",
-        "function": your_gpt3_prediction_function,
-    },
-    "LSTM": {
-        "description": "Sequence prediction using LSTM.",
-        "input_type": "text",
-        "model": "path_to_your_lstm_model",
-        "function": your_lstm_prediction_function,
-    },
-    "RNN": {
-        "description": "Recurrent Neural Network for sequential data.",
-        "input_type": "text",
-        "model": "path_to_your_rnn_model",
-        "function": your_lstm_prediction_function,
+        "function": lambda text_data: f"GPT-3 Generated Text: {text_data[:50]}...",
     },
     "CNN": {
         "description": "Image classification using CNN.",
         "input_type": "image",
-        "model": "path_to_your_cnn_model",
-        "function": your_cnn_prediction_function,
+        "function": lambda image_data: f"CNN Image Classification Result",
     },
-    "U-Net": {
-        "description": "Image segmentation using U-Net.",
-        "input_type": "image",
-        "model": "path_to_your_unet_model",
-        "function": your_unet_prediction_function,
-    },
-    "ResNet": {
-        "description": "Residual Neural Network for image classification.",
-        "input_type": "image",
-        "model": "path_to_your_resnet_model",
-        "function": your_resnet_prediction_function,
-    },
-    "VGG16": {
-        "description": "VGG16 model for image classification.",
-        "input_type": "image",
-        "model": "path_to_your_vgg16_model",
-        "function": your_vgg16_prediction_function,
-    },
-    "EfficientNet": {
-        "description": "EfficientNet model for image classification.",
-        "input_type": "image",
-        "model": "path_to_your_efficientnet_model",
-        "function": your_efficientnet_prediction_function,
-    },
-    "YOLO": {
-        "description": "Object detection using YOLO.",
-        "input_type": "image",
-        "model": "path_to_your_yolo_model",
-        "function": your_yolo_prediction_function,
-    },
-    "GANs": {
-        "description": "Generative Adversarial Networks for image generation.",
-        "input_type": "image",
-        "model": "path_to_your_gans_model",
-        "function": your_gan_prediction_function,
-    },
-    "VAEs": {
-        "description": "Variational Autoencoders for image generation.",
-        "input_type": "image",
-        "model": "path_to_your_vaes_model",
-        "function": your_vae_prediction_function,
-    },
-    "Transformer": {
-        "description": "Transformer model for text tasks.",
-        "input_type": "text",
-        "model": "path_to_your_transformer_model",
-        "function": your_transformer_prediction_function,
-    },
-    "Siamese Networks": {
-        "description": "Siamese networks for similarity tasks.",
-        "input_type": "text",
-        "model": "path_to_your_siamese_model",
-        "function": your_siamese_prediction_function,
-    },
-    "Deep Reinforcement Learning": {
-        "description": "Deep reinforcement learning for decision making.",
-        "input_type": "text",
-        "model": "path_to_your_drl_model",
-        "function": your_deep_reinforcement_learning_prediction_function,
-    },
-    "Capsule Networks": {
-        "description": "Capsule networks for image classification.",
-        "input_type": "image",
-        "model": "path_to_your_capsule_model",
-        "function": your_capsule_network_prediction_function,
-    },
-    "TGAN": {
-        "description": "Temporal GAN for time series data generation.",
-        "input_type": "image",
-        "model": "path_to_your_tgan_model",
-        "function": your_tgan_prediction_function,
-    },
-    "FastGAN": {
-        "description": "FastGAN for quick image generation.",
-        "input_type": "image",
-        "model": "path_to_your_fastgan_model",
-        "function": your_fastgan_prediction_function,
-    },
+    # Add more models and their configurations as needed
 }
 
-# Display skills and functionalities
-for section in skills_data:
-    st.markdown(f"<h3 class='skills-category'>{section['category']}</h3>", unsafe_allow_html=True)
+# Render Categories and Skills
+for category in skills_data:
+    st.markdown(f'<div class="skills-category"><h3>{category["category"]}</h3>', unsafe_allow_html=True)
+    for skill in category["skills"]:
+        if "icon" in skill:
+            icon_path = skill["icon"]
+            img = Image.open(icon_path)
+            st.image(img, width=50, caption=os.path.basename(icon_path).split(".")[0], use_column_width=False)
+        elif "name" in skill:
+            st.write(f"- {skill['name']}")
+    st.markdown('</div>', unsafe_allow_html=True)
 
-    # Display icons for skills
-    if section["category"] == "Programming Languages" or section["category"] == "Machine Learning & Data Science Frameworks" or section["category"] == "Big Data & Cloud Technologies":
-        cols = st.columns(len(section["skills"]))
-        for i, skill in enumerate(section["skills"]):
-            cols[i].image(skill["icon"], width=50)  # Adjust width as necessary
+# Sidebar: Model Demos
+st.sidebar.title("Deep Learning Model Demos")
+selected_model = st.sidebar.selectbox("Choose a model", options=deep_learning_models.keys())
 
-    # Handle Deep Learning Models
-    if section["category"] == "Deep Learning Models":
-        for model in deep_learning_models:
-            st.subheader(model)
-            st.write(deep_learning_models[model]["description"])
+# Get selected model details
+model_info = deep_learning_models[selected_model]
+st.sidebar.write(f"**Model:** {selected_model}")
+st.sidebar.write(f"**Description:** {model_info['description']}")
 
-            # Upload input data
-            if deep_learning_models[model]["input_type"] == "text":
-                uploaded_file = st.file_uploader("Upload your text file", type=["txt"])
-            elif deep_learning_models[model]["input_type"] == "image":
-                uploaded_file = st.file_uploader("Upload your image file", type=["jpg", "jpeg", "png"])
-
-            if uploaded_file is not None:
-                if deep_learning_models[model]["input_type"] == "text":
-                    text_data = uploaded_file.read().decode("utf-8")
-                    result = deep_learning_models[model]["function"](text_data)
-                    st.write("Prediction Result:", result)
-                elif deep_learning_models[model]["input_type"] == "image":
-                    image = Image.open(uploaded_file)
-                    result = deep_learning_models[model]["function"](image)
-                    st.image(image, caption="Uploaded Image", use_column_width=True)
-                    st.write("Prediction Result:", result)
-
-# Optional: Display plots for each category
-st.subheader("Skill Distribution Visualizations")
-st.plotly_chart(plot_programming_languages())
-st.plotly_chart(plot_ml_frameworks())
-st.plotly_chart(plot_deep_learning_models())
-st.plotly_chart(plot_big_data_cloud())
+# Input uploader with unique keys to avoid StreamlitDuplicateElementId
+if model_info["input_type"] == "text":
+    user_input = st.sidebar.text_area("Enter text for prediction", key=f"text_{selected_model}")
+    if st.sidebar.button("Run Prediction", key=f"run_text_{selected_model}"):
+        prediction = model_info["function"](user_input)
+        st.sidebar.write(prediction)
+elif model_info["input_type"] == "image":
+    uploaded_image = st.sidebar.file_uploader("Upload an image", type=["jpg", "png"], key=f"image_{selected_model}")
+    if uploaded_image and st.sidebar.button("Run Image Classification", key=f"run_image_{selected_model}"):
+        prediction = model_info["function"](uploaded_image)
+        st.sidebar.write(prediction)
 
 # Footer
-st.markdown("<div class='footer'>Developed by Karim Osman</div>", unsafe_allow_html=True)
+st.markdown('<div class="footer">Core Skills and Technologies Demo</div>', unsafe_allow_html=True)
