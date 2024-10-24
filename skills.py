@@ -339,6 +339,18 @@ deep_learning_models = {
         "model": "path_to_your_fastgan_model",
         "function": your_fastgan_prediction_function,
     },
+    "WaveNet": {
+        "description": "Sound generation using WaveNet.",
+        "input_type": "sound",
+        "model": "path_to_your_wavenet_model",
+        "function": your_wavenet_prediction_function,
+    },
+    "ConvLSTM": {
+        "description": "Video processing using ConvLSTM.",
+        "input_type": "video",
+        "model": "path_to_your_convlstm_model",
+        "function": your_convlstm_prediction_function,
+    },
 }
 
 # Display deep learning models and handle functionalities
@@ -365,6 +377,24 @@ for model_name, model_data in deep_learning_models.items():
             result = model_data["function"](image)  # Call the model's prediction function
             st.image(image, caption="Uploaded Image", use_column_width=True)
             st.write(f"Prediction Result for {model_name}: {result}")
+
+    elif model_data["input_type"] == "sound":
+        # Sound-based models (e.g., WaveNet)
+        uploaded_file = st.file_uploader(f"Upload sound file for {model_name}", type=["wav", "mp3"], key=f"sound_uploader_{model_name}")
+        if uploaded_file is not None:
+            sound_data = uploaded_file.read()  # Assuming the model handles raw sound data
+            result = model_data["function"](sound_data)
+            st.write(f"Prediction Result for {model_name}: {result}")
+
+    elif model_data["input_type"] == "video":
+        # Video-based models (e.g., ConvLSTM)
+        uploaded_file = st.file_uploader(f"Upload video file for {model_name}", type=["mp4", "avi", "mov"], key=f"video_uploader_{model_name}")
+        if uploaded_file is not None:
+            video_data = uploaded_file.read()  # Assuming the model handles raw video data
+            result = model_data["function"](video_data)
+            st.video(video_data)
+            st.write(f"Prediction Result for {model_name}: {result}")
+
 
 # Optional: Display plots for each category
 st.subheader("Skill Distribution Visualizations")
