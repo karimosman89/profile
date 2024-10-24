@@ -75,16 +75,16 @@ about innovative projects, ideas, and opportunities. Please feel free to connect
 
 # Contact Methods Section
 contact_buttons = {
-    "LinkedIn": "https://linkedin.com/in/karimosman89",
-    "Email": "mailto:karim.programmer2020@gmail.com",
-    "GitHub": "https://github.com/karimosman89"
+    "LinkedIn": ("https://linkedin.com/in/karimosman89", "https://cdn-icons-png.flaticon.com/512/174/174857.png"),
+    "Email": ("mailto:karim.programmer2020@gmail.com", "https://cdn-icons-png.flaticon.com/512/732/732200.png"),
+    "GitHub": ("https://github.com/karimosman89", "https://cdn-icons-png.flaticon.com/512/733/733553.png")
 }
 
 # Create buttons for contact methods
-for platform, link in contact_buttons.items():
+for platform, (link, icon) in contact_buttons.items():
     st.markdown(f"""
     <a href="{link}" target="_blank" class="contact-button">
-        <img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" style="width: 30px; height: 30px; margin-right: 10px;"> {platform}
+        <img src="{icon}" style="width: 30px; height: 30px; margin-right: 10px;"> {platform}
     </a>
     """, unsafe_allow_html=True)
 
