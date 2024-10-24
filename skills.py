@@ -249,7 +249,7 @@ deep_learning_models = {
         "description": "Recurrent Neural Network for sequential data.",
         "input_type": "text",
         "model": "path_to_your_rnn_model",
-        "function": your_lstm_prediction_function,
+        "function": your_rnn_prediction_function,
     },
     "CNN": {
         "description": "Image classification using CNN.",
@@ -337,38 +337,30 @@ deep_learning_models = {
     },
 }
 
-# Display skills and functionalities
-for section in skills_data:
-    st.markdown(f"<h3 class='skills-category'>{section['category']}</h3>", unsafe_allow_html=True)
+# Display deep learning models and handle functionalities
+st.header("Deep Learning Models")
 
-    # Display icons for skills
-    if section["category"] == "Programming Languages" or section["category"] == "Machine Learning & Data Science Frameworks" or section["category"] == "Big Data & Cloud Technologies":
-        cols = st.columns(len(section["skills"]))
-        for i, skill in enumerate(section["skills"]):
-            cols[i].image(skill["icon"], width=50)  # Adjust width as necessary
+for model_name, model_data in deep_learning_models.items():
+    st.subheader(model_name)
+    st.write(model_data["description"])
 
-  # Handle Deep Learning Models
-    if section["category"] == "Deep Learning Models":
-        for model in deep_learning_models:
-            st.subheader(model)
-            st.write(deep_learning_models[model]["description"])
+    # Handle input based on input type
+    if model_data["input_type"] == "text":
+        # Text-based models (e.g., BERT, GPT-3)
+        uploaded_file = st.file_uploader(f"Upload text file for {model_name}", type=["txt"], key=f"text_uploader_{model_name}")
+        if uploaded_file is not None:
+            text_data = uploaded_file.read().decode("utf-8")
+            result = model_data["function"](text_data)  # Call the model's prediction function
+            st.write(f"Prediction Result for {model_name}: {result}")
 
-            # Upload input data
-            if deep_learning_models[model]["input_type"] == "text":
-                uploaded_file = st.file_uploader("Upload your text file", type=["txt"], key="file_uploader_1")
-            elif deep_learning_models[model]["input_type"] == "image":
-                uploaded_file = st.file_uploader("Upload your image file", type=["jpg", "jpeg", "png"])
-
-            if uploaded_file is not None:
-                if deep_learning_models[model]["input_type"] == "text":
-                    text_data = uploaded_file.read().decode("utf-8")
-                    result = deep_learning_models[model]["function"](text_data)
-                    st.write("Prediction Result:", result)
-                elif deep_learning_models[model]["input_type"] == "image":
-                    image = Image.open(uploaded_file)
-                    result = deep_learning_models[model]["function"](image)
-                    st.image(image, caption="Uploaded Image", use_column_width=True)
-                    st.write("Prediction Result:", result)
+    elif model_data["input_type"] == "image":
+        # Image-based models (e.g., CNN, U-Net)
+        uploaded_file = st.file_uploader(f"Upload image file for {model_name}", type=["jpg", "jpeg", "png"], key=f"image_uploader_{model_name}")
+        if uploaded_file is not None:
+            image = Image.open(uploaded_file)
+            result = model_data["function"](image)  # Call the model's prediction function
+            st.image(image, caption="Uploaded Image", use_column_width=True)
+            st.write(f"Prediction Result for {model_name}: {result}")
 
 # Optional: Display plots for each category
 st.subheader("Skill Distribution Visualizations")
