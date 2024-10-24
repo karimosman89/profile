@@ -168,7 +168,11 @@ def your_gpt3_prediction_function(text_data):
 def your_lstm_prediction_function(text_data):
     # Placeholder for LSTM prediction logic
     return f"LSTM Prediction for: {text_data[:50]}..."
-
+    
+def your_rnn_prediction_function(text_data):
+    # Placeholder for RNN prediction logic
+  return f"RNN Prediction for: {text_data[:50]}..."  
+    
 def your_cnn_prediction_function(image):
     # Placeholder for CNN prediction logic
     return "CNN Prediction Result"
