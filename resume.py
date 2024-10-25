@@ -2,7 +2,7 @@ import streamlit as st
 from pathlib import Path
 
 # Define the path to your resume PDF file
-resume_path = "assets/Resume.pdf"  # Adjust this if necessary
+resume_path = "assets/Resume.pdf"  # Ensure this path matches your repo structure
 
 # Function to set styles for the page
 def set_style():
