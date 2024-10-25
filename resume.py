@@ -67,7 +67,7 @@ st.write("""
     </ul>
     
     <br>
-    <a href="Resume.pdf" download class="resume-button">📥 Download My Resume</a>
+    <a href="./Resume.pdf" download class="resume-button">📥 Download My Resume</a>
 </div>
 """, unsafe_allow_html=True)
 
