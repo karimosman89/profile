@@ -59,26 +59,38 @@ with a commitment to driving innovation and exceeding project goals.
 st.markdown("### 📑 Read My Resume")
 st.markdown("Below is my resume. You can also download it for offline viewing.")
 
-# Embed PDF for in-app viewing
-st.components.v1.iframe("./Resume.pdf", height=600)
+# Update the PDF path according to where you placed the file
+pdf_path = "./Resume.pdf"  # Update this if your file is in a different location
+# Or if it's inside a folder, use this:
+# pdf_path = "./files/Resume.pdf"
+
+# Check if the file exists before trying to open it
+import os
+if os.path.exists(pdf_path):
+    st.components.v1.iframe(pdf_path, height=600)
+else:
+    st.error("Resume.pdf not found. Please check the file path.")
 
 # Prepare resume for download
-with open("Resume.pdf", "rb") as pdf_file:
-    pdf_data = pdf_file.read()
+if os.path.exists(pdf_path):
+    with open(pdf_path, "rb") as pdf_file:
+        pdf_data = pdf_file.read()
 
-# Download Button
-st.download_button(
-    label="📥 Download My Resume",
-    data=pdf_data,  # Using the saved pdf data
-    file_name="Karim_Osman_Resume.pdf",
-    mime="application/pdf",
-    help="Download my resume to explore more details about my experience and skills."
-)
+    # Download Button
+    st.download_button(
+        label="📥 Download My Resume",
+        data=pdf_data,  # Using the saved pdf data
+        file_name="Karim_Osman_Resume.pdf",
+        mime="application/pdf",
+        help="Download my resume to explore more details about my experience and skills."
+    )
+else:
+    st.error("Unable to prepare download. The file does not exist.")
 
 # Footer
 st.markdown("""
 <div style="text-align: center; margin-top: 30px;">
     <p style="color: #888;">For further inquiries or to discuss potential opportunities, 
-    feel free to reach out through my <a href="./contact.py">Contact Page</a>.</p>
+    feel free to reach out through my <a href="/contact">Contact Page</a>.</p>
 </div>
 """, unsafe_allow_html=True)
