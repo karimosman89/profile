@@ -1,10 +1,10 @@
 import streamlit as st
 from pathlib import Path
 
-# Path to your resume PDF in the `pages` directory
-resume_path = "assets/Resume.pdf"
+# Define the path to your resume PDF file
+resume_path = "assets/Resume.pdf"  # Adjust this if necessary
 
-# Set up page styles
+# Function to set styles for the page
 def set_style():
     st.markdown("""
     <style>
@@ -15,28 +15,29 @@ def set_style():
     </style>
     """, unsafe_allow_html=True)
 
+# Set the styles
 set_style()
 
 # Header and download section
 st.markdown("""
 <div class="centered-content">
-    <h3>Resume</h3>
-    <p>Preview my resume below or download for full details.</p>
+    <h3>My Resume</h3>
+    <p>Preview my resume below or download it for full details.</p>
 </div>
 """, unsafe_allow_html=True)
 
-# Embed the PDF if it exists
+# Check if the PDF file exists
 if Path(resume_path).exists():
     # Display PDF in an iframe
-    pdf_display = f'<iframe src="{resume_path}"></iframe>'
+    pdf_display = f'<iframe src="/{resume_path}" class="pdf-container"></iframe>'
     st.markdown(pdf_display, unsafe_allow_html=True)
 
-    # Download button for the full resume
+    # Create a download button for the resume
     with open(resume_path, "rb") as pdf_file:
         st.download_button(
             label="📥 Download My Full Resume",
             data=pdf_file,
-            file_name="Karim_Osman_Resume.pdf",
+            file_name="Karim_Osman_Resume.pdf",  # Change to your actual resume file name
             mime="application/pdf",
         )
 else:
