@@ -2,7 +2,7 @@ import streamlit as st
 from pathlib import Path
 
 # Path to your resume PDF in the `pages` directory
-resume_path = "./pages/Resume.pdf"
+resume_path = "pages/Resume.pdf"
 
 # Set up page styles
 def set_style():
