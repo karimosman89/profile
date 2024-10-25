@@ -24,7 +24,7 @@ st.write("I’m **Karim Osman**, a passionate **Machine Learning Engineer** dedi
 
 # Sidebar Navigation
 st.sidebar.title("Navigation")
-page = st.sidebar.radio("Go to", ["Home", "About", "Projects", "Skills", "Contact"])
+page = st.sidebar.radio("Go to", ["Home", "About", "Projects", "Skills", "Contact", "Resume"])
 
 # Common styling          
 def set_style():
@@ -293,3 +293,5 @@ elif page == "About":
 elif page == "Contact":
     # Import and render contact.py content
     import contact
+elif page == "Resume":
+    import resume
