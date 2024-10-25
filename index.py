@@ -25,14 +25,7 @@ st.write("I’m **Karim Osman**, a passionate **Machine Learning Engineer** dedi
 # Sidebar Navigation
 st.sidebar.title("Navigation")
 page = st.sidebar.radio("Go to", ["Home", "About", "Projects", "Skills", "Contact", "Resume"])
-st.markdown("""
--[Home](./index)
--[About](./about)
-- [Skills](./skills)
-- [Projects](./projects)
-- [Contact](./contact)
--[Resume](./resume)
-""")
+
 # Common styling          
 def set_style():
     st.markdown("""
