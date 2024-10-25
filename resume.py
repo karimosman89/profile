@@ -1,96 +1,64 @@
 import streamlit as st
+from pathlib import Path
 
-# Custom styling for professional look
+# Styles for professional look
 def set_style():
     st.markdown("""
     <style>
-        .main-content { 
-            text-align: left; 
-            font-family: 'Arial', sans-serif; 
-            color: #333; 
-            background-color: #f7f9fc; /* Subtle professional blue */
-            padding: 30px; 
+        .centered-content {
+            text-align: center;
+            font-family: 'Arial', sans-serif;
+            color: #333;
+            margin-top: 20px;
+        }
+        .pdf-container {
+            width: 100%;
+            max-width: 800px;
+            margin: auto;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             border-radius: 10px;
+            overflow: hidden;
         }
-        h1 {
-            color: #264653; /* Dark teal for title */
-            font-weight: bold;
-        }
-        h2 {
-            color: #2a9d8f; /* Lighter teal for section headings */
-        }
-        .resume-button {
-            background-color: #e76f51; /* Contrasting download button color */
-            color: white; 
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
+        .pdf-download {
+            background-color: #0073e6;
+            color: white;
             text-decoration: none;
-            font-size: 1.1em;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            transition: transform 0.2s;
+            padding: 8px 16px;
+            border-radius: 5px;
+            font-weight: bold;
+            display: inline-block;
+            margin: 20px 0;
         }
-        .resume-button:hover {
-            transform: scale(1.05);
+        .pdf-download:hover {
+            background-color: #005bb5;
         }
     </style>
     """, unsafe_allow_html=True)
 
-# Apply styles
+# Apply the styles
 set_style()
 
-# Page Title
-st.title("📄 Resume")
-
-# Introductory Text
-st.markdown("""
-<div class="main-content">
-    <h2>Professional Overview</h2>
+# Centered header and download link
+st.markdown(f"""
+<div class="centered-content">
+    <h3>Resume</h3>
+    <p>Download my resume for detailed information on my professional experience.</p>
 </div>
 """, unsafe_allow_html=True)
-st.write("""
-With a strong background in data science, software engineering, and project management, 
-I bring a proven track record of delivering high-impact projects and leading cross-functional 
-teams. My expertise spans data analytics, machine learning, and scalable software solutions, 
-with a commitment to driving innovation and exceeding project goals.
-""")
 
-# Display Resume PDF Inline
-st.markdown("### 📑 Read My Resume")
-st.markdown("Below is my resume. You can also download it for offline viewing.")
+# Path to your resume PDF
+resume_path = "Resume.pdf"
 
-# Update the PDF path according to where you placed the file
-pdf_path = "./Resume.pdf"  # Update this if your file is in a different location
-# Or if it's inside a folder, use this:
-# pdf_path = "./files/Resume.pdf"
-
-# Check if the file exists before trying to open it
-import os
-if os.path.exists(pdf_path):
-    st.components.v1.iframe(pdf_path, height=600)
+# PDF display and download section
+if Path(resume_path).exists():
+    # Embed PDF viewer using HTML iframe
+    st.markdown(f"""
+    <div class="pdf-container">
+        <iframe src="{resume_path}" width="100%" height="600px"></iframe>
+    </div>
+    <div class="centered-content">
+        <a href="{resume_path}" download="Karim_Osman_Resume.pdf" class="pdf-download">📥 Download My Resume</a>
+    </div>
+    """, unsafe_allow_html=True)
 else:
-    st.error("Resume.pdf not found. Please check the file path.")
-
-# Prepare resume for download
-if os.path.exists(pdf_path):
-    with open(pdf_path, "rb") as pdf_file:
-        pdf_data = pdf_file.read()
-
-    # Download Button
-    st.download_button(
-        label="📥 Download My Resume",
-        data=pdf_data,  # Using the saved pdf data
-        file_name="Karim_Osman_Resume.pdf",
-        mime="application/pdf",
-        help="Download my resume to explore more details about my experience and skills."
-    )
-else:
-    st.error("Unable to prepare download. The file does not exist.")
-
-# Footer
-st.markdown("""
-<div style="text-align: center; margin-top: 30px;">
-    <p style="color: #888;">For further inquiries or to discuss potential opportunities, 
-    feel free to reach out through my <a href="/contact">Contact Page</a>.</p>
-</div>
-""", unsafe_allow_html=True)
+    st.error("Resume file not found. Please check the file path and try again.")
