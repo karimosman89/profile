@@ -46,8 +46,8 @@ st.markdown(f"""
 </div>
 """, unsafe_allow_html=True)
 
-# Path to your resume PDF
-resume_path = "Resume.pdf"
+# Updated path to your resume PDF in the `pages` directory
+resume_path = "pages/Resume.pdf"
 
 # PDF display and download section
 if Path(resume_path).exists():
