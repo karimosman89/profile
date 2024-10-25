@@ -271,11 +271,7 @@ if page == "Home":
         st.markdown("---")  # Add a horizontal line for separation
 
     # Footer
-    st.markdown("<h2>Contact</h2>", unsafe_allow_html=True)
-    st.write("Feel free to connect with me through the following platforms:")
-    st.markdown("[LinkedIn](https://linkedin.com/in/karimosman89)")
-    st.markdown("[Email](mailto:karim.programmer2020@gmail.com)")
-    st.markdown("[GitHub](https://github.com/karimosman89)")
+    
     st.markdown("<p class='footer'>© 2024 Karim Osman</p>", unsafe_allow_html=True)
 
 elif page == "Skills":
@@ -293,4 +289,5 @@ elif page == "About":
 elif page == "Contact":
     # Import and render contact.py content
     import contact
-
+elif page == "Resume":
+    import resume
