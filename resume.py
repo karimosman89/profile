@@ -10,8 +10,8 @@ def set_style():
     <style>
         .centered-content { text-align: center; font-family: Arial, sans-serif; color: #333; margin-top: 20px; }
         .pdf-download { background-color: #0073e6; color: white; text-decoration: none; padding: 8px 16px; border-radius: 5px; font-weight: bold; display: inline-block; margin: 20px 0; }
-        .pdf-download:hover { background-color: #005bb5; }
         .pdf-container { border: 2px solid #ddd; border-radius: 8px; margin: auto; max-width: 90%; height: 800px; }
+        iframe { width: 100%; height: 800px; border: none; }
     </style>
     """, unsafe_allow_html=True)
 
@@ -28,7 +28,7 @@ st.markdown("""
 # Embed the PDF if it exists
 if Path(resume_path).exists():
     # Display PDF in an iframe
-    pdf_display = f'<iframe src="{resume_path}" class="pdf-container"></iframe>'
+    pdf_display = f'<iframe src="{resume_path}"></iframe>'
     st.markdown(pdf_display, unsafe_allow_html=True)
 
     # Download button for the full resume
