@@ -3,3 +3,4 @@ plotly
 pandas
 pdf2image
 pathlib
+PyMuPDF
