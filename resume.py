@@ -60,10 +60,10 @@ st.markdown("### 📑 Read My Resume")
 st.markdown("Below is my resume. You can also download it for offline viewing.")
 
 # Embed PDF for in-app viewing
-st.components.v1.iframe("Resume.pdf", height=600)
+st.components.v1.iframe("profile/Resume.pdf", height=600)
 
 # Prepare resume for download
-with open("Resume.pdf", "rb") as pdf_file:
+with open("profile/Resume.pdf", "rb") as pdf_file:
     pdf_data = pdf_file.read()
 
 # Download Button
