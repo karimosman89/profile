@@ -1,6 +1,4 @@
 import streamlit as st
-from pdf2image import convert_from_path
-from io import BytesIO
 from pathlib import Path
 
 # Path to your resume PDF in the `pages` directory
@@ -13,7 +11,7 @@ def set_style():
         .centered-content { text-align: center; font-family: Arial, sans-serif; color: #333; margin-top: 20px; }
         .pdf-download { background-color: #0073e6; color: white; text-decoration: none; padding: 8px 16px; border-radius: 5px; font-weight: bold; display: inline-block; margin: 20px 0; }
         .pdf-download:hover { background-color: #005bb5; }
-        .pdf-preview { box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border-radius: 10px; margin: auto; max-width: 90%; }
+        .pdf-container { border: 2px solid #ddd; border-radius: 8px; margin: auto; max-width: 90%; height: 800px; }
     </style>
     """, unsafe_allow_html=True)
 
@@ -27,15 +25,13 @@ st.markdown("""
 </div>
 """, unsafe_allow_html=True)
 
-# Load the resume file
+# Embed the PDF if it exists
 if Path(resume_path).exists():
-    # Convert first page to image for preview
-    pages = convert_from_path(resume_path, dpi=100, first_page=1, last_page=1)
-    if pages:
-        # Display the first page as an image preview
-        st.image(pages[0], caption="Resume Preview", use_column_width=True)
+    # Display PDF in an iframe
+    pdf_display = f'<iframe src="{resume_path}" class="pdf-container"></iframe>'
+    st.markdown(pdf_display, unsafe_allow_html=True)
 
-    # Display download button
+    # Download button for the full resume
     with open(resume_path, "rb") as pdf_file:
         st.download_button(
             label="📥 Download My Full Resume",
