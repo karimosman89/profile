@@ -46,7 +46,8 @@ set_style()
 
 # Page Title
 st.title("📄 Resume")
-
+if st.button("📄 View My Resume"):
+    st.experimental_set_query_params(page="resume")
 # Introductory Text
 st.write("""
 <div class="main-content">
