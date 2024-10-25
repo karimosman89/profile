@@ -60,10 +60,10 @@ st.markdown("### 📑 Read My Resume")
 st.markdown("Below is my resume. You can also download it for offline viewing.")
 
 # Embed PDF for in-app viewing
-st.components.v1.iframe("profile/Resume.pdf", height=600)
+st.components.v1.iframe("./Resume.pdf", height=600)
 
 # Prepare resume for download
-with open("profile/Resume.pdf", "rb") as pdf_file:
+with open("Resume.pdf", "rb") as pdf_file:
     pdf_data = pdf_file.read()
 
 # Download Button
@@ -79,6 +79,6 @@ st.download_button(
 st.markdown("""
 <div style="text-align: center; margin-top: 30px;">
     <p style="color: #888;">For further inquiries or to discuss potential opportunities, 
-    feel free to reach out through my <a href="/contact">Contact Page</a>.</p>
+    feel free to reach out through my <a href="./contact.py">Contact Page</a>.</p>
 </div>
 """, unsafe_allow_html=True)
