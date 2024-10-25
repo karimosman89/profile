@@ -59,14 +59,17 @@ with a commitment to driving innovation and exceeding project goals.
 st.markdown("### 📑 Read My Resume")
 st.markdown("Below is my resume. You can also download it for offline viewing.")
 
+# Embed PDF for in-app viewing
+st.components.v1.iframe("Resume.pdf", height=600)
+
+# Prepare resume for download
 with open("Resume.pdf", "rb") as pdf_file:
-    # Embed the PDF file in an iframe
-    st.components.v1.iframe("Resume.pdf", height=600)
+    pdf_data = pdf_file.read()
 
 # Download Button
 st.download_button(
     label="📥 Download My Resume",
-    data=pdf_file,
+    data=pdf_data,  # Using the saved pdf data
     file_name="Karim_Osman_Resume.pdf",
     mime="application/pdf",
     help="Download my resume to explore more details about my experience and skills."
