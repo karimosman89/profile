@@ -293,5 +293,4 @@ elif page == "About":
 elif page == "Contact":
     # Import and render contact.py content
     import contact
-elif page == "Resume":
-    import resume
+
