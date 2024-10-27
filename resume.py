@@ -1,44 +1,22 @@
 import streamlit as st
-from pathlib import Path
 
-# Define the path to your resume PDF file
-resume_path = "assets/Resume.pdf"  # Ensure this path matches your repo structure
 
-# Function to set styles for the page
-def set_style():
-    st.markdown("""
-    <style>
-        .centered-content { text-align: center; font-family: Arial, sans-serif; color: #333; margin-top: 20px; }
-        .pdf-download { background-color: #0073e6; color: white; text-decoration: none; padding: 8px 16px; border-radius: 5px; font-weight: bold; display: inline-block; margin: 20px 0; }
-        .pdf-container { border: 2px solid #ddd; border-radius: 8px; margin: auto; max-width: 90%; height: 800px; }
-        iframe { width: 100%; height: 800px; border: none; }
-    </style>
-    """, unsafe_allow_html=True)
 
-# Set the styles
-set_style()
 
-# Header and download section
-st.markdown("""
-<div class="centered-content">
-    <h3>My Resume</h3>
-    <p>Preview my resume below or download it for full details.</p>
-</div>
-""", unsafe_allow_html=True)
+# PDF Link and Preview Section
+st.subheader("Resume")
+st.write("You can view or download my detailed resume below.")
 
-# Check if the PDF file exists
-if Path(resume_path).exists():
-    # Display PDF in an iframe
-    pdf_display = f'<iframe src="/{resume_path}" class="pdf-container"></iframe>'
-    st.markdown(pdf_display, unsafe_allow_html=True)
+# Use a direct link to the PDF file
+pdf_url = "https://drive.google.com/file/d/18SLECTaOP9vgHKqGrgRdVotPRWu_V7nZ/preview"  
+# Embed the PDF for preview using an iframe
+st.markdown(f'<iframe src="{pdf_url}#view=FitH" width="700" height="700" frameborder="0"></iframe>', unsafe_allow_html=True)
 
-    # Create a download button for the resume
-    with open(resume_path, "rb") as pdf_file:
-        st.download_button(
-            label="📥 Download My Full Resume",
-            data=pdf_file,
-            file_name="Karim_Osman_Resume.pdf",  # Change to your actual resume file name
-            mime="application/pdf",
-        )
-else:
-    st.error("Resume file not found. Please check the file path and try again.")
+# Display a link for downloading the resume
+st.markdown(f'### [Download Resume]({pdf_url})')
+
+
+
+# Footer Section
+st.markdown("---")  # Horizontal line for separation
+st.write("© 2024 Karim Osman - Machine Learning Engineer")
