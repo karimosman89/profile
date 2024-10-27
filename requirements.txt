@@ -7,4 +7,4 @@ PyMuPDF
 opencv-python
 opencv-contrib-python
 librosa
-pytorch
+torch
