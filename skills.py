@@ -1,7 +1,11 @@
 import os
+import cv2
+import librosa
 import streamlit as st
 import plotly.graph_objects as go
-from PIL import Image 
+from PIL import Image
+import torch 
+
 
 # Get the directory of the current script
 current_dir = os.path.dirname(__file__)
@@ -104,20 +108,47 @@ skills_data = [
 # Header
 st.title("🛠️ Core Skills and Technologies")
 
-# Styling for better presentation
+# Styling for better presentation with hover effects
 st.markdown("""
 <style>
     .skills-category {
-        padding: 10px;
-        border-bottom: 1px solid #ccc;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        margin: 10px;
+        text-align: center;
+        background-color: #f9f9f9;
+        transition: transform 0.2s, background-color 0.2s; 
+        display: flex;
+        flex-direction: column;
+        align-items: center; 
+        justify-content: center; 
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+    }
+    .skills-category:hover {
+        transform: scale(1.05); 
+        background-color: #e6f7ff; 
+    }
+    .skills-category:active {
+        transform: scale(0.95); /* Scale down on click */
     }
     .skills-category h3 {
         margin-bottom: 10px;
+        color: #0073e6; /* Header color */
     }
     .skill-icon {
-        display: inline-block;
-        margin: 5px;
-        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 10px; /* Increased margin for better spacing */
+        transition: transform 0.2s; /* Smooth transition */
+    }
+    .skill-icon img {
+        width: 50px;
+        height: 50px;
+    }
+    .skill-icon:hover {
+        transform: scale(1.1); /* Scale up on icon hover */
     }
     .footer {
         text-align: center;
@@ -127,6 +158,26 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
+def get_base64_image(image_path):
+    """Convert an image to a base64 string."""
+    import base64
+    with open(image_path, "rb") as image_file:
+        return base64.b64encode(image_file.read()).decode('utf-8')
+# Display skills with icons in cards
+cols = st.columns(len(skills_data))  # Create columns for each category
+
+for col, category in zip(cols, skills_data):
+    with col:
+        st.markdown(f"<div class='skills-category'><h3>{category['category']}</h3>", unsafe_allow_html=True)
+        for skill in category['skills']:
+            if 'icon' in skill:  # For skills with icons
+                st.markdown(f"<div class='skill-icon'><img src='data:image/svg+xml;base64,{get_base64_image(skill['icon'])}' width='50' height='50' alt='Icon'></div>", unsafe_allow_html=True)
+            else:  # For skills without icons
+                st.markdown(f"<div class='skill-icon'>{skill['name']}</div>", unsafe_allow_html=True)
+        st.markdown("</div>", unsafe_allow_html=True)
+
+
+    
 # Functions to create Plotly graphs for each skill category
 def plot_programming_languages():
     languages = ["Python", "R", "Java", "C++", "C#", "Groovy", "SQL", "JavaScript", "PHP", "Bash", "Go"]
@@ -159,7 +210,7 @@ def plot_big_data_cloud():
 # Define deep learning model functionalities
 def your_bert_prediction_function(text_data):
     # Placeholder for BERT prediction logic
-    return f"BERT Prediction for: {text_data[:50]}..."  # Limit output for brevity
+    return f"BERT Prediction for: {text_data[:50]}..."  
 
 def your_gpt3_prediction_function(text_data):
     # Placeholder for GPT-3 prediction logic
@@ -283,85 +334,85 @@ deep_learning_models = {
     "BERT": {
         "description": "Text classification using BERT.",
         "input_type": "text",
-        "model": "path_to_your_bert_model",
+        "model": "model_epoch_5.pth",
         "function": your_bert_prediction_function,
     },
     "GPT-3": {
         "description": "Text generation using GPT-3.",
         "input_type": "text",
-        "model": "path_to_your_gpt3_model",
+        "model": "tf_model.h5",
         "function": your_gpt3_prediction_function,
     },
     "LSTM": {
         "description": "Sequence prediction using LSTM.",
         "input_type": "text",
-        "model": "path_to_your_lstm_model",
+        "model": "SRmodelo_lstm.h5",
         "function": your_lstm_prediction_function,
     },
     "RNN": {
         "description": "Recurrent Neural Network for sequential data.",
         "input_type": "text",
-        "model": "path_to_your_rnn_model",
+        "model": "rnn_model.h5",
         "function": your_rnn_prediction_function,
     },
     "CNN": {
         "description": "Image classification using CNN.",
         "input_type": "image",
-        "model": "path_to_your_cnn_model",
+        "model": "CNNModel2.pkl",
         "function": your_cnn_prediction_function,
     },
     "U-Net": {
         "description": "Image segmentation using U-Net.",
         "input_type": "image",
-        "model": "path_to_your_unet_model",
+        "model": "UNET_model.keras",
         "function": your_unet_prediction_function,
     },
     "ResNet": {
         "description": "Residual Neural Network for image classification.",
         "input_type": "image",
-        "model": "path_to_your_resnet_model",
+        "model": "resnet_model.pth",
         "function": your_resnet_prediction_function,
     },
     "VGG16": {
         "description": "VGG16 model for image classification.",
         "input_type": "image",
-        "model": "path_to_your_vgg16_model",
+        "model": "vgg16.pth",
         "function": your_vgg16_prediction_function,
     },
     "EfficientNet": {
         "description": "EfficientNet model for image classification.",
         "input_type": "image",
-        "model": "path_to_your_efficientnet_model",
+        "model": "efficientnet_model.bin",
         "function": your_efficientnet_prediction_function,
     },
     "YOLO": {
         "description": "Object detection using YOLO.",
         "input_type": "image",
-        "model": "path_to_your_yolo_model",
+        "model": "yolov8m.pt",
         "function": your_yolo_prediction_function,
     },
     "GANs": {
         "description": "Generative Adversarial Networks for image generation.",
         "input_type": "image",
-        "model": "path_to_your_gans_model",
+        "model": "gans_model.h5",
         "function": your_gan_prediction_function,
     },
     "VAEs": {
         "description": "Variational Autoencoders for image generation.",
         "input_type": "image",
-        "model": "path_to_your_vaes_model",
+        "model": "VAEsbest_model.pth",
         "function": your_vae_prediction_function,
     },
     "Transformer": {
         "description": "Transformer model for text tasks.",
         "input_type": "text",
-        "model": "path_to_your_transformer_model",
+        "model": "transformer_model.pth",
         "function": your_transformer_prediction_function,
     },
     "Siamese Networks": {
         "description": "Siamese networks for similarity tasks.",
         "input_type": "text",
-        "model": "path_to_your_siamese_model",
+        "model": "siamesemodelv2.h5",
         "function": your_siamese_prediction_function,
     },
     "Deep Reinforcement Learning": {
@@ -373,36 +424,37 @@ deep_learning_models = {
     "Capsule Networks": {
         "description": "Capsule networks for image classification.",
         "input_type": "image",
-        "model": "path_to_your_capsule_model",
+        "model": "capsule_model.bin",
         "function": your_capsule_network_prediction_function,
     },
     "TGAN": {
         "description": "Temporal GAN for time series data generation.",
         "input_type": "image",
-        "model": "path_to_your_tgan_model",
+        "model": "tgan.safetensors",
         "function": your_tgan_prediction_function,
     },
     "FastGAN": {
         "description": "FastGAN for quick image generation.",
         "input_type": "image",
-        "model": "path_to_your_fastgan_model",
+        "model": "fastgan_model.bin",
         "function": your_fastgan_prediction_function,
     },
     "WaveNet": {
         "description": "Sound generation using WaveNet.",
         "input_type": "sound",
-        "model": "path_to_your_wavenet_model",
+        "model": "archive\WaveNet_Model\WaveNet_fold4.h5",
         "function": your_wavenet_prediction_function,
     },
     "ConvLSTM": {
         "description": "Video processing using ConvLSTM.",
         "input_type": "video",
-        "model": "path_to_your_convlstm_model",
+        "model": "convlstm_model.h5",
         "function": your_convlstm_prediction_function,
     },
 }
 
 # Display deep learning models and handle functionalities
+
 st.header("Deep Learning Models")
 
 for model_name, model_data in deep_learning_models.items():
@@ -453,4 +505,6 @@ st.plotly_chart(plot_deep_learning_models())
 st.plotly_chart(plot_big_data_cloud())
 
 # Footer
-st.markdown('<div class="footer">Core Skills and Technologies Demo</div>', unsafe_allow_html=True)
+
+st.markdown('<div class="footer">© 2024 Karim Osman - Machine Learning Engineer</div>', unsafe_allow_html=True)
+
