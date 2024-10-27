@@ -6,5 +6,5 @@ pathlib
 PyMuPDF
 opencv-python
 opencv-contrib-python
-
+librosa
 
