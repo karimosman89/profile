@@ -5,4 +5,4 @@ pdf2image
 pathlib
 PyMuPDF
 opencv-python
-pytorch
+
