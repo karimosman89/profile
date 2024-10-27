@@ -4,5 +4,7 @@ pandas
 pdf2image
 pathlib
 PyMuPDF
-opencv
+opencv-python
+opencv-contrib-python
+
 
