@@ -9,7 +9,7 @@ import torch
 
 # Get the directory of the current script
 current_dir = os.path.dirname(__file__)
-@st.cache_data
+
 # Skills Data
 skills_data = [
     {
@@ -328,7 +328,7 @@ def your_convlstm_prediction_function(video_data):
 
     # Return the predicted class or the output of the model
     return probabilities.argmax().item()
-@st.cache_data    
+  
 # Deep Learning Models Functionality
 deep_learning_models = {
     "BERT": {
