@@ -7,4 +7,6 @@ PyMuPDF
 opencv-python
 opencv-contrib-python
 librosa
-
+streamlit
+torch
+numpy
