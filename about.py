@@ -62,7 +62,7 @@ def set_style():
 set_style()  # Apply styles
 
 
-
+@st.cache_data
 # What I Do Section
 st.header("🚀 What I Do")
 st.write("""
@@ -73,7 +73,7 @@ st.markdown("""
 - 📊 **Data Pipeline Development:** Designing robust ETL processes to ensure data quality and accessibility.
 - 🔗 **AI Research:** Staying ahead of trends in **Reinforcement Learning** and exploring the latest advancements in **AI technologies**.
 """)
-
+@st.cache_data
 # Why Work With Me Section
 st.header("🌟 Why Work With Me?")
 st.write("""
@@ -84,7 +84,7 @@ st.markdown("""
 - 💡 **Innovative Mindset:** My commitment to continuous learning allows me to adopt the latest technologies and methodologies to solve complex problems.
 - 📈 **Results-Driven Approach:** I focus on delivering tangible outcomes, using data to inform decisions and measure success.
 """)
-
+@st.cache_data
 # My Journey Section
 st.header("📈 My Journey")
 st.write("""
@@ -95,7 +95,7 @@ st.markdown("""
 - **Industry Experience**: Collaborated with cross-functional teams to deliver data-driven solutions in [Your Industry/Field].
 - **Continuous Learning**: I actively participate in workshops, webinars, and courses to stay updated on the latest trends and technologies in AI and Data Science.
 """)
-
+@st.cache_data
 # Let's Connect Section
 st.header("🌐 Let’s Connect!")
 st.write("""
