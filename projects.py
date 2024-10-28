@@ -3,7 +3,7 @@ import streamlit as st
 
 # Get the directory of the current script
 current_dir = os.path.dirname(__file__)
-
+@st.cache_data
 # Project Data
 projects = [
     {
@@ -65,7 +65,7 @@ st.markdown("""
     }
 </style>
 """, unsafe_allow_html=True)
-
+@st.cache_data
 # Projects Grid
 for project in projects:
     with st.container():
