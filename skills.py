@@ -1,5 +1,5 @@
 import os
-#import cv2
+import cv2
 import librosa
 import streamlit as st
 import plotly.graph_objects as go
