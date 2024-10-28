@@ -177,7 +177,7 @@ for col, category in zip(cols, skills_data):
         st.markdown("</div>", unsafe_allow_html=True)
 
 
- @st.cache_data   
+    
 # Functions to create Plotly graphs for each skill category
 def plot_programming_languages():
     languages = ["Python", "R", "Java", "C++", "C#", "Groovy", "SQL", "JavaScript", "PHP", "Bash", "Go"]
@@ -185,45 +185,45 @@ def plot_programming_languages():
     fig = go.Figure(data=go.Bar(x=languages, y=usage))
     fig.update_layout(title='Programming Languages Usage', xaxis_title='Languages', yaxis_title='Usage (%)')
     return fig
-@st.cache_data
+
 def plot_ml_frameworks():
     frameworks = ["Scikit-learn", "XGBoost", "LightGBM", "CatBoost", "TensorFlow", "Keras", "PyTorch", "MXNet"]
     popularity = [30, 20, 15, 10, 25, 20, 35, 10]  # Hypothetical popularity percentages
     fig = go.Figure(data=go.Pie(labels=frameworks, values=popularity))
     fig.update_layout(title='Machine Learning Frameworks Popularity')
     return fig
-@st.cache_data
+
 def plot_deep_learning_models():
     models = ["BERT", "GPT-3", "LSTM", "CNN", "ResNet", "YOLO"]
     applications = [25, 35, 15, 20, 25, 10]  # Hypothetical application areas
     fig = go.Figure(data=go.Scatter(x=models, y=applications, mode='markers', marker=dict(size=15), text=models))
     fig.update_layout(title='Deep Learning Models Applications', xaxis_title='Models', yaxis_title='Application Areas')
     return fig
-@st.cache_data
+
 def plot_big_data_cloud():
     technologies = ["Hadoop", "Spark", "AWS", "GCP", "Azure"]
     usage = [50, 70, 60, 55, 45]  # Hypothetical usage percentages
     fig = go.Figure(data=go.Bar(x=technologies, y=usage))
     fig.update_layout(title='Big Data & Cloud Technologies Usage', xaxis_title='Technologies', yaxis_title='Usage (%)')
     return fig
-@st.cache_data
+
 # Define deep learning model functionalities
 def your_bert_prediction_function(text_data):
     # Placeholder for BERT prediction logic
     return f"BERT Prediction for: {text_data[:50]}..."  
-@st.cache_data
+
 def your_gpt3_prediction_function(text_data):
     # Placeholder for GPT-3 prediction logic
     return f"GPT-3 Prediction for: {text_data[:50]}..."
-@st.cache_data
+
 def your_lstm_prediction_function(text_data):
     # Placeholder for LSTM prediction logic
     return f"LSTM Prediction for: {text_data[:50]}..."
- @st.cache_data   
+   
 def your_rnn_prediction_function(text_data):
     # Placeholder for RNN prediction logic
   return f"RNN Prediction for: {text_data[:50]}..."  
- @st.cache_data   
+  
 def your_cnn_prediction_function(image):
     # Placeholder for CNN prediction logic
     return "CNN Prediction Result"
@@ -231,55 +231,55 @@ def your_cnn_prediction_function(image):
 def your_unet_prediction_function(image):
     # Placeholder for U-Net prediction logic
     return "U-Net Prediction Result"
-@st.cache_data
+
 def your_resnet_prediction_function(image):
     # Placeholder for ResNet prediction logic
     return "ResNet Prediction Result"
-@st.cache_data
+
 def your_vgg16_prediction_function(image):
     # Placeholder for VGG16 prediction logic
     return "VGG16 Prediction Result"
-@st.cache_data
+
 def your_efficientnet_prediction_function(image):
     # Placeholder for EfficientNet prediction logic
     return "EfficientNet Prediction Result"
-@st.cache_data
+
 def your_yolo_prediction_function(image):
     # Placeholder for YOLO prediction logic
     return "YOLO Prediction Result"
-@st.cache_data
+
 def your_gan_prediction_function(image):
     # Placeholder for GAN prediction logic
     return "GAN Prediction Result"
-@st.cache_data
+
 def your_vae_prediction_function(image):
     # Placeholder for VAE prediction logic
     return "VAE Prediction Result"
-@st.cache_data
+
 def your_transformer_prediction_function(text_data):
     # Placeholder for Transformer prediction logic
     return f"Transformer Prediction for: {text_data[:50]}..."
-@st.cache_data
+
 def your_siamese_prediction_function(text_data):
     # Placeholder for Siamese Networks prediction logic
     return f"Siamese Networks Prediction for: {text_data[:50]}..."
-@st.cache_data
+
 def your_deep_reinforcement_learning_prediction_function(text_data):
     # Placeholder for Deep Reinforcement Learning prediction logic
     return f"Deep Reinforcement Learning Prediction for: {text_data[:50]}..."
-@st.cache_data
+
 def your_capsule_network_prediction_function(image):
     # Placeholder for Capsule Networks prediction logic
     return "Capsule Network Prediction Result"
-@st.cache_data
+
 def your_tgan_prediction_function(image):
     # Placeholder for TGAN prediction logic
     return "TGAN Prediction Result"
-@st.cache_data
+
 def your_fastgan_prediction_function(image):
     # Placeholder for FastGAN prediction logic
     return "FastGAN Prediction Result"
-@st.cache_data
+
 def your_wavenet_prediction_function(sound_data):
     # Convert the sound data (raw bytes) into a waveform using librosa
     audio, sr = librosa.load(sound_data, sr=None)
@@ -299,7 +299,7 @@ def your_wavenet_prediction_function(sound_data):
 
     # Return the predicted class or the output of the model
     return probabilities.argmax().item()
-@st.cache_data
+
 def your_convlstm_prediction_function(video_data):
     # Load video frames using OpenCV
     video = cv2.VideoCapture(video_data)
