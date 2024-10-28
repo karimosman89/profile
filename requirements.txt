@@ -9,8 +9,5 @@ opencv-contrib-python
 opencv-python-headless
 librosa
 streamlit
-torch+cpu
 numpy
-torchvision
-torchaudio
 streamlit_lottie 
