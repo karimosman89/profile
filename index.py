@@ -3,11 +3,19 @@ from PIL import Image
 import json
 from streamlit_lottie import st_lottie
 import plotly.graph_objects as go
+import logging
 
-# Function to load Lottie animations from local JSON files
+
+logging.basicConfig(level=logging.INFO)
+
+@st.cache_resource
 def load_lottie_local(filepath: str):
     with open(filepath, "r") as f:
         return json.load(f)
+
+@st.cache_resource
+def load_profile_photo():
+    return Image.open("profile-photo.jpg")
 
 # Load Lottie animations
 data_analysis_animation = load_lottie_local('data-analyisis.json')
@@ -16,6 +24,8 @@ ai_engineering_animation = load_lottie_local('ai-engineering.json')
 ai_animation = load_lottie_local('ai.json')
 deep_learning_animation = load_lottie_local('devops.json')
 dev_ops_animation = load_lottie_local('deep-learning.json')  
+profile_photo = load_profile_photo()
+
 
 # Streamlit app title and description
 st.set_page_config(page_title="Karim Osman - ML Engineer Portfolio", layout="wide")
@@ -88,6 +98,7 @@ def set_style():
 set_style()  # Apply styles
 
 # Functions to create Plotly graphs
+@st.cache_data
 def plot_ml_graph():
     fig = go.Figure()
     fig.add_trace(go.Scatter(x=[1, 2, 3, 4], y=[10, 11, 12, 13], mode='lines+markers', name='Model A'))
@@ -122,7 +133,9 @@ def plot_devops_graph():
     return fig
 
 # Define common business scenarios and their graphs
-business_scenarios = {
+@st.cache_data
+def get_business_scenarios():
+    return {
     "Machine Learning Engineer": {
         "Customer Churn Prediction": {
             "description": "Predicting customer churn using historical data to enhance retention strategies.",
@@ -184,10 +197,11 @@ business_scenarios = {
         }
     }
 }
-
+business_scenarios = get_business_scenarios()
 # Render pages based on the selection
 if page == "Home":
     # Content for Home
+    logging.info("Displaying Home Page")
     st.markdown("<h2>Explore My Expertise</h2>", unsafe_allow_html=True)
 
     # Create columns for animations
@@ -275,19 +289,21 @@ if page == "Home":
     st.markdown("<p class='footer'>© 2024 Karim Osman</p>", unsafe_allow_html=True)
 
 elif page == "Skills":
-    # Import and render skills.py content
-    import skills
+    logging.info("Loading Skills Page")
+    import skills  # Only load 'skills' when on Skills page
 
 elif page == "Projects":
-    # Import and render projects.py content
-    import projects
+    logging.info("Loading Projects Page")
+    import projects  # Only load 'projects' when on Projects page
 
 elif page == "About":
-    # Import and render about.py content
-    import about
+    logging.info("Loading About Page")
+    import about  # Only load 'about' when on About page
 
 elif page == "Contact":
-    # Import and render contact.py content
-    import contact
+    logging.info("Loading Contact Page")
+    import contact  # Only load 'contact' when on Contact page
+
 elif page == "Resume":
-    import resume
+    logging.info("Loading Resume Page")
+    import resume  # Only load 'resume' when on Resume page
