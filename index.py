@@ -307,9 +307,9 @@ elif page == "About":
      about.display()  # Only load 'about' when on About page
 
 elif page == "Contact":
-    logging.info("Loading Contact Page")
+     logging.info("Loading Contact Page")
      contact.display()  # Only load 'contact' when on Contact page
 
 elif page == "Resume":
-    logging.info("Loading Resume Page")
-    resume.display()  # Only load 'resume' when on Resume page
+     logging.info("Loading Resume Page")
+     resume.display()  # Only load 'resume' when on Resume page
