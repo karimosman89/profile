@@ -5,6 +5,7 @@ from streamlit_lottie import st_lottie
 import plotly.graph_objects as go
 import logging
 
+st.set_page_config(page_title="Karim Osman - ML Engineer Portfolio", layout="wide")
 
 logging.basicConfig(level=logging.INFO)
 
@@ -28,7 +29,7 @@ profile_photo = load_profile_photo()
 
 
 # Streamlit app title and description
-st.set_page_config(page_title="Karim Osman - ML Engineer Portfolio", layout="wide")
+
 st.title("🌍 Welcome to My Portfolio!")
 st.write("I’m **Karim Osman**, a passionate **Machine Learning Engineer** dedicated to solving real-world challenges through data-driven models and algorithms.")
 
