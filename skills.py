@@ -442,7 +442,7 @@ deep_learning_models = {
     "WaveNet": {
         "description": "Sound generation using WaveNet.",
         "input_type": "sound",
-        "model": "archive\WaveNet_Model\WaveNet_fold4.h5",
+        "model": "archive/WaveNet_Model/WaveNet_fold4.h5",
         "function": your_wavenet_prediction_function,
     },
     "ConvLSTM": {
