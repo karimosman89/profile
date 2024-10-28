@@ -4,6 +4,11 @@ import json
 from streamlit_lottie import st_lottie
 import plotly.graph_objects as go
 import logging
+import about
+import projects
+import skills
+import contact
+import resume
 
 st.set_page_config(page_title="Karim Osman - ML Engineer Portfolio", layout="wide")
 
@@ -291,20 +296,20 @@ if page == "Home":
 
 elif page == "Skills":
     logging.info("Loading Skills Page")
-    import skills  # Only load 'skills' when on Skills page
+     skills.display()  # Only load 'skills' when on Skills page
 
 elif page == "Projects":
     logging.info("Loading Projects Page")
-    import projects  # Only load 'projects' when on Projects page
+     projects.display()  # Only load 'projects' when on Projects page
 
 elif page == "About":
     logging.info("Loading About Page")
-    import about  # Only load 'about' when on About page
+     about.display()  # Only load 'about' when on About page
 
 elif page == "Contact":
     logging.info("Loading Contact Page")
-    import contact  # Only load 'contact' when on Contact page
+     contact.display()  # Only load 'contact' when on Contact page
 
 elif page == "Resume":
     logging.info("Loading Resume Page")
-    import resume  # Only load 'resume' when on Resume page
+    resume.display()  # Only load 'resume' when on Resume page
