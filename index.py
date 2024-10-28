@@ -296,14 +296,14 @@ if page == "Home":
 
 elif page == "Skills":
     logging.info("Loading Skills Page")
-     skills.display()  # Only load 'skills' when on Skills page
+    skills.display()  
 
 elif page == "Projects":
-    logging.info("Loading Projects Page")
+     logging.info("Loading Projects Page")
      projects.display()  # Only load 'projects' when on Projects page
 
 elif page == "About":
-    logging.info("Loading About Page")
+     logging.info("Loading About Page")
      about.display()  # Only load 'about' when on About page
 
 elif page == "Contact":
