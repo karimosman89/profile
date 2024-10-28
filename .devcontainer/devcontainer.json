@@ -6,7 +6,12 @@
     "codespaces": {
       "openFiles": [
         "README.md",
-        "index.py"
+        "index.py",
+        "about.py",
+        "projects.py",
+        "skills.py",
+        "contact.py",
+        "resume.py"
       ]
     },
     "vscode": {
