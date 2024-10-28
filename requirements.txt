@@ -10,3 +10,5 @@ librosa
 streamlit
 torch
 numpy
+torchvision
+torchaudio
