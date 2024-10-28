@@ -134,7 +134,7 @@ def plot_devops_graph():
     return fig
 
 # Define common business scenarios and their graphs
-@st.cache_data
+
 def get_business_scenarios():
     return {
     "Machine Learning Engineer": {
