@@ -10,7 +10,6 @@ from PIL import Image
 # Get the directory of the current script
 current_dir = os.path.dirname(__file__)
 
-def display():
   # Skills Data
     skills_data = [
     {
