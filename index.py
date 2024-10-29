@@ -37,7 +37,7 @@ st.write("I’m **Karim Osman**, a passionate **Machine Learning Engineer** dedi
 def load_page(module_name):
     try:
         module = importlib.import_module(module_name)
-        module.reload()
+        
           # Assumes each module has a `display` function
     except AttributeError as e:
         st.error(f"Error loading {module_name}: {e}")
