@@ -10,8 +10,9 @@ from PIL import Image
 # Get the directory of the current script
 current_dir = os.path.dirname(__file__)
 
-# Skills Data
-skills_data = [
+def display():
+  # Skills Data
+    skills_data = [
     {
         "category": "Programming Languages",
         "skills": [
@@ -106,11 +107,11 @@ skills_data = [
 ]
 
 # Header
-st.title("🛠️ Core Skills and Technologies")
+ st.title("🛠️ Core Skills and Technologies")
 
-# Styling for better presentation with hover effects
-st.markdown("""
-<style>
+ # Styling for better presentation with hover effects
+  st.markdown("""
+   <style>
     .skills-category {
         padding: 20px;
         border: 1px solid #ccc;
@@ -157,7 +158,7 @@ st.markdown("""
     }
 </style>
 """, unsafe_allow_html=True)
-@st.cache_data
+ @st.cache_data
 def get_base64_image(image_path):
     """Convert an image to a base64 string."""
     import base64
