@@ -8,6 +8,7 @@ import skills
 import projects
 import about
 import resume
+import contact
 import importlib
 
 st.set_page_config(page_title="Karim Osman - ML Engineer Portfolio", layout="wide")
