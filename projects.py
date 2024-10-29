@@ -36,7 +36,7 @@ projects = [
 st.title("🏆 Notable Projects")
 st.write("Explore some of the projects I've worked on, demonstrating my skills in Machine Learning, AI, and Data Engineering.")
 
-# Styling for better presentation
+# Styling for better presentation with 3D effect
 st.markdown("""
    <style>
     .project-card {
@@ -46,10 +46,13 @@ st.markdown("""
         overflow: hidden;
         transition: transform 0.3s, box-shadow 0.3s;
         perspective: 1000px; /* Create a perspective for 3D effect */
+        display: inline-block; /* Make cards inline for grid layout */
+        width: 300px; /* Set a fixed width for cards */
+        height: 400px; /* Set a fixed height for cards */
     }
     .project-card:hover {
         transform: rotateY(10deg) rotateX(10deg) scale(1.05); /* 3D rotation and scaling */
-        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2); /* Add shadow for depth */
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5); /* Add shadow for depth */
     }
     .project-title {
         color: #1e1e1e;
