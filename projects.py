@@ -84,12 +84,16 @@ for project in projects:
         col1, col2 = st.columns([1, 2])  # Create two columns for layout
         
         with col1:
-            st.image(project["image"], caption=project["title"], use_column_width=False, width=300, height=200)  
+            # Use a try-except block to handle potential issues loading the image
+            try:
+                st.image(project["image"], caption=project["title"], use_column_width=True)  # Display project image
+            except Exception as e:
+                st.warning(f"Could not load image for project: {project['title']}. Error: {e}")  # Handle missing images
         
         with col2:
             st.markdown(f"<div class='project-title'>{project['title']}</div>", unsafe_allow_html=True)
             st.markdown(f"<div class='project-description'>{project['description']}</div>", unsafe_allow_html=True)
-            st.markdown(f"[View Project]({project['link']})", unsafe_allow_html=True)  
+            st.markdown(f"[View Project]({project['link']})", unsafe_allow_html=True)  # Link to GitHub project
         
         st.markdown("</div>", unsafe_allow_html=True)  # Close the card
 
