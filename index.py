@@ -4,6 +4,10 @@ import json
 from streamlit_lottie import st_lottie
 import plotly.graph_objects as go
 import logging
+import skills
+import projects
+import about
+import resume
 import importlib
 
 st.set_page_config(page_title="Karim Osman - ML Engineer Portfolio", layout="wide")
