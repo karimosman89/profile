@@ -310,11 +310,11 @@ elif page == "Projects":
 
 elif page == "About":
      logging.info("Loading About Page")
-    load_page("about")  
+     load_page("about")  
 
 elif page == "Contact":
      logging.info("Loading Contact Page")
-      load_page("contact")
+     load_page("contact")
 
 elif page == "Resume":
      logging.info("Loading Resume Page")
