@@ -302,7 +302,7 @@ if page == "Home":
 
 elif page == "Skills":
     logging.info("Loading Skills Page")
-    import skills
+    load_page("skills")
 
 elif page == "Projects":
      logging.info("Loading Projects Page")
