@@ -3,7 +3,7 @@ import streamlit as st
 
 # Get the directory of the current script
 current_dir = os.path.dirname(__file__)
-def display():
+
 # Project Data
    projects = [
       {
