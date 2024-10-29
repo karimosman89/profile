@@ -36,7 +36,7 @@ projects = [
 st.title("🏆 Notable Projects")
 st.write("Explore some of the projects I've worked on, demonstrating my skills in Machine Learning, AI, and Data Engineering.")
 
-# Styling for better presentation
+# Styling for better presentation with 3D effect
 st.markdown("""
    <style>
     .project-card {
@@ -53,6 +53,11 @@ st.markdown("""
     .project-card:hover {
         transform: rotateY(10deg) rotateX(10deg) scale(1.05); /* 3D rotation and scaling */
         box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5); /* Add shadow for depth */
+    }
+    .project-image {
+        width: 100%; /* Make image full width of the card */
+        height: 200px; /* Fixed height for images */
+        object-fit: cover; /* Cover the area, cropping if necessary */
     }
     .project-title {
         color: #1e1e1e;
@@ -79,12 +84,12 @@ for project in projects:
         col1, col2 = st.columns([1, 2])  # Create two columns for layout
         
         with col1:
-            st.image(project["image"], caption=project["title"], use_column_width=True)  # Display project image
+            st.image(project["image"], caption=project["title"], use_column_width=False, width=300, height=200)  
         
         with col2:
             st.markdown(f"<div class='project-title'>{project['title']}</div>", unsafe_allow_html=True)
             st.markdown(f"<div class='project-description'>{project['description']}</div>", unsafe_allow_html=True)
-            st.markdown(f"[View Project]({project['link']})", unsafe_allow_html=True)  # Link to GitHub project
+            st.markdown(f"[View Project]({project['link']})", unsafe_allow_html=True)  
         
         st.markdown("</div>", unsafe_allow_html=True)  # Close the card
 
