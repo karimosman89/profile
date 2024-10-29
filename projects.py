@@ -6,37 +6,37 @@ current_dir = os.path.dirname(__file__)
 
 # Project Data
 projects = [
-      {
+    {
         "title": "NLP with Transformers",
         "description": "Developed advanced text classification models utilizing BERT for sentiment analysis and topic classification.",
         "link": "https://github.com/karimosman89/NLP-with-Transformers",
         "image": os.path.join(current_dir, "images", "background5.jpg"),  # Ensure this path is correct
-      },
-     {
+    },
+    {
         "title": "Time Series Forecasting",
         "description": "Designed robust forecasting models employing LSTM, ARIMA, and Prophet to predict stock prices.",
         "link": "https://github.com/karimosman89/time-series",
         "image": os.path.join(current_dir, "images", "background9.jpg"),  # Ensure this path is correct
-     },
-     {
+    },
+    {
         "title": "End-to-End ML Pipeline on AWS",
         "description": "Engineered a scalable ML pipeline for customer churn prediction utilizing AWS services and CI/CD methodologies.",
         "link": "https://github.com/karimosman89/ML-Pipeline-AWS",
         "image": os.path.join(current_dir, "images", "background10.jpg"),  # Ensure this path is correct
-     },
-     {
+    },
+    {
         "title": "Real-Time Data Pipeline",
         "description": "Architected a high-performance ETL pipeline for processing streaming log data using Apache Kafka and Spark.",
         "link": "https://github.com/karimosman89/Data-Pipeline",
         "image": os.path.join(current_dir, "images", "background15.jpg"),  # Ensure this path is correct
-     },
- ]
+    },
+]
 
 # Header
 st.title("🏆 Notable Projects")
 st.write("Explore some of the projects I've worked on, demonstrating my skills in Machine Learning, AI, and Data Engineering.")
 
- # Styling for better presentation
+# Styling for better presentation
 st.markdown("""
    <style>
     .project-card {
@@ -44,10 +44,12 @@ st.markdown("""
         border: 1px solid #ccc;
         border-radius: 8px;
         overflow: hidden;
-        transition: transform 0.3s;
+        transition: transform 0.3s, box-shadow 0.3s;
+        perspective: 1000px; /* Create a perspective for 3D effect */
     }
     .project-card:hover {
-        transform: scale(1.02);
+        transform: rotateY(10deg) rotateX(10deg) scale(1.05); /* 3D rotation and scaling */
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2); /* Add shadow for depth */
     }
     .project-title {
         color: #1e1e1e;
@@ -62,13 +64,13 @@ st.markdown("""
         text-align: center;
         margin-top: 40px;
         color: #666;
-     }
+    }
  </style>
  """, unsafe_allow_html=True)
 
 # Projects Grid
 for project in projects:
-     with st.container():
+    with st.container():
         # Create a card-like layout for each project
         st.markdown("<div class='project-card'>", unsafe_allow_html=True)
         col1, col2 = st.columns([1, 2])  # Create two columns for layout
