@@ -303,30 +303,30 @@ if page == "Home":
 
 elif page == "Skills":
     logging.info("Loading Skills Page")
-    import skills
+    #import skills
     importlib.reload(skills)
     
 
 elif page == "Projects":
      logging.info("Loading Projects Page")
-     import projects
+     #import projects
      importlib.reload(projects)
        
 
 elif page == "About":
      logging.info("Loading About Page")
-     import about
+     #import about
      importlib.reload(about)
     
 
 elif page == "Contact":
      logging.info("Loading Contact Page")
-     import contact
+     #import contact
      importlib.reload(contact)
      
 
 elif page == "Resume":
      logging.info("Loading Resume Page")
-     import resume
+     #import resume
      importlib.reload(resume) 
      
