@@ -5,7 +5,7 @@ import streamlit as st
 current_dir = os.path.dirname(__file__)
 
 # Project Data
-   projects = [
+projects = [
       {
         "title": "NLP with Transformers",
         "description": "Developed advanced text classification models utilizing BERT for sentiment analysis and topic classification.",
@@ -33,11 +33,11 @@ current_dir = os.path.dirname(__file__)
  ]
 
 # Header
- st.title("🏆 Notable Projects")
- st.write("Explore some of the projects I've worked on, demonstrating my skills in Machine Learning, AI, and Data Engineering.")
+st.title("🏆 Notable Projects")
+st.write("Explore some of the projects I've worked on, demonstrating my skills in Machine Learning, AI, and Data Engineering.")
 
  # Styling for better presentation
- st.markdown("""
+st.markdown("""
    <style>
     .project-card {
         margin-bottom: 20px;
@@ -67,7 +67,7 @@ current_dir = os.path.dirname(__file__)
  """, unsafe_allow_html=True)
 
 # Projects Grid
- for project in projects:
+for project in projects:
      with st.container():
         # Create a card-like layout for each project
         st.markdown("<div class='project-card'>", unsafe_allow_html=True)
@@ -84,4 +84,4 @@ current_dir = os.path.dirname(__file__)
         st.markdown("</div>", unsafe_allow_html=True)  # Close the card
 
 # Footer
- st.markdown("<p class='footer'>© 2024 Karim Osman</p>", unsafe_allow_html=True)
+st.markdown("<p class='footer'>© 2024 Karim Osman</p>", unsafe_allow_html=True)
