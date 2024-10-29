@@ -329,4 +329,4 @@ elif page == "Resume":
      logging.info("Loading Resume Page")
      import resume
      importlib.reload(resume) 
-     load_page("resume")
+     
