@@ -38,6 +38,16 @@ profile_photo = load_profile_photo()
 st.title("🌍 Welcome to My Portfolio!")
 st.write("I’m **Karim Osman**, a passionate **Machine Learning Engineer** dedicated to solving real-world challenges through data-driven models and algorithms.")
 
+def load_page(module_name):
+    try:
+        module = importlib.import_module(module_name)
+        module.display()  # Assumes each module has a `display` function
+    except AttributeError as e:
+        st.error(f"Error loading {module_name}: {e}")
+    except ImportError as e:
+        st.error(f"Module {module_name} not found: {e}")
+
+
 # Sidebar Navigation
 st.sidebar.title("Navigation")
 page = st.sidebar.radio("Go to", ["Home", "About", "Projects", "Skills", "Contact", "Resume"])
@@ -296,20 +306,20 @@ if page == "Home":
 
 elif page == "Skills":
     logging.info("Loading Skills Page")
-    skills.display()  
+    load_page("skills")
 
 elif page == "Projects":
      logging.info("Loading Projects Page")
-     projects.display()  # Only load 'projects' when on Projects page
+     load_page("projects")  
 
 elif page == "About":
      logging.info("Loading About Page")
-     about.display()  # Only load 'about' when on About page
+    load_page("about")  
 
 elif page == "Contact":
      logging.info("Loading Contact Page")
-     contact.display()  # Only load 'contact' when on Contact page
+      load_page("contact")
 
 elif page == "Resume":
      logging.info("Loading Resume Page")
-     resume.display()  # Only load 'resume' when on Resume page
+     load_page("resume")
