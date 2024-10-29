@@ -305,25 +305,25 @@ elif page == "Skills":
     logging.info("Loading Skills Page")
     import skills
     importlib.reload(skills)
-    load_page("skills")
+    
 
 elif page == "Projects":
      logging.info("Loading Projects Page")
      import projects
      importlib.reload(projects)
-     load_page("projects")  
+       
 
 elif page == "About":
      logging.info("Loading About Page")
      import about
      importlib.reload(about)
-     load_page("about")  
+    
 
 elif page == "Contact":
      logging.info("Loading Contact Page")
      import contact
      importlib.reload(contact)
-     load_page("contact")
+     
 
 elif page == "Resume":
      logging.info("Loading Resume Page")
