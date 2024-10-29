@@ -11,7 +11,7 @@ from PIL import Image
 current_dir = os.path.dirname(__file__)
 
   # Skills Data
-    skills_data = [
+skills_data = [
     {
         "category": "Programming Languages",
         "skills": [
@@ -106,10 +106,10 @@ current_dir = os.path.dirname(__file__)
 ]
 
 # Header
- st.title("🛠️ Core Skills and Technologies")
+st.title("🛠️ Core Skills and Technologies")
 
  # Styling for better presentation with hover effects
-  st.markdown("""
+st.markdown("""
    <style>
     .skills-category {
         padding: 20px;
