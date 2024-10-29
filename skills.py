@@ -157,7 +157,7 @@ st.markdown("""
     }
 </style>
 """, unsafe_allow_html=True)
- @st.cache_data
+ 
 def get_base64_image(image_path):
     """Convert an image to a base64 string."""
     import base64
