@@ -1,5 +1,6 @@
 import os
 import streamlit as st
+from PIL import Image
 
 # Get the directory of the current script
 current_dir = os.path.dirname(__file__)
@@ -36,17 +37,9 @@ projects = [
 st.title("🏆 Notable Projects")
 st.write("Explore some of the projects I've worked on, demonstrating my skills in Machine Learning, AI, and Data Engineering.")
 
-# Styling for 3D effect and hover animations
+# CSS for 3D effect and hover animations
 st.markdown("""
    <style>
-    /* Container for project cards */
-    .project-container {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-around;
-    }
-
-    /* Project card styling */
     .project-card {
         background-color: #ffffff;
         border-radius: 10px;
@@ -55,47 +48,33 @@ st.markdown("""
         margin: 20px;
         width: 300px;
         transform-style: preserve-3d;
-        transition: transform 0.5s, box-shadow 0.5s;
+        transition: transform 0.3s, box-shadow 0.3s;
         cursor: pointer;
+        text-align: center;
     }
     .project-card:hover {
-        transform: scale(1.05) rotateX(8deg) rotateY(8deg);
+        transform: scale(1.05) rotateX(5deg) rotateY(5deg);
         box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
     }
-
-    /* Image styling */
-    .project-image {
-        width: 100%;
-        height: 180px;
-        object-fit: cover;
-    }
-
-    /* Project title and description styling */
     .project-title {
         color: #333333;
-        font-size: 1.5em;
+        font-size: 1.2em;
         font-weight: bold;
-        margin: 15px;
-        text-align: center;
+        margin: 10px 0;
     }
     .project-description {
         color: #555555;
         font-size: 1em;
         margin: 0 15px 15px 15px;
-        text-align: center;
     }
-
-    /* Button styling */
     .project-link {
-        display: inline-block;
-        text-align: center;
         color: #ffffff;
         background-color: #4CAF50;
         padding: 10px 15px;
-        margin: 10px 0;
         border-radius: 5px;
         text-decoration: none;
-        transition: background-color 0.3s ease-in-out;
+        display: inline-block;
+        transition: background-color 0.3s ease;
     }
     .project-link:hover {
         background-color: #45a049;
@@ -104,19 +83,22 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # Display Projects
-st.markdown("<div class='project-container'>", unsafe_allow_html=True)
 for project in projects:
-    st.markdown(f"""
-        <div class='project-card'>
-            <img src='data:image/jpeg;base64,{st.file_uploader(project["image"])}' class='project-image' alt='{project["title"]}'>
-            <div class='project-title'>{project["title"]}</div>
-            <div class='project-description'>{project["description"]}</div>
-            <div style='text-align: center;'>
-                <a href='{project["link"]}' class='project-link' target='_blank'>View Project</a>
-            </div>
-        </div>
-    """, unsafe_allow_html=True)
-st.markdown("</div>", unsafe_allow_html=True)
+    with st.container():
+        st.markdown("<div class='project-card'>", unsafe_allow_html=True)
+        
+        # Load and display the image
+        if os.path.exists(project["image"]):
+            st.image(Image.open(project["image"]), use_column_width=True)
+        else:
+            st.write("Image not found.")
+        
+        st.markdown(f"<div class='project-title'>{project['title']}</div>", unsafe_allow_html=True)
+        st.markdown(f"<div class='project-description'>{project['description']}</div>", unsafe_allow_html=True)
+        st.markdown(f"<a href='{project['link']}' class='project-link' target='_blank'>View Project</a>", unsafe_allow_html=True)
+        
+        st.markdown("</div>", unsafe_allow_html=True)
+
 
 
 # Footer
