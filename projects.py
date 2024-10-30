@@ -10,25 +10,25 @@ projects = [
         "title": "NLP with Transformers",
         "description": "Developed advanced text classification models utilizing BERT for sentiment analysis and topic classification.",
         "link": "https://github.com/karimosman89/NLP-with-Transformers",
-        "image": os.path.join(current_dir, "images", "background5.jpg"),  # Ensure this path is correct
+        "image": os.path.join(current_dir, "images", "background5.jpg"),
     },
     {
         "title": "Time Series Forecasting",
         "description": "Designed robust forecasting models employing LSTM, ARIMA, and Prophet to predict stock prices.",
         "link": "https://github.com/karimosman89/time-series",
-        "image": os.path.join(current_dir, "images", "background9.jpg"),  # Ensure this path is correct
+        "image": os.path.join(current_dir, "images", "background9.jpg"),
     },
     {
         "title": "End-to-End ML Pipeline on AWS",
         "description": "Engineered a scalable ML pipeline for customer churn prediction utilizing AWS services and CI/CD methodologies.",
         "link": "https://github.com/karimosman89/ML-Pipeline-AWS",
-        "image": os.path.join(current_dir, "images", "background10.jpg"),  # Ensure this path is correct
+        "image": os.path.join(current_dir, "images", "background10.jpg"),
     },
     {
         "title": "Real-Time Data Pipeline",
         "description": "Architected a high-performance ETL pipeline for processing streaming log data using Apache Kafka and Spark.",
         "link": "https://github.com/karimosman89/Data-Pipeline",
-        "image": os.path.join(current_dir, "images", "background15.jpg"),  # Ensure this path is correct
+        "image": os.path.join(current_dir, "images", "background15.jpg"),
     },
 ]
 
@@ -36,66 +36,88 @@ projects = [
 st.title("🏆 Notable Projects")
 st.write("Explore some of the projects I've worked on, demonstrating my skills in Machine Learning, AI, and Data Engineering.")
 
-# Styling for better presentation with 3D effect
+# Styling for 3D effect and hover animations
 st.markdown("""
    <style>
+    /* Container for project cards */
+    .project-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+    }
+
+    /* Project card styling */
     .project-card {
-        margin-bottom: 20px;
-        border: 1px solid #ccc;
-        border-radius: 8px;
+        background-color: #ffffff;
+        border-radius: 10px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
         overflow: hidden;
-        transition: transform 0.3s, box-shadow 0.3s;
-        perspective: 1000px; /* Create a perspective for 3D effect */
-        display: inline-block; /* Make cards inline for grid layout */
-        width: 300px; /* Set a fixed width for cards */
-        height: 400px; /* Set a fixed height for cards */
+        margin: 20px;
+        width: 300px;
+        transform-style: preserve-3d;
+        transition: transform 0.5s, box-shadow 0.5s;
+        cursor: pointer;
     }
     .project-card:hover {
-        transform: rotateY(10deg) rotateX(10deg) scale(1.05); /* 3D rotation and scaling */
-        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5); /* Add shadow for depth */
+        transform: scale(1.05) rotateX(8deg) rotateY(8deg);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
     }
+
+    /* Image styling */
     .project-image {
-        width: 100%; /* Make image full width of the card */
-        height: 200px; /* Fixed height for images */
-        object-fit: cover; /* Cover the area, cropping if necessary */
+        width: 100%;
+        height: 180px;
+        object-fit: cover;
     }
+
+    /* Project title and description styling */
     .project-title {
-        color: #1e1e1e;
+        color: #333333;
+        font-size: 1.5em;
         font-weight: bold;
-        margin: 10px;
+        margin: 15px;
+        text-align: center;
     }
     .project-description {
-        color: #555;
-        margin: 0 10px 10px;
-    }
-    .footer {
+        color: #555555;
+        font-size: 1em;
+        margin: 0 15px 15px 15px;
         text-align: center;
-        margin-top: 40px;
-        color: #666;
     }
- </style>
- """, unsafe_allow_html=True)
 
-# Projects Grid
+    /* Button styling */
+    .project-link {
+        display: inline-block;
+        text-align: center;
+        color: #ffffff;
+        background-color: #4CAF50;
+        padding: 10px 15px;
+        margin: 10px 0;
+        border-radius: 5px;
+        text-decoration: none;
+        transition: background-color 0.3s ease-in-out;
+    }
+    .project-link:hover {
+        background-color: #45a049;
+    }
+   </style>
+""", unsafe_allow_html=True)
+
+# Display Projects
+st.markdown("<div class='project-container'>", unsafe_allow_html=True)
 for project in projects:
-    with st.container():
-        # Create a card-like layout for each project
-        st.markdown("<div class='project-card'>", unsafe_allow_html=True)
-        col1, col2 = st.columns([1, 2])  # Create two columns for layout
-        
-        with col1:
-            # Use a try-except block to handle potential issues loading the image
-            try:
-                st.image(project["image"], caption=project["title"], use_column_width=True)  # Display project image
-            except Exception as e:
-                st.warning(f"Could not load image for project: {project['title']}. Error: {e}")  # Handle missing images
-        
-        with col2:
-            st.markdown(f"<div class='project-title'>{project['title']}</div>", unsafe_allow_html=True)
-            st.markdown(f"<div class='project-description'>{project['description']}</div>", unsafe_allow_html=True)
-            st.markdown(f"[View Project]({project['link']})", unsafe_allow_html=True)  # Link to GitHub project
-        
-        st.markdown("</div>", unsafe_allow_html=True)  # Close the card
+    st.markdown(f"""
+        <div class='project-card'>
+            <img src='data:image/jpeg;base64,{st.file_uploader(project["image"])}' class='project-image' alt='{project["title"]}'>
+            <div class='project-title'>{project["title"]}</div>
+            <div class='project-description'>{project["description"]}</div>
+            <div style='text-align: center;'>
+                <a href='{project["link"]}' class='project-link' target='_blank'>View Project</a>
+            </div>
+        </div>
+    """, unsafe_allow_html=True)
+st.markdown("</div>", unsafe_allow_html=True)
+
 
 # Footer
 st.markdown("<p class='footer'>© 2024 Karim Osman</p>", unsafe_allow_html=True)
