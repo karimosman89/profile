@@ -37,44 +37,39 @@ projects = [
 st.title("🏆 Notable Projects")
 st.write("Explore some of the projects I've worked on, demonstrating my skills in Machine Learning, AI, and Data Engineering.")
 
-# CSS for 3D effect and hover animations
+# CSS for card styling and layout
 st.markdown("""
    <style>
     .project-card {
         background-color: #ffffff;
-        border-radius: 10px;
-        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
-        overflow: hidden;
-        margin: 20px;
-        width: 300px;
-        transform-style: preserve-3d;
-        transition: transform 0.3s, box-shadow 0.3s;
-        cursor: pointer;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        margin: 15px;
+        padding: 10px;
+        width: 100%;
         text-align: center;
+        transition: transform 0.2s;
     }
     .project-card:hover {
-        transform: scale(1.05) rotateX(5deg) rotateY(5deg);
-        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        transform: scale(1.02);
     }
     .project-title {
         color: #333333;
-        font-size: 1.2em;
         font-weight: bold;
-        margin: 10px 0;
+        font-size: 1.2em;
     }
     .project-description {
-        color: #555555;
-        font-size: 1em;
-        margin: 0 15px 15px 15px;
+        color: #666666;
+        font-size: 0.95em;
+        margin: 10px 0;
     }
     .project-link {
         color: #ffffff;
         background-color: #4CAF50;
-        padding: 10px 15px;
+        padding: 8px 12px;
         border-radius: 5px;
         text-decoration: none;
-        display: inline-block;
-        transition: background-color 0.3s ease;
+        font-size: 0.9em;
     }
     .project-link:hover {
         background-color: #45a049;
@@ -82,22 +77,26 @@ st.markdown("""
    </style>
 """, unsafe_allow_html=True)
 
-# Display Projects
-for project in projects:
-    with st.container():
+# Display Projects in a 2-column grid layout
+columns_per_row = 2
+for i, project in enumerate(projects):
+    if i % columns_per_row == 0:
+        cols = st.columns(columns_per_row)
+    
+    # Display each project as a card within its column
+    with cols[i % columns_per_row]:
         st.markdown("<div class='project-card'>", unsafe_allow_html=True)
         
-        # Load and display the image
+        # Load and display the image with fixed size
         if os.path.exists(project["image"]):
-            st.image(Image.open(project["image"]), use_column_width=True)
-        else:
-            st.write("Image not found.")
+            st.image(Image.open(project["image"]), use_column_width=False, width=200)  # Set image size here
         
         st.markdown(f"<div class='project-title'>{project['title']}</div>", unsafe_allow_html=True)
         st.markdown(f"<div class='project-description'>{project['description']}</div>", unsafe_allow_html=True)
         st.markdown(f"<a href='{project['link']}' class='project-link' target='_blank'>View Project</a>", unsafe_allow_html=True)
         
         st.markdown("</div>", unsafe_allow_html=True)
+
 
 
 
