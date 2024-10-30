@@ -89,18 +89,18 @@ for i, project in enumerate(projects):
         cols = st.columns(columns_per_row)
     st.markdown("<div class='project-card project-card:hover'>", unsafe_allow_html=True)
     # Display each project as a card within its column
-       with cols[i % columns_per_row]:
+    with cols[i % columns_per_row]:
         
         
          # Load and display the image with fixed size
-         if os.path.exists(project["image"]):
-             st.image(Image.open(project["image"]), use_column_width=False, width=220)  # Set image size here
+        if os.path.exists(project["image"]):
+            st.image(Image.open(project["image"]), use_column_width=False, width=220)  # Set image size here
         
-          st.markdown(f"<div class='project-title project-card:hover'>{project['title']}</div>", unsafe_allow_html=True)
-          st.markdown(f"<div class='project-description project-card:hover'>{project['description']}</div>", unsafe_allow_html=True)
-          st.markdown(f"<a href='{project['link']}' class='project-link project-card:hover' target='_blank'>View Project</a>", unsafe_allow_html=True)
+        st.markdown(f"<div class='project-title project-card:hover'>{project['title']}</div>", unsafe_allow_html=True)
+        st.markdown(f"<div class='project-description project-card:hover'>{project['description']}</div>", unsafe_allow_html=True)
+        st.markdown(f"<a href='{project['link']}' class='project-link project-card:hover' target='_blank'>View Project</a>", unsafe_allow_html=True)
         
-          st.markdown("</div>", unsafe_allow_html=True)
+        st.markdown("</div>", unsafe_allow_html=True)
 
 
 
