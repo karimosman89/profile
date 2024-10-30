@@ -90,7 +90,7 @@ for i, project in enumerate(projects):
     
     # Display each project as a card within its column
     with cols[i % columns_per_row]:
-        st.markdown("<div class='project-card'>", unsafe_allow_html=True)
+        st.markdown("<div class='project-card project-card:hover'>", unsafe_allow_html=True)
         
         # Load and display the image with fixed size
         if os.path.exists(project["image"]):
