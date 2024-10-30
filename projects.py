@@ -1,5 +1,6 @@
 import os
 import streamlit as st
+from PIL import Image
 
 # Get the directory of the current script
 current_dir = os.path.dirname(__file__)
@@ -10,25 +11,25 @@ projects = [
         "title": "NLP with Transformers",
         "description": "Advanced text classification models using BERT for sentiment analysis and topic classification.",
         "link": "https://github.com/karimosman89/NLP-with-Transformers",
-        "image": os.path.join(current_dir, "images", "background5.svg"),
+        "image": os.path.join(current_dir, "images", "background5.jpg"),  # Use JPG or PNG
     },
     {
         "title": "Time Series Forecasting",
         "description": "Robust forecasting models employing LSTM, ARIMA, and Prophet for stock prices.",
         "link": "https://github.com/karimosman89/time-series",
-        "image": os.path.join(current_dir, "images", "background9.svg"),
+        "image": os.path.join(current_dir, "images", "background9.jpg"),
     },
     {
         "title": "End-to-End ML Pipeline on AWS",
         "description": "Scalable ML pipeline for customer churn prediction using AWS and CI/CD.",
         "link": "https://github.com/karimosman89/ML-Pipeline-AWS",
-        "image": os.path.join(current_dir, "images", "background10.svg"),
+        "image": os.path.join(current_dir, "images", "background10.jpg"),
     },
     {
         "title": "Real-Time Data Pipeline",
         "description": "High-performance ETL pipeline for streaming log data using Apache Kafka and Spark.",
         "link": "https://github.com/karimosman89/Data-Pipeline",
-        "image": os.path.join(current_dir, "images", "background15.svg"),
+        "image": os.path.join(current_dir, "images", "background15.jpg"),
     },
 ]
 
@@ -97,10 +98,11 @@ for project in projects:
     
     # Check if the image file exists
     if os.path.exists(project["image"]):
-        # Display SVG image directly
-        with open(project["image"], 'r') as svg_file:
-            svg_content = svg_file.read()
-        st.markdown(svg_content, unsafe_allow_html=True)  # Render SVG directly
+        # Open and resize the image
+        image = Image.open(project["image"])
+        # Resize the image to a smaller width (e.g., 300 pixels)
+        image.thumbnail((300, 300))  # Maintain aspect ratio
+        st.image(image, caption=project["title"], use_column_width=True)  # Display resized image
     
     # Project information in styled card layout
     st.markdown(f"<div class='project-title'>{project['title']}</div>", unsafe_allow_html=True)
