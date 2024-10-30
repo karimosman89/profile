@@ -36,45 +36,49 @@ projects = [
 st.title("🏆 Notable Projects")
 st.write("Explore projects demonstrating skills in Machine Learning, AI, and Data Engineering.")
 
-# CSS for interactive and 3D card styling
+# CSS for modern styling
 st.markdown("""
    <style>
+    body {
+        background-color: #f4f4f4; /* Soft background color */
+        font-family: 'Arial', sans-serif; /* Modern font */
+    }
     .project-card {
-        background-color: #ffffff;
+        background-color: #ffffff; /* Card background color */
         border-radius: 10px;
-        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
-        margin: 20px;
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+        margin: 20px auto; /* Centered margins */
         padding: 20px;
         transition: transform 0.4s, box-shadow 0.4s;
         perspective: 1000px;
         text-align: center;
+        max-width: 400px; /* Max width for the cards */
     }
     .project-card:hover {
-        transform: scale(1.05) rotateX(10deg) rotateY(10deg);
-        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+        transform: scale(1.05) rotateX(5deg) rotateY(5deg); /* Subtle 3D effect */
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
     }
     .project-image {
         border-radius: 8px;
         margin-bottom: 15px;
-        transition: box-shadow 0.3s ease;
         width: 100%;
-        height: 180px;
+        height: auto; /* Responsive height */
         object-fit: cover;
     }
     .project-title {
-        color: #333333;
+        color: #333333; /* Dark gray for the title */
         font-weight: bold;
-        font-size: 1.4em;
+        font-size: 1.5em; /* Slightly larger title */
         margin-top: 15px;
     }
     .project-description {
-        color: #555555;
+        color: #666666; /* Medium gray for description */
         font-size: 1em;
         margin: 15px 0;
     }
     .project-link {
         color: #ffffff;
-        background-color: #4CAF50;
+        background-color: #4CAF50; /* Green link button */
         padding: 10px 15px;
         border-radius: 5px;
         text-decoration: none;
@@ -82,7 +86,7 @@ st.markdown("""
         transition: background-color 0.3s;
     }
     .project-link:hover {
-        background-color: #3e8e41;
+        background-color: #45a049; /* Darker green on hover */
     }
    </style>
 """, unsafe_allow_html=True)
@@ -106,4 +110,4 @@ for project in projects:
     st.markdown("</div>", unsafe_allow_html=True)
 
 # Footer
-st.markdown("<p class='footer'>© 2024 Karim Osman</p>", unsafe_allow_html=True)
+st.markdown("<p class='footer' style='text-align: center; color: #666;'>© 2024 Karim Osman</p>", unsafe_allow_html=True)
