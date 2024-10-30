@@ -11,25 +11,25 @@ projects = [
         "title": "NLP with Transformers",
         "description": "Advanced text classification models using BERT for sentiment analysis and topic classification.",
         "link": "https://github.com/karimosman89/NLP-with-Transformers",
-        "image": os.path.join(current_dir, "images", "background5.jpg"),
+        "image": os.path.join(current_dir, "images", "background5.svg"),
     },
     {
         "title": "Time Series Forecasting",
         "description": "Robust forecasting models employing LSTM, ARIMA, and Prophet for stock prices.",
         "link": "https://github.com/karimosman89/time-series",
-        "image": os.path.join(current_dir, "images", "background9.jpg"),
+        "image": os.path.join(current_dir, "images", "background9.svg"),
     },
     {
         "title": "End-to-End ML Pipeline on AWS",
         "description": "Scalable ML pipeline for customer churn prediction using AWS and CI/CD.",
         "link": "https://github.com/karimosman89/ML-Pipeline-AWS",
-        "image": os.path.join(current_dir, "images", "background10.jpg"),
+        "image": os.path.join(current_dir, "images", "background10.svg"),
     },
     {
         "title": "Real-Time Data Pipeline",
         "description": "High-performance ETL pipeline for streaming log data using Apache Kafka and Spark.",
         "link": "https://github.com/karimosman89/Data-Pipeline",
-        "image": os.path.join(current_dir, "images", "background15.jpg"),
+        "image": os.path.join(current_dir, "images", "background15.svg"),
     },
 ]
 
@@ -94,7 +94,7 @@ for project in projects:
     
     # Display project image with a consistent, fixed size
     if os.path.exists(project["image"]):
-        st.image(Image.open(project["image"]), use_column_width=False, width=300, caption=project["title"], output_format="JPEG")
+        st.image(Image.open(project["image"]), use_column_width=False, width=300, caption=project["title"], output_format="SVG")
     
     # Project information in styled card layout
     st.markdown(f"<div class='project-title'>{project['title']}</div>", unsafe_allow_html=True)
