@@ -37,7 +37,7 @@ projects = [
 st.title("🏆 Notable Projects")
 st.write("Explore some of the projects I've worked on, demonstrating my skills in Machine Learning, AI, and Data Engineering.")
 
-# CSS for card styling and layout
+# CSS for 3D card hover effect
 st.markdown("""
    <style>
     .project-card {
@@ -100,8 +100,7 @@ for i, project in enumerate(projects):
         st.markdown(f"<div class='project-description'>{project['description']}</div>", unsafe_allow_html=True)
         st.markdown(f"<a href='{project['link']}' class='project-link' target='_blank'>View Project</a>", unsafe_allow_html=True)
         
-        st.markdown("</div>", unsafe_allow_html=True
-
+        st.markdown("</div>", unsafe_allow_html=True)
 
 
 
