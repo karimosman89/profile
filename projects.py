@@ -1,6 +1,5 @@
 import os
 import streamlit as st
-from PIL import Image
 
 # Get the directory of the current script
 current_dir = os.path.dirname(__file__)
@@ -92,9 +91,12 @@ st.markdown("""
 for project in projects:
     st.markdown("<div class='project-card'>", unsafe_allow_html=True)
     
-    # Display project image with a consistent, fixed size
+    # Check if the image file exists
     if os.path.exists(project["image"]):
-        st.image(Image.open(project["image"]), use_column_width=False, width=300, caption=project["title"], output_format="SVG")
+        # Display SVG image directly
+        with open(project["image"], 'r') as svg_file:
+            svg_content = svg_file.read()
+        st.markdown(svg_content, unsafe_allow_html=True)  # Render SVG directly
     
     # Project information in styled card layout
     st.markdown(f"<div class='project-title'>{project['title']}</div>", unsafe_allow_html=True)
@@ -102,8 +104,6 @@ for project in projects:
     st.markdown(f"<a href='{project['link']}' class='project-link' target='_blank'>View Project</a>", unsafe_allow_html=True)
     
     st.markdown("</div>", unsafe_allow_html=True)
-
-
 
 # Footer
 st.markdown("<p class='footer'>© 2024 Karim Osman</p>", unsafe_allow_html=True)
