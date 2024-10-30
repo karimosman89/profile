@@ -42,26 +42,30 @@ st.markdown("""
    <style>
     .project-card {
         background-color: #ffffff;
-        border-radius: 8px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 12px;
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
         margin: 15px;
-        padding: 10px;
+        padding: 20px;
         width: 100%;
         text-align: center;
-        transition: transform 0.2s;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        transform-style: preserve-3d;
+        perspective: 1000px;
     }
     .project-card:hover {
-        transform: scale(1.02);
+        transform: scale(1.03) rotateX(8deg) rotateY(-8deg);
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
     }
     .project-title {
         color: #333333;
         font-weight: bold;
-        font-size: 1.2em;
+        font-size: 1.3em;
+        margin-top: 10px;
     }
     .project-description {
         color: #666666;
         font-size: 0.95em;
-        margin: 10px 0;
+        margin: 10px 0 20px;
     }
     .project-link {
         color: #ffffff;
@@ -70,6 +74,7 @@ st.markdown("""
         border-radius: 5px;
         text-decoration: none;
         font-size: 0.9em;
+        transition: background-color 0.3s ease;
     }
     .project-link:hover {
         background-color: #45a049;
@@ -89,13 +94,13 @@ for i, project in enumerate(projects):
         
         # Load and display the image with fixed size
         if os.path.exists(project["image"]):
-            st.image(Image.open(project["image"]), use_column_width=False, width=200)  # Set image size here
+            st.image(Image.open(project["image"]), use_column_width=False, width=220)  # Set image size here
         
         st.markdown(f"<div class='project-title'>{project['title']}</div>", unsafe_allow_html=True)
         st.markdown(f"<div class='project-description'>{project['description']}</div>", unsafe_allow_html=True)
         st.markdown(f"<a href='{project['link']}' class='project-link' target='_blank'>View Project</a>", unsafe_allow_html=True)
         
-        st.markdown("</div>", unsafe_allow_html=True)
+        st.markdown("</div>", unsafe_allow_html=True
 
 
 
