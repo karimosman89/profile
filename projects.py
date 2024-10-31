@@ -40,18 +40,13 @@ st.write("Explore projects demonstrating skills in Machine Learning, AI, and Dat
 # CSS for Grid Layout, Card Style, and Hover Animation
 st.markdown("""
    <style>
-    /* Basic styling for the body */
-    body {
-        font-family: Arial, sans-serif;
-    }
-
     /* Grid container for cards */
     .grid-container {
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
         gap: 20px;
         padding: 20px;
-        max-width: 1000px;
+        max-width: 1200px;
         margin: 0 auto;
     }
 
@@ -70,12 +65,13 @@ st.markdown("""
         box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
     }
 
-    /* Card image */
+    /* Card image with fixed size */
     .project-image {
         width: 100%;
-        height: 100px;
+        height: 150px;
         object-fit: cover;
-        border-radius: 10px 10px 0 0;
+        border-radius: 10px;
+        transition: transform 0.2s ease;
     }
 
     /* Title styling */
@@ -118,11 +114,11 @@ for project in projects:
     # Start each project card container
     st.markdown("<div class='project-card'>", unsafe_allow_html=True)
 
-    # Load and display the project image, resizing if necessary
+    # Load and display the project image with fixed dimensions
     if os.path.exists(project["image"]):
         image = Image.open(project["image"])
-        image.thumbnail((400, 400))  # Resize image to fit within card
-        st.image(image, use_column_width=True, caption=project["title"])
+        image = image.resize((250, 150))  # Resize to fit within card
+        st.image(image, use_column_width=True)
 
     # Add project title, description, and link with styles applied
     st.markdown(f"<div class='project-title'>{project['title']}</div>", unsafe_allow_html=True)
