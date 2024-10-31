@@ -11,7 +11,7 @@ projects = [
         "title": "NLP with Transformers",
         "description": "Advanced text classification models using BERT for sentiment analysis and topic classification.",
         "link": "https://github.com/karimosman89/NLP-with-Transformers",
-        "image": os.path.join(current_dir, "images", "background5.jpg"),  # Use JPG or PNG
+        "image": os.path.join(current_dir, "images", "background5.jpg"),
     },
     {
         "title": "Time Series Forecasting",
@@ -37,49 +37,45 @@ projects = [
 st.title("🏆 Notable Projects")
 st.write("Explore projects demonstrating skills in Machine Learning, AI, and Data Engineering.")
 
-# CSS for modern styling
+# CSS for interactive and 3D card styling
 st.markdown("""
    <style>
-    body {
-        background-color: #f4f4f4; /* Soft background color */
-        font-family: 'Arial', sans-serif; /* Modern font */
-    }
     .project-card {
-        background-color: #ffffff; /* Card background color */
+        background-color: #ffffff;
         border-radius: 10px;
-        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
-        margin: 20px auto; /* Centered margins */
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+        margin: 20px;
         padding: 20px;
         transition: transform 0.4s, box-shadow 0.4s;
         perspective: 1000px;
         text-align: center;
-        max-width: 400px; /* Max width for the cards */
     }
     .project-card:hover {
-        transform: scale(1.05) rotateX(5deg) rotateY(5deg); /* Subtle 3D effect */
-        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        transform: scale(1.05) rotateX(10deg) rotateY(10deg);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
     }
     .project-image {
         border-radius: 8px;
         margin-bottom: 15px;
+        transition: box-shadow 0.3s ease;
         width: 100%;
-        height: auto; /* Responsive height */
+        height: 180px;
         object-fit: cover;
     }
     .project-title {
-        color: #333333; /* Dark gray for the title */
+        color: #333333;
         font-weight: bold;
-        font-size: 1.5em; /* Slightly larger title */
+        font-size: 1.4em;
         margin-top: 15px;
     }
     .project-description {
-        color: #666666; /* Medium gray for description */
+        color: #555555;
         font-size: 1em;
         margin: 15px 0;
     }
     .project-link {
         color: #ffffff;
-        background-color: #4CAF50; /* Green link button */
+        background-color: #4CAF50;
         padding: 10px 15px;
         border-radius: 5px;
         text-decoration: none;
@@ -87,7 +83,7 @@ st.markdown("""
         transition: background-color 0.3s;
     }
     .project-link:hover {
-        background-color: #45a049; /* Darker green on hover */
+        background-color: #3e8e41;
     }
    </style>
 """, unsafe_allow_html=True)
@@ -96,13 +92,9 @@ st.markdown("""
 for project in projects:
     st.markdown("<div class='project-card'>", unsafe_allow_html=True)
     
-    # Check if the image file exists
+    # Display project image with a consistent, fixed size
     if os.path.exists(project["image"]):
-        # Open and resize the image
-        image = Image.open(project["image"])
-        # Resize the image to a smaller width (e.g., 300 pixels)
-        image.thumbnail((300, 300))  # Maintain aspect ratio
-        st.image(image, caption=project["title"], use_column_width=True)  # Display resized image
+        st.image(Image.open(project["image"]), use_column_width=False, width=300, caption=project["title"], output_format="JPEG")
     
     # Project information in styled card layout
     st.markdown(f"<div class='project-title'>{project['title']}</div>", unsafe_allow_html=True)
@@ -110,6 +102,7 @@ for project in projects:
     st.markdown(f"<a href='{project['link']}' class='project-link' target='_blank'>View Project</a>", unsafe_allow_html=True)
     
     st.markdown("</div>", unsafe_allow_html=True)
+
 
 # Footer
 st.markdown("<p class='footer' style='text-align: center; color: #666;'>© 2024 Karim Osman</p>", unsafe_allow_html=True)
