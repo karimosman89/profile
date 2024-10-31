@@ -51,7 +51,7 @@ st.markdown("""
         grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
         gap: 20px;
         padding: 20px;
-        max-width: 1200px;
+        max-width: 1000px;
         margin: 0 auto;
     }
 
@@ -72,8 +72,8 @@ st.markdown("""
 
     /* Card image */
     .project-image {
-        width: 50%;
-        height: 50px;
+        width: 100%;
+        height: 100px;
         object-fit: cover;
         border-radius: 10px 10px 0 0;
     }
@@ -121,7 +121,7 @@ for project in projects:
     # Load and display the project image, resizing if necessary
     if os.path.exists(project["image"]):
         image = Image.open(project["image"])
-        image.thumbnail((100, 100))  # Resize image to fit within card
+        image.thumbnail((30, 30))  # Resize image to fit within card
         st.image(image, use_column_width=True, caption=project["title"])
 
     # Add project title, description, and link with styles applied
