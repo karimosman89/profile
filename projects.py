@@ -9,25 +9,25 @@ current_dir = os.path.dirname(__file__)
 projects = [
     {
         "title": "NLP with Transformers",
-        "description": "Developed advanced text classification models utilizing BERT for sentiment analysis and topic classification.",
+        "description": "Advanced text classification models using BERT for sentiment analysis and topic classification.",
         "link": "https://github.com/karimosman89/NLP-with-Transformers",
         "image": os.path.join(current_dir, "images", "background5.jpg"),
     },
     {
         "title": "Time Series Forecasting",
-        "description": "Designed robust forecasting models employing LSTM, ARIMA, and Prophet to predict stock prices.",
+        "description": "Robust forecasting models employing LSTM, ARIMA, and Prophet for stock prices.",
         "link": "https://github.com/karimosman89/time-series",
         "image": os.path.join(current_dir, "images", "background9.jpg"),
     },
     {
         "title": "End-to-End ML Pipeline on AWS",
-        "description": "Engineered a scalable ML pipeline for customer churn prediction utilizing AWS services and CI/CD methodologies.",
+        "description": "Scalable ML pipeline for customer churn prediction using AWS and CI/CD.",
         "link": "https://github.com/karimosman89/ML-Pipeline-AWS",
         "image": os.path.join(current_dir, "images", "background10.jpg"),
     },
     {
         "title": "Real-Time Data Pipeline",
-        "description": "Architected a high-performance ETL pipeline for processing streaming log data using Apache Kafka and Spark.",
+        "description": "High-performance ETL pipeline for streaming log data using Apache Kafka and Spark.",
         "link": "https://github.com/karimosman89/Data-Pipeline",
         "image": os.path.join(current_dir, "images", "background15.jpg"),
     },
@@ -35,66 +35,105 @@ projects = [
 
 # Header
 st.title("🏆 Notable Projects")
-st.write("Explore some of the projects I've worked on, demonstrating my skills in Machine Learning, AI, and Data Engineering.")
+st.write("Explore projects demonstrating skills in Machine Learning, AI, and Data Engineering.")
 
-# CSS for card styling and layout
+# CSS for Grid Layout, Card Style, and Hover Animation
 st.markdown("""
    <style>
+    /* Basic styling for the body */
+    body {
+        font-family: Arial, sans-serif;
+    }
+
+    /* Grid container for cards */
+    .grid-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 20px;
+        padding: 20px;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    /* Card styling */
     .project-card {
         background-color: #ffffff;
-        border-radius: 8px;
+        border-radius: 10px;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        margin: 15px;
-        padding: 10px;
-        width: 100%;
+        transition: transform 0.3s, box-shadow 0.3s;
+        overflow: hidden;
         text-align: center;
-        transition: transform 0.2s;
+        padding: 15px;
     }
     .project-card:hover {
-        transform: scale(1.02);
+        transform: scale(1.05);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
     }
+
+    /* Card image */
+    .project-image {
+        width: 100%;
+        height: 150px;
+        object-fit: cover;
+        border-radius: 10px 10px 0 0;
+    }
+
+    /* Title styling */
     .project-title {
-        color: #333333;
         font-weight: bold;
         font-size: 1.2em;
+        color: #333;
+        margin-top: 10px;
     }
+
+    /* Description styling */
     .project-description {
-        color: #666666;
-        font-size: 0.95em;
+        color: #555;
+        font-size: 1em;
         margin: 10px 0;
     }
+
+    /* Link styling */
     .project-link {
         color: #ffffff;
-        background-color: #4CAF50;
+        background-color: #007bff;
         padding: 8px 12px;
         border-radius: 5px;
         text-decoration: none;
         font-size: 0.9em;
+        transition: background-color 0.3s;
+        display: inline-block;
+        margin-top: 10px;
     }
     .project-link:hover {
-        background-color: #45a049;
+        background-color: #0056b3;
     }
    </style>
 """, unsafe_allow_html=True)
 
-# Display Projects in a 2-column grid layout
-columns_per_row = 2
-for i, project in enumerate(projects):
-    if i % columns_per_row == 0:
-        cols = st.columns(columns_per_row)
-    
-    # Display each project as a card within its column
-    with cols[i % columns_per_row]:
-        st.markdown("<div class='project-card'>", unsafe_allow_html=True)
-        
-        # Load and display the image with fixed size
-        if os.path.exists(project["image"]):
-            st.image(Image.open(project["image"]), use_column_width=False, width=200)  # Set image size here
-        
-        st.markdown(f"<div class='project-title'>{project['title']}</div>", unsafe_allow_html=True)
-        st.markdown(f"<div class='project-description'>{project['description']}</div>", unsafe_allow_html=True)
-        st.markdown(f"<a href='{project['link']}' class='project-link' target='_blank'>View Project</a>", unsafe_allow_html=True)
-        
-        st.markdown("</div>", unsafe_allow_html=True)
+# Display each project as a card within a grid
+st.markdown("<div class='grid-container'>", unsafe_allow_html=True)
+
+for project in projects:
+    # Start each project card container
+    st.markdown("<div class='project-card'>", unsafe_allow_html=True)
+
+    # Load and display the project image, resizing if necessary
+    if os.path.exists(project["image"]):
+        image = Image.open(project["image"])
+        image.thumbnail((300, 300))  # Resize image to fit within card
+        st.image(image, use_column_width=True, caption=project["title"])
+
+    # Add project title, description, and link with styles applied
+    st.markdown(f"<div class='project-title'>{project['title']}</div>", unsafe_allow_html=True)
+    st.markdown(f"<div class='project-description'>{project['description']}</div>", unsafe_allow_html=True)
+    st.markdown(f"<a href='{project['link']}' class='project-link' target='_blank'>View Project</a>", unsafe_allow_html=True)
+
+    # Close each project card container
+    st.markdown("</div>", unsafe_allow_html=True)
+
+# Close the grid container
+st.markdown("</div>", unsafe_allow_html=True)
+
 # Footer
-st.markdown("<p class='footer' style='text-align: center; color: #666;'>© 2024 Karim Osman</p>", unsafe_allow_html=True)
+st.markdown("<p style='text-align: center; color: #666;'>© 2024 Karim Osman</p>", unsafe_allow_html=True)
