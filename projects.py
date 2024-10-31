@@ -121,7 +121,7 @@ for project in projects:
     # Load and display the project image, resizing if necessary
     if os.path.exists(project["image"]):
         image = Image.open(project["image"])
-        image.thumbnail((300, 300))  # Resize image to fit within card
+        image.thumbnail((100, 100))  # Resize image to fit within card
         st.image(image, use_column_width=True, caption=project["title"])
 
     # Add project title, description, and link with styles applied
