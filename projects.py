@@ -72,8 +72,8 @@ st.markdown("""
 
     /* Card image */
     .project-image {
-        width: 100%;
-        height: 150px;
+        width: 50%;
+        height: 50px;
         object-fit: cover;
         border-radius: 10px 10px 0 0;
     }
