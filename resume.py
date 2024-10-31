@@ -13,7 +13,7 @@ pdf_url = "https://drive.google.com/file/d/18SLECTaOP9vgHKqGrgRdVotPRWu_V7nZ/pre
 st.markdown(f'<iframe src="{pdf_url}#view=FitH" width="700" height="700" frameborder="0"></iframe>', unsafe_allow_html=True)
 
 # Display a link for downloading the resume
-st.markdown(f'### [Download Resume]({pdf_url})')
+st.markdown(f'### [Download]({pdf_url})')
 
 
 
