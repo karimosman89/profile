@@ -78,12 +78,11 @@ def set_style():
             margin-bottom: 10px;
         }
         .profile-photo {
-               border-radius: 50%;
-               width: 150px;
-               height: 150px;
-               margin: 0 auto;
-               box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
-               border: 3px solid #007ACC;
+            border-radius: 70%;
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+            margin: 20px auto;
+            display: block;
+            width: 50px;
         }
         .footer {
             margin-top: 50px;
@@ -240,11 +239,11 @@ if page == "Home":
             st_lottie(animation, height=80, width=80,key=title)
             st.markdown(f"<h4>{title}</h4>", unsafe_allow_html=True)
 
-    
-    
-         image = Image.open("profile-photo.jpg")
+    # Profile Photo Section
+    st.markdown("<h2>About Me</h2>", unsafe_allow_html=True)
+    image = Image.open("profile-photo.jpg")
     # Display the profile photo with custom styling
-          st.image(profile_photo, caption="Karim Osman", use_column_width=False, width=150)
+    st.image(image, caption=' Karim Osman', use_column_width=False,width=100)
     st.write("""
         As a Machine Learning Engineer, I specialize in building intelligent systems that help businesses make better decisions. 
         My expertise spans various domains including machine learning, AI engineering, and data science. I’m driven by my passion for turning data into actionable insights.
