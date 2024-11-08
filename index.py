@@ -240,11 +240,11 @@ if page == "Home":
             st_lottie(animation, height=80, width=80,key=title)
             st.markdown(f"<h4>{title}</h4>", unsafe_allow_html=True)
 
-    # Profile Photo Section
     
-      image = Image.open("profile-photo.jpg")
+    
+       image = Image.open("profile-photo.jpg")
     # Display the profile photo with custom styling
-      st.image(profile_photo, caption="Karim Osman", use_column_width=False, width=150)
+       st.image(profile_photo, caption="Karim Osman", use_column_width=False, width=150)
     st.write("""
         As a Machine Learning Engineer, I specialize in building intelligent systems that help businesses make better decisions. 
         My expertise spans various domains including machine learning, AI engineering, and data science. I’m driven by my passion for turning data into actionable insights.
