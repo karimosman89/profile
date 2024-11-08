@@ -243,7 +243,11 @@ if page == "Home":
     st.markdown("<h2>About Me</h2>", unsafe_allow_html=True)
     image = Image.open("profile-photo.jpg")
     # Display the profile photo with custom styling
-    st.image(image, caption=' Karim Osman', use_column_width=False,width=100)
+   st.markdown("""
+    <div class="profile-photo">
+        <img src="profile-photo.jpg" alt="Karim Osman">
+    </div>
+""", unsafe_allow_html=True)
     st.write("""
         As a Machine Learning Engineer, I specialize in building intelligent systems that help businesses make better decisions. 
         My expertise spans various domains including machine learning, AI engineering, and data science. I’m driven by my passion for turning data into actionable insights.
