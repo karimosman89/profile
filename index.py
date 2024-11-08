@@ -245,7 +245,7 @@ if page == "Home":
     # Display the profile photo with custom styling
     st.markdown("""
      <div class="profile-photo">
-        <img src="profile-photo.jpg" alt="Karim Osman">
+        <img src="profile-photo.jpg" alt="Karim Osman" width="150">
       </div>
 """, unsafe_allow_html=True)
     st.write("""
