@@ -82,7 +82,7 @@ def set_style():
             box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
             margin: 20px auto;
             display: block;
-            width: 50px;
+            width: 100px;
         }
         .footer {
             margin-top: 50px;
@@ -240,7 +240,7 @@ if page == "Home":
             st.markdown(f"<h4>{title}</h4>", unsafe_allow_html=True)
 
     # Profile Photo Section
-    st.markdown("<h2>About Me</h2>", unsafe_allow_html=True)
+   
     image = Image.open("profile-photo.jpg")
     # Display the profile photo with custom styling
     st.markdown("""
