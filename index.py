@@ -78,7 +78,7 @@ def set_style():
             margin-bottom: 10px;
         }
         .profile-photo {
-            border-radius: 70%;
+            border-radius: 100%;
             box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
             margin: 20px auto;
             display: block;
