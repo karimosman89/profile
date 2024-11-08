@@ -83,6 +83,7 @@ def set_style():
             margin: 20px auto;
             display: block;
             width: 100px;
+            hight:30px;
         }
         .footer {
             margin-top: 50px;
