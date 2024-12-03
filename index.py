@@ -11,8 +11,8 @@ import resume
 import contact
 import importlib
 
+# Configure the page
 st.set_page_config(page_title="Karim Osman - ML Engineer Portfolio", layout="wide")
-
 logging.basicConfig(level=logging.INFO)
 
 @st.cache_resource
@@ -29,87 +29,91 @@ data_analysis_animation = load_lottie_local('data-analyisis.json')
 data_engineer_animation = load_lottie_local('data-engineer.json')
 ai_engineering_animation = load_lottie_local('ai-engineering.json')
 ai_animation = load_lottie_local('ai.json')
-deep_learning_animation = load_lottie_local('devops.json')
-dev_ops_animation = load_lottie_local('deep-learning.json')  
+deep_learning_animation = load_lottie_local('deep-learning.json')
+dev_ops_animation = load_lottie_local('devops.json')
 profile_photo = load_profile_photo()
 
 
-# Streamlit app title and description
-
-st.title("🌍 Welcome to My Portfolio!")
-st.write("I’m **Karim Osman**, a passionate **Machine Learning Engineer** dedicated to solving real-world challenges through data-driven models and algorithms.")
-
-def load_page(module_name):
-    try:
-        module = importlib.import_module(module_name)
-        
-          # Assumes each module has a display function
-    except AttributeError as e:
-        st.error(f"Error loading {module_name}: {e}")
-    except ImportError as e:
-        st.error(f"Module {module_name} not found: {e}")
+# Apply common styles
+st.markdown("""
+<style>
+    body {
+        font-family: 'Helvetica Neue', sans-serif;
+    }
+    .main {
+        background-color: #f5f5f5;
+        padding: 2rem;
+    }
+    h1, h2, h4 {
+        font-weight: 700;
+        color: #003366;
+    }
+    h1 {
+        margin-bottom: 20px;
+        font-size: 2.5rem;
+    }
+    h2 {
+        color: #007ACC;
+        margin-bottom: 10px;
+    }
+    .profile-photo {
+        display: block;
+        margin: 20px auto;
+        border-radius: 50%;
+        box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
+    }
+    .button {
+        background-color: #007ACC;
+        color: white;
+        padding: 10px 20px;
+        text-align: center;
+        border-radius: 5px;
+        margin: 20px 5px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+    .button:hover {
+        background-color: #005999;
+    }
+    .footer {
+        margin-top: 50px;
+        text-align: center;
+        color: #999;
+        font-size: 0.85rem;
+    }
+</style>
+""", unsafe_allow_html=True)
 
 
 # Sidebar Navigation
 st.sidebar.title("Navigation")
 page = st.sidebar.radio("Go to", ["Home", "About", "Projects", "Skills", "Contact", "Resume"])
 
-# Common styling          
-def set_style():
+# Add theme toggle
+st.sidebar.markdown("### Theme Selector")
+theme = st.sidebar.radio("Select Theme", ["Light", "Dark"])
+
+if theme == "Dark":
     st.markdown("""
     <style>
         body {
-            font-family: 'Helvetica Neue', sans-serif;
+            background-color: #121212;
+            color: #fff;
+        }
+        .main {
+            background-color: #1e1e1e;
+        }
+    </style>
+    """, unsafe_allow_html=True)
+else:
+    st.markdown("""
+    <style>
+        body {
+            background-color: #ffffff;
+            color: #000;
         }
         .main {
             background-color: #f5f5f5;
-            padding: 2rem;
-        }
-        h1, h2, h4 {
-            font-weight: 700;
-            color: #003366;
-        }
-        h1 {
-            margin-bottom: 20px;
-            font-size: 2.5rem;
-        }
-        h2 {
-            color: #007ACC;
-            margin-bottom: 10px;
-        }
-        .profile-photo {
-            border-radius: 100%;
-            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
-            margin: 20px auto;
-            display: block;
-            width: 100px;
-            hight:30px;
-        }
-        .footer {
-            margin-top: 50px;
-            text-align: center;
-            color: #999;
-            font-size: 0.9rem;
-        }
-        .button {
-            background-color: #007ACC;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 16px;
-            margin: 20px 2px;
-            cursor: pointer;
-            border-radius: 5px;
-        }
-        .button:hover {
-            background-color: #005999;
-        }
-        .lottie-animation {
-            max-width: 120px;
-            margin: 0 auto;
         }
     </style>
     """, unsafe_allow_html=True)
@@ -219,9 +223,18 @@ def get_business_scenarios():
 business_scenarios = get_business_scenarios()
 # Render pages based on the selection
 if page == "Home":
-    # Content for Home
-    logging.info("Displaying Home Page")
-    st.markdown("<h2>Explore My Expertise</h2>", unsafe_allow_html=True)
+    st.title("🌍 Welcome to My Portfolio!")
+    st.write("I’m **Karim Osman**, a passionate **Machine Learning Engineer** dedicated to solving real-world challenges through data-driven models and algorithms.")
+
+    # Profile photo
+    st.markdown("""
+    <div style="text-align: center; margin-bottom: 20px;">
+        <img src="profile-photo.jpg" alt="Karim Osman" 
+             style="width: 150px; height: 150px; object-fit: cover; border-radius: 50%; box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);">
+    </div>
+    """, unsafe_allow_html=True)
+
+    st.markdown("<h2 style='text-align: center;'>Explore My Expertise</h2>", unsafe_allow_html=True)
 
     # Create columns for animations
     col1, col2, col3, col4, col5, col6 = st.columns(6)
@@ -295,21 +308,19 @@ if page == "Home":
     }
 
     for role, description in role_descriptions.items():
-        st.markdown(f"<h4>{role}</h4>", unsafe_allow_html=True)
-        st.write(description)
-        
-        # Display business scenarios for each role
-        if role in business_scenarios:
-            for scenario, details in business_scenarios[role].items():
-                st.markdown(f"### {scenario}")
-                st.write(details["description"])
-                st.plotly_chart(details["graph"]())
-
-        st.markdown("---")  # Add a horizontal line for separation
+        with st.expander(role):
+            st.write(description)
+            if role in business_scenarios:
+                for scenario, details in business_scenarios[role].items():
+                    st.markdown(f"### {scenario}")
+                    st.write(details["description"])
+                    st.plotly_chart(details["graph"]())
 
     # Footer
-    
-    st.markdown("<p class='footer'>© 2024 Karim Osman</p>", unsafe_allow_html=True)
+    st.markdown("""
+    <hr style="border: 1px solid #ddd; margin-top: 50px;">
+    <p class='footer'>© 2024 Karim Osman</p>
+    """, unsafe_allow_html=True)
 
 elif page == "Skills":
     logging.info("Loading Skills Page")
