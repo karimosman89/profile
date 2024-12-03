@@ -226,13 +226,7 @@ if page == "Home":
     st.title("🌍 Welcome to My Portfolio!")
     st.write("I’m **Karim Osman**, a passionate **Machine Learning Engineer** dedicated to solving real-world challenges through data-driven models and algorithms.")
 
-    # Profile photo
-    st.markdown("""
-    <div style="text-align: center; margin-bottom: 20px;">
-        <img src="profile-photo.jpg" alt="Karim Osman" 
-             style="width: 150px; height: 150px; object-fit: cover; border-radius: 50%; box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);">
-    </div>
-    """, unsafe_allow_html=True)
+   
 
     st.markdown("<h2 style='text-align: center;'>Explore My Expertise</h2>", unsafe_allow_html=True)
 
