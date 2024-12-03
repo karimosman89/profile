@@ -118,7 +118,7 @@ else:
     </style>
     """, unsafe_allow_html=True)
 
-set_style()  # Apply styles
+
 
 # Functions to create Plotly graphs
 @st.cache_data
