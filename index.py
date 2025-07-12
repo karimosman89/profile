@@ -219,7 +219,7 @@ def show_impact_metrics():
         st.markdown("""
         <div class="metric-card pulse">
             <h3 style="color: #e74c3c; margin: 0;">20%</h3>
-            <p style="margin: 0;">(f"### {utils.tr("PERFORMANCE")}")</p>
+            <p style="margin: 0;">tr("PERFORMANCE")</p>
         </div>
         """, unsafe_allow_html=True)
     
@@ -227,7 +227,7 @@ def show_impact_metrics():
         st.markdown("""
         <div class="metric-card pulse">
             <h3 style="color: #27ae60; margin: 0;">30%</h3>
-            <p style="margin: 0;">{utils.tr("EFFICIENCY")}</p>
+            <p style="margin: 0;">tr("EFFICIENCY")</p>
         </div>
         """, unsafe_allow_html=True)
     
@@ -235,7 +235,7 @@ def show_impact_metrics():
         st.markdown("""
         <div class="metric-card pulse">
             <h3 style="color: #3498db; margin: 0;">25%</h3>
-            <p style="margin: 0;">Data Processing Speed</p>
+            <p style="margin: 0;">tr('PROCESSING')</p>
         </div>
         """, unsafe_allow_html=True)
     
@@ -243,7 +243,7 @@ def show_impact_metrics():
         st.markdown("""
         <div class="metric-card pulse">
             <h3 style="color: #f39c12; margin: 0;">5+</h3>
-            <p style="margin: 0;">Years Experience</p>
+            <p style="margin: 0;">tr('EXPERIENCE')</p>
         </div>
         """, unsafe_allow_html=True)
 
@@ -251,9 +251,9 @@ def show_impact_metrics():
 def proactive_showcase():
     st.markdown("""
     <div class="proactive-section">
-        <h2 style="color: white; margin-bottom: 2rem;">🚀 My Proactive Approach</h2>
+        <h2 style="color: white; margin-bottom: 2rem;">tr('PROACTIVE_TITLE')</h2>
         <p style="font-size: 1.2rem; margin-bottom: 2rem;">
-            I don't just respond to problems - I anticipate them. Here's how I would revolutionize your company's AI capabilities:
+            tr('PROACTIVE_TEXT')
         </p>
     </div>
     """, unsafe_allow_html=True)
@@ -263,13 +263,13 @@ def proactive_showcase():
     with col1:
         st.markdown("""
         <div class="interactive-card">
-            <h3>🎯 Intelligent Candidate Assistant</h3>
-            <p>An AI-powered system that analyzes applications beyond keywords, providing personalized feedback and creating an exceptional candidate experience.</p>
+            <h3>tr('CANDIDATE_ASSISTANT')</h3>
+            <p>tr('CANDIDATE_DESC')</p>
             <ul>
-                <li>Semantic analysis of CVs and proposals</li>
-                <li>Personalized feedback generation</li>
-                <li>Interactive chatbot for candidates</li>
-                <li>Hidden talent identification</li>
+                <li>tr('CANDIDATE_FEATURE1')</li>
+                <li>tr('CANDIDATE_FEATURE2')</li>
+                <li>tr('CANDIDATE_FEATURE3')</li>
+                <li>tr('CANDIDATE_FEATURE4')</li>
             </ul>
         </div>
         """, unsafe_allow_html=True)
@@ -277,13 +277,13 @@ def proactive_showcase():
     with col2:
         st.markdown("""
         <div class="interactive-card">
-            <h3>⚡ Technical Implementation</h3>
-            <p>Leveraging cutting-edge technologies to create scalable, robust solutions:</p>
+            <h3>tr('TECH_IMPLEMENTATION')</h3>
+            <p>tr('TECH_DESC')</p>
             <ul>
-                <li>Advanced NLP with Hugging Face models</li>
-                <li>Vector databases for semantic search</li>
-                <li>Cloud-native architecture (AWS/GCP)</li>
-                <li>Real-time interactive interfaces</li>
+                <li>tr('TECH_FEATURE1')</li>
+                <li>tr('TECH_FEATURE2')</li>
+                <li>tr('TECH_FEATURE3')</li>
+                <li>tr('TECH_FEATURE4')</li>
             </ul>
         </div>
         """, unsafe_allow_html=True)
