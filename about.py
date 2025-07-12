@@ -2,6 +2,7 @@ import streamlit as st
 from PIL import Image
 import plotly.graph_objects as go
 import plotly.express as px
+from utils import tr 
 
 # Enhanced styling for a more modern and engaging look
 def set_style():
@@ -32,293 +33,194 @@ def set_style():
             margin: 1.5rem 0;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             border-left: 5px solid #667eea;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .story-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        }
+        .story-card h3 {
+            color: #4a4a4a;
+            margin-bottom: 1rem;
+        }
+        .story-card p {
+            color: #666;
+            font-size: 1.05rem;
+            line-height: 1.6;
         }
         
         .philosophy-section {
-            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
-            color: white;
+            background: linear-gradient(145deg, #e6e6fa, #d0b3ff);
             border-radius: 20px;
             padding: 3rem;
             margin: 2rem 0;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
             text-align: center;
+            color: #333;
         }
-        
-        .value-card {
-            background: white;
-            border-radius: 15px;
-            padding: 2rem;
-            margin: 1rem;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            transition: transform 0.3s ease;
+        .philosophy-section h2 {
+            color: #5d3f6a;
+            margin-bottom: 2rem;
         }
-        
-        .value-card:hover {
-            transform: translateY(-5px);
+        .philosophy-section p {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: #4a4a4a;
         }
         
         .timeline-item {
-            background: linear-gradient(135deg, #74b9ff, #0984e3);
-            color: white;
-            border-radius: 15px;
-            padding: 1.5rem;
-            margin: 1rem 0;
-            position: relative;
+            display: flex;
+            margin-bottom: 2rem;
         }
-        
-        .timeline-item::before {
-            content: '';
-            position: absolute;
-            left: -10px;
-            top: 50%;
-            transform: translateY(-50%);
+        .timeline-dot {
             width: 20px;
             height: 20px;
-            background: #667eea;
+            background-color: #667eea;
             border-radius: 50%;
+            margin-right: 1.5rem;
+            flex-shrink: 0;
+            border: 3px solid #fff;
+            box-shadow: 0 0 0 2px #667eea;
         }
-        
-        h1 {
-            font-size: 3rem;
-            font-weight: 700;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 1rem;
-        }
-        
-        h2 {
-            color: #2c3e50;
-            font-weight: 600;
-            margin: 2rem 0 1rem 0;
-        }
-        
-        .quote-section {
-            background: #f8f9fa;
-            border-left: 5px solid #667eea;
-            padding: 2rem;
-            margin: 2rem 0;
+        .timeline-content {
+            background: rgba(255, 255, 255, 0.9);
             border-radius: 10px;
-            font-style: italic;
-            font-size: 1.2rem;
-            text-align: center;
+            padding: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            flex-grow: 1;
         }
-        
-        .stats-container {
-            display: flex;
-            justify-content: space-around;
-            margin: 2rem 0;
+        .timeline-content h4 {
+            color: #4a4a4a;
+            margin-top: 0;
+            margin-bottom: 0.5rem;
         }
-        
-        .stat-item {
-            text-align: center;
-            padding: 1rem;
-        }
-        
-        .stat-number {
-            font-size: 2.5rem;
-            font-weight: bold;
-            color: #667eea;
-        }
-        
-        .stat-label {
+        .timeline-content p {
             color: #666;
-            font-size: 0.9rem;
+            font-size: 0.95rem;
         }
     </style>
     """, unsafe_allow_html=True)
 
 set_style()
 
-# Hero Section
-st.markdown("""
+# Load profile photo (ensure 'profile-photo.jpg' is in the same directory or provide full path)
+try:
+    profile_photo = Image.open("profile-photo.jpg")
+except FileNotFoundError:
+    st.error("Profile photo not found. Please ensure 'profile-photo.jpg' is in the correct directory.")
+    profile_photo = None # Set to None or a placeholder if file not found
+
+# Hero Section - About Me
+st.markdown(f"""
 <div class="hero-about">
-    <h1>The Story Behind the Code 🚀</h1>
-    <p style="font-size: 1.3rem; color: #555; margin-top: 2rem;">
-        From curiosity-driven student to impact-focused AI engineer - 
-        here's how I transform complex challenges into intelligent solutions
+    <h1>{tr('ABOUT_HERO_TITLE')}</h1>
+    <p style="font-size: 1.2rem; color: #555;">{tr('ABOUT_HERO_SUBTITLE')}</p>
+    {"<img src='data:image/jpeg;base64," + (Image.open("profile-photo.jpg").tobytes().hex() if profile_photo else '') + "' style='width: 150px; height: 150px; border-radius: 50%; object-fit: cover; margin-top: 1.5rem; border: 4px solid #667eea; box-shadow: 0 0 20px rgba(102, 126, 234, 0.5);' alt='Profile Photo'>" if profile_photo else ''}
+</div>
+""", unsafe_allow_html=True)
+
+
+# My Story Section
+st.markdown(f"## {tr('ABOUT_STORY_TITLE')}")
+st.markdown(f"""
+<div class="story-card">
+    <h3>{tr('ABOUT_STORY_BACKGROUND_TITLE')}</h3>
+    <p>
+        {tr('ABOUT_STORY_BACKGROUND_DESC')}
     </p>
 </div>
 """, unsafe_allow_html=True)
 
-# Personal Philosophy Section
-st.markdown("""
+st.markdown(f"""
+<div class="story-card">
+    <h3>{tr('ABOUT_STORY_AI_JOURNEY_TITLE')}</h3>
+    <p>
+        {tr('ABOUT_STORY_AI_JOURNEY_DESC')}
+    </p>
+</div>
+""", unsafe_allow_html=True)
+
+st.markdown(f"""
+<div class="story-card">
+    <h3>{tr('ABOUT_STORY_PASSION_TITLE')}</h3>
+    <p>
+        {tr('ABOUT_STORY_PASSION_DESC')}
+    </p>
+</div>
+""", unsafe_allow_html=True)
+
+# Philosophy Section
+st.markdown(f"""
 <div class="philosophy-section">
-    <h2 style="color: white; margin-bottom: 2rem;">💡 My Philosophy</h2>
-    <p style="font-size: 1.2rem; margin-bottom: 2rem;">
-        "AI isn't just about algorithms and data - it's about understanding human needs and creating technology that amplifies human potential."
-    </p>
-    <p style="font-size: 1.1rem;">
-        I believe the best AI solutions are those that feel intuitive, solve real problems, and make people's lives better.
-    </p>
+    <h2>{tr('ABOUT_PHILOSOPHY_TITLE')}</h2>
+    <p>{tr('ABOUT_PHILOSOPHY_DESC')}</p>
+    <p><strong>{tr('ABOUT_PHILOSOPHY_PRINCIPLES_TITLE')}</strong></p>
+    <ul>
+        <li>{tr('ABOUT_PHILOSOPHY_PRINCIPLE1')}</li>
+        <li>{tr('ABOUT_PHILOSOPHY_PRINCIPLE2')}</li>
+        <li>{tr('ABOUT_PHILOSOPHY_PRINCIPLE3')}</li>
+        <li>{tr('ABOUT_PHILOSOPHY_PRINCIPLE4')}</li>
+    </ul>
 </div>
 """, unsafe_allow_html=True)
 
-# What Drives Me Section
-st.markdown("## 🎯 What Drives Me")
-
-col1, col2 = st.columns(2)
-
-with col1:
-    st.markdown("""
-    <div class="story-card">
-        <h3>🔍 Curiosity-Driven Innovation</h3>
-        <p>
-            I'm fascinated by the "why" behind every problem. Whether it's understanding why a model fails 
-            or discovering hidden patterns in data, my curiosity drives me to dig deeper and find better solutions. 
-            This approach has led me to develop unique methodologies that often outperform standard practices.
-        </p>
-    </div>
-    """, unsafe_allow_html=True)
-
-with col2:
-    st.markdown("""
-    <div class="story-card">
-        <h3>🚀 Impact-First Mindset</h3>
-        <p>
-            Every line of code I write, every model I build, is designed with real-world impact in mind. 
-            I don't just create technically impressive solutions - I create solutions that solve actual business 
-            problems and improve people's experiences. My track record shows consistent delivery of measurable results.
-        </p>
-    </div>
-    """, unsafe_allow_html=True)
-
-# My Journey Timeline
-st.markdown("## 📈 My Journey: From Curiosity to Expertise")
-
-timeline_events = [
-    {
-        "year": "2010-2014",
-        "title": "🎓 Foundation Years",
-        "description": "Started with Computer Science at University of Cairo. Built my first recommendation system for movies - sparked my passion for AI that understands user behavior."
-    },
-    {
-        "year": "2020-2022",
-        "title": "🧠 AI Specialization",
-        "description": "Master's in AI Engineering at University of Pisa. Developed emotion detection models that outperformed existing benchmarks by 15% - learned that innovation comes from understanding the problem deeply."
-    },
-    {
-        "year": "2021-2024",
-        "title": "💼 Industry Impact",
-        "description": "At Configuratori, transformed theoretical knowledge into practical solutions. Improved predictive performance by 20% and workflow efficiency by 30% - discovered my talent for bridging research and business value."
-    },
-    {
-        "year": "2024-Present",
-        "title": "🚀 AI Innovation Leader",
-        "description": "At Bakerhughes, pioneering RAG and LLM services. Building the future of document interaction and AI accessibility - proving that the best AI solutions are those that empower everyone."
-    }
+# Key Milestones (Example Timeline)
+st.markdown(f"## {tr('ABOUT_MILESTONES_TITLE')}")
+milestones = [
+    {"year": "2024", "title": tr('MILESTONE_2024_TITLE'), "description": tr('MILESTONE_2024_DESC')},
+    {"year": "2022", "title": tr('MILESTONE_2022_TITLE'), "description": tr('MILESTONE_2022_DESC')},
+    {"year": "2020", "title": tr('MILESTONE_2020_TITLE'), "description": tr('MILESTONE_2020_DESC')},
+    {"year": "2018", "title": tr('MILESTONE_2018_TITLE'), "description": tr('MILESTONE_2018_DESC')},
 ]
 
-for event in timeline_events:
+for milestone in milestones:
     st.markdown(f"""
     <div class="timeline-item">
-        <h4>{event['year']}: {event['title']}</h4>
-        <p>{event['description']}</p>
+        <div class="timeline-dot"></div>
+        <div class="timeline-content">
+            <h4>{milestone['year']}: {milestone['title']}</h4>
+            <p>{milestone['description']}</p>
+        </div>
     </div>
     """, unsafe_allow_html=True)
 
-# Core Values Section
-st.markdown("## 🌟 My Core Values")
-
-col1, col2, col3 = st.columns(3)
-
-with col1:
-    st.markdown("""
-    <div class="value-card">
-        <h3>🤝 Collaboration</h3>
-        <p>The best solutions emerge when diverse minds work together. I actively seek different perspectives and believe that explaining complex concepts simply is a superpower.</p>
-    </div>
-    """, unsafe_allow_html=True)
-
-with col2:
-    st.markdown("""
-    <div class="value-card">
-        <h3>📚 Continuous Learning</h3>
-        <p>AI evolves rapidly, and so do I. I dedicate time weekly to learning new techniques, reading research papers, and experimenting with emerging technologies.</p>
-    </div>
-    """, unsafe_allow_html=True)
-
-with col3:
-    st.markdown("""
-    <div class="value-card">
-        <h3>🎯 Results Focus</h3>
-        <p>Beautiful code means nothing without real impact. I measure success by business outcomes, user satisfaction, and the tangible value my solutions create.</p>
-    </div>
-    """, unsafe_allow_html=True)
-
-# Skills Evolution Chart
-st.markdown("## 📊 My Skills Evolution Over Time")
-
-# Create a skills evolution chart
-years = [2014, 2016, 2018, 2020, 2022, 2024]
-python_skills = [20, 40, 60, 80, 90, 95]
-ml_skills = [0, 10, 30, 60, 85, 95]
-ai_engineering = [0, 0, 20, 50, 80, 95]
-cloud_devops = [0, 0, 10, 40, 70, 90]
-
-fig = go.Figure()
-fig.add_trace(go.Scatter(x=years, y=python_skills, mode='lines+markers', name='Python & Programming', line=dict(color='#667eea')))
-fig.add_trace(go.Scatter(x=years, y=ml_skills, mode='lines+markers', name='Machine Learning', line=dict(color='#ff6b6b')))
-fig.add_trace(go.Scatter(x=years, y=ai_engineering, mode='lines+markers', name='AI Engineering', line=dict(color='#74b9ff')))
-fig.add_trace(go.Scatter(x=years, y=cloud_devops, mode='lines+markers', name='Cloud & DevOps', line=dict(color='#00b894')))
-
-fig.update_layout(
-    title='My Technical Skills Journey',
-    xaxis_title='Year',
-    yaxis_title='Proficiency Level (%)',
-    hovermode='x unified',
-    template='plotly_white'
-)
-
-st.plotly_chart(fig, use_container_width=True)
-
-# Personal Insights Section
-st.markdown("""
-<div class="quote-section">
-    "The most rewarding moments in my career have been when I've helped non-technical stakeholders understand 
-    and leverage AI to solve their biggest challenges. Technology should empower, not intimidate."
-</div>
-""", unsafe_allow_html=True)
-
-# What I'm Working On Now
-st.markdown("## 🔬 What I'm Exploring Now")
+# Current Focus & Future Interests
+st.markdown(f"## {tr('ABOUT_CURRENT_FOCUS_TITLE')}")
 
 col1, col2 = st.columns(2)
 
 with col1:
-    st.markdown("""
+    st.markdown(f"""
     <div class="story-card">
-        <h3>🤖 AI Agents & Automation</h3>
+        <h3>{tr('ABOUT_AI_AGENTS_TITLE')}</h3>
         <p>
-            Exploring how AI agents can automate complex workflows while maintaining human oversight. 
-            Currently experimenting with multi-agent systems that can collaborate to solve business problems.
+            {tr('ABOUT_AI_AGENTS_DESC')}
         </p>
     </div>
     """, unsafe_allow_html=True)
 
 with col2:
-    st.markdown("""
+    st.markdown(f"""
     <div class="story-card">
-        <h3>🧠 Explainable AI</h3>
+        <h3>{tr('ABOUT_EXPLAINABLE_AI_TITLE')}</h3>
         <p>
-            Working on making AI decisions more transparent and interpretable. Because the best AI is AI that 
-            humans can understand, trust, and improve upon.
+            {tr('ABOUT_EXPLAINABLE_AI_DESC')}
         </p>
     </div>
     """, unsafe_allow_html=True)
 
 # Call to Action
-st.markdown("""
+st.markdown(f"""
 <div class="philosophy-section">
-    <h2 style="color: white; margin-bottom: 2rem;">🤝 Let's Build Something Amazing Together</h2>
+    <h2 style="color: white; margin-bottom: 2rem;">{tr('ABOUT_CALL_TITLE')}</h2>
     <p style="font-size: 1.2rem; margin-bottom: 2rem;">
-        I'm always excited to discuss new challenges, share insights, or explore how AI can transform your business.
+        {tr('ABOUT_CALL_TEXT1')}
     </p>
     <p style="font-size: 1.1rem;">
-        Whether you're looking for technical expertise, strategic AI guidance, or just want to chat about the future of technology - I'm here for it!
+        {tr('ABOUT_CALL_TEXT2')}
     </p>
 </div>
 """, unsafe_allow_html=True)
 
 # Footer
-st.markdown("<p style='text-align: center; color: #666; margin-top: 2rem;'>© 2024 Karim Osman - Passionate about AI, Driven by Impact</p>", unsafe_allow_html=True)
+st.markdown(f"<p style='text-align: center; color: #666; margin-top: 2rem;'>{tr('ABOUT_FOOTER')}</p>", unsafe_allow_html=True)
