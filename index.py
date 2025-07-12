@@ -12,7 +12,7 @@ import contact
 import importlib
 import random
 import time
-from utils import tr # Corrected import
+from utils import tr, language_selector
 
 # Configure the page
 st.set_page_config(page_title=tr("PAGE_TITLE"), layout="wide", initial_sidebar_state="expanded")
