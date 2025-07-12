@@ -338,18 +338,18 @@ elif page == tr("NAV_ABOUT"):
     logging.info("Loading About Page")
     importlib.reload(about)
 
-elif page == "🚀 Projects":
+elif page == tr("NAV_PROJECTS"):
     logging.info("Loading Projects Page")
     importlib.reload(projects)
 
-elif page == "⚡ Skills":
+elif page == tr("NAV_SKILLS"):
     logging.info("Loading Skills Page")
     importlib.reload(skills)
 
-elif page == "📞 Contact":
+elif page == tr("NAV_CONTACT"):
     logging.info("Loading Contact Page")
     importlib.reload(contact)
 
-elif page == "📄 Resume":
+elif page == tr("NAV_RESUME"):
     logging.info("Loading Resume Page")
     importlib.reload(resume)
