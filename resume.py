@@ -8,7 +8,7 @@ st.subheader("Resume")
 st.write("You can view or download my detailed resume below.")
 
 # Use a direct link to the PDF file
-pdf_url = "https://drive.google.com/file/d/1czMtC6Ee_OOrj-58NW5uHHzITDiJ16Zu/view"  
+pdf_url = "https://drive.google.com/file/d/1czMtC6Ee_OOrj-58NW5uHHzITDiJ16Zu/preview"  
 # Embed the PDF for preview using an iframe
 st.markdown(f'<iframe src="{pdf_url}#view=FitH" width="700" height="700" frameborder="0"></iframe>', unsafe_allow_html=True)
 
