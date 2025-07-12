@@ -149,7 +149,14 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # Sidebar Navigation
-page = utils.language_selector()
+page = st.sidebar.radio("", [
+    tr("NAV_HOME"), # Use tr() for Home
+    tr("NAV_ABOUT"), # Use tr() for About
+    tr("NAV_PROJECTS"), # Use tr() for Projects
+    tr("NAV_SKILLS"), # Use tr() for Skills
+    tr("NAV_CONTACT"), # Use tr() for Contact
+    tr("NAV_RESUME") # Use tr() for Resume
+])
 
 
 
