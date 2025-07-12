@@ -10,9 +10,11 @@ import about
 import resume
 import contact
 import importlib
+import random
+import time
 
 # Configure the page
-st.set_page_config(page_title="Karim Osman - ML Engineer Portfolio", layout="wide")
+st.set_page_config(page_title="Karim Osman - AI Engineer Portfolio", layout="wide", initial_sidebar_state="expanded")
 logging.basicConfig(level=logging.INFO)
 
 @st.cache_resource
@@ -33,314 +35,317 @@ deep_learning_animation = load_lottie_local('deep-learning.json')
 dev_ops_animation = load_lottie_local('devops.json')
 profile_photo = load_profile_photo()
 
-
-# Apply common styles
+# Enhanced styles with modern design
 st.markdown("""
 <style>
-    body {
-        font-family: 'Helvetica Neue', sans-serif;
-    }
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+    
     .main {
-        background-color: #f5f5f5;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         padding: 2rem;
+        font-family: 'Inter', sans-serif;
     }
-    h1, h2, h4 {
-        font-weight: 700;
-        color: #003366;
+    
+    .hero-section {
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 20px;
+        padding: 3rem;
+        margin: 2rem 0;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(10px);
     }
-    h1 {
-        margin-bottom: 20px;
-        font-size: 2.5rem;
-    }
-    h2 {
-        color: #007ACC;
-        margin-bottom: 10px;
-    }
-    .profile-photo {
-        display: block;
-        margin: 20px auto;
-        border-radius: 50%;
-        box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
-    }
-    .button {
-        background-color: #007ACC;
-        color: white;
-        padding: 10px 20px;
-        text-align: center;
-        border-radius: 5px;
-        margin: 20px 5px;
+    
+    .interactive-card {
+        background: linear-gradient(145deg, #ffffff, #f0f0f0);
+        border-radius: 15px;
+        padding: 2rem;
+        margin: 1rem 0;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
         cursor: pointer;
-        font-size: 16px;
     }
-    .button:hover {
-        background-color: #005999;
+    
+    .interactive-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
     }
-    .footer {
-        margin-top: 50px;
+    
+    .proactive-section {
+        background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+        color: white;
+        border-radius: 20px;
+        padding: 3rem;
+        margin: 2rem 0;
         text-align: center;
-        color: #999;
-        font-size: 0.85rem;
+    }
+    
+    .chat-interface {
+        background: #f8f9fa;
+        border-radius: 15px;
+        padding: 2rem;
+        margin: 2rem 0;
+        border: 2px solid #e9ecef;
+    }
+    
+    h1 {
+        font-size: 3.5rem;
+        font-weight: 700;
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        text-align: center;
+        margin-bottom: 1rem;
+    }
+    
+    h2 {
+        color: #2c3e50;
+        font-weight: 600;
+        margin: 2rem 0 1rem 0;
+    }
+    
+    .metric-card {
+        background: white;
+        border-radius: 10px;
+        padding: 1.5rem;
+        text-align: center;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+    }
+    
+    .pulse {
+        animation: pulse 2s infinite;
+    }
+    
+    @keyframes pulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+        100% { transform: scale(1); }
+    }
+    
+    .typing-effect {
+        overflow: hidden;
+        border-right: .15em solid orange;
+        white-space: nowrap;
+        margin: 0 auto;
+        letter-spacing: .15em;
+        animation: typing 3.5s steps(40, end), blink-caret .75s step-end infinite;
+    }
+    
+    @keyframes typing {
+        from { width: 0 }
+        to { width: 100% }
+    }
+    
+    @keyframes blink-caret {
+        from, to { border-color: transparent }
+        50% { border-color: orange; }
     }
 </style>
 """, unsafe_allow_html=True)
 
+# Sidebar Navigation with enhanced design
+st.sidebar.markdown("### 🚀 Navigation")
+page = st.sidebar.radio("", ["🏠 Home", "👨‍💻 About", "🚀 Projects", "⚡ Skills", "📞 Contact", "📄 Resume"])
 
-# Sidebar Navigation
-st.sidebar.title("Navigation")
-page = st.sidebar.radio("Go to", ["Home", "About", "Projects", "Skills", "Contact", "Resume"])
-
-# Add theme toggle
-st.sidebar.markdown("### Theme Selector")
-theme = st.sidebar.radio("Select Theme", ["Light", "Dark"])
-
-if theme == "Dark":
-    st.markdown("""
-    <style>
-        body {
-            background-color: #121212;
-            color: #fff;
-        }
-        .main {
-            background-color: #1e1e1e;
-        }
-    </style>
-    """, unsafe_allow_html=True)
-else:
-    st.markdown("""
-    <style>
-        body {
-            background-color: #ffffff;
-            color: #000;
-        }
-        .main {
-            background-color: #f5f5f5;
-        }
-    </style>
-    """, unsafe_allow_html=True)
-
-
-
-# Functions to create Plotly graphs
-@st.cache_data
-def plot_ml_graph():
-    fig = go.Figure()
-    fig.add_trace(go.Scatter(x=[1, 2, 3, 4], y=[10, 11, 12, 13], mode='lines+markers', name='Model A'))
-    fig.add_trace(go.Scatter(x=[1, 2, 3, 4], y=[16, 5, 11, 9], mode='lines+markers', name='Model B'))
-    fig.update_layout(title='Model Performance Comparison', xaxis_title='Epoch', yaxis_title='Accuracy')
-    return fig
-
-def plot_data_engineer_graph():
-    fig = go.Figure(data=[go.Bar(x=['Jan', 'Feb', 'Mar', 'Apr'], y=[10, 15, 13, 17])])
-    fig.update_layout(title='Data Pipeline Throughput', xaxis_title='Month', yaxis_title='Records Processed')
-    return fig
-
-def plot_data_scientist_graph():
-    fig = go.Figure(data=go.Pie(labels=['Category A', 'Category B', 'Category C'], values=[4500, 2500, 1050]))
-    fig.update_layout(title='Data Distribution by Category')
-    return fig
-
-def plot_ai_engineer_graph():
-    fig = go.Figure()
-    fig.add_trace(go.Scatter(x=['Model A', 'Model B', 'Model C'], y=[80, 90, 70], mode='markers', marker=dict(size=[15, 20, 25]), name='AI Models'))
-    fig.update_layout(title='AI Model Performance', xaxis_title='Model', yaxis_title='F1 Score')
-    return fig
-
-def plot_dl_engineer_graph():
-    fig = go.Figure(data=[go.Scatter(x=[0, 1, 2, 3, 4], y=[0, 1, 4, 9, 16], mode='lines+markers')])
-    fig.update_layout(title='Deep Learning Model Loss Over Time', xaxis_title='Epoch', yaxis_title='Loss')
-    return fig
-
-def plot_devops_graph():
-    fig = go.Figure(data=[go.Scatter(x=[1, 2, 3, 4], y=[3, 2, 5, 4], mode='lines+markers')])
-    fig.update_layout(title='Deployment Frequency', xaxis_title='Week', yaxis_title='Deployments')
-    return fig
-
-# Define common business scenarios and their graphs
-
-def get_business_scenarios():
-    return {
-    "Machine Learning Engineer": {
-        "Customer Churn Prediction": {
-            "description": "Predicting customer churn using historical data to enhance retention strategies.",
-            "graph": lambda: go.Figure(data=[go.Bar(x=['Model A', 'Model B'], y=[70, 85])]).update_layout(title='Churn Prediction Accuracy', xaxis_title='Model', yaxis_title='Accuracy (%)')
-        },
-        "Sales Forecasting": {
-            "description": "Utilizing sales data to predict future sales and optimize inventory.",
-            "graph": lambda: go.Figure(data=[go.Scatter(x=['Jan', 'Feb', 'Mar', 'Apr'], y=[100, 150, 120, 180], mode='lines+markers')]).update_layout(title='Sales Forecast', xaxis_title='Month', yaxis_title='Sales ($)')
-        }
-    },
-    "Data Engineer": {
-        "ETL Pipeline Efficiency": {
-            "description": "Analyzing the efficiency of ETL processes in transforming and loading data.",
-            "graph": lambda: go.Figure(data=[go.Bar(x=['ETL Job 1', 'ETL Job 2'], y=[30, 50])]).update_layout(title='ETL Job Processing Time', xaxis_title='ETL Job', yaxis_title='Time (minutes)') # type: ignore
-        },
-        "Data Quality Metrics": {
-            "description": "Monitoring data quality metrics over time to ensure integrity and reliability.",
-            "graph": lambda: go.Figure(data=[go.Scatter(x=['Week 1', 'Week 2', 'Week 3'], y=[95, 85, 90], mode='lines+markers')]).update_layout(title='Data Quality Metrics', xaxis_title='Week', yaxis_title='Quality (%)')
-        }
-    },
-    "Data Scientist": {
-        "Market Basket Analysis": {
-            "description": "Analyzing customer purchase data to find associations between products.",
-            "graph": lambda: go.Figure(data=[go.Pie(labels=['Product A', 'Product B', 'Product C'], values=[4500, 2500, 1050])]).update_layout(title='Market Basket Analysis')
-        },
-        "A/B Testing Results": {
-            "description": "Evaluating the effectiveness of marketing strategies through A/B testing.",
-            "graph": lambda: go.Figure(data=[go.Bar(x=['Group A', 'Group B'], y=[0.5, 0.7])]).update_layout(title='A/B Test Conversion Rate', xaxis_title='Group', yaxis_title='Conversion Rate (%)')
-        }
-    },
-    "AI Engineer": {
-        "Model Deployment Performance": {
-            "description": "Assessing the performance of deployed AI models in a production environment.",
-            "graph": lambda: go.Figure(data=[go.Scatter(x=['Model A', 'Model B'], y=[0.9, 0.85], mode='lines+markers')]).update_layout(title='AI Model Performance', xaxis_title='Model', yaxis_title='Performance (F1 Score)')
-        },
-         "User Interaction Metrics": {
-            "description": "Monitoring user interactions with AI applications to improve user experience.",
-            "graph": lambda: go.Figure(data=[go.Bar(x=['Week 1', 'Week 2'], y=[200, 250])]).update_layout(title='User Interaction Over Time', xaxis_title='Week', yaxis_title='Interactions')
-        }
-    },
-    "Deep Learning Engineer": {
-        "Training Time Comparison": {
-            "description": "Comparing training times of various deep learning models to optimize resource usage.",
-            "graph": lambda: go.Figure(data=[go.Bar(x=['Model A', 'Model B'], y=[50, 30])]).update_layout(title='Training Time Comparison', xaxis_title='Model', yaxis_title='Time (hours)')
-        },
-        "Validation Loss Analysis": {
-            "description": "Analyzing validation loss to prevent overfitting during training.",
-            "graph": lambda: go.Figure(data=[go.Scatter(x=[1, 2, 3, 4], y=[0.5, 0.3, 0.1, 0.05], mode='lines+markers')]).update_layout(title='Validation Loss Over Epochs', xaxis_title='Epoch', yaxis_title='Loss')
-        }
-    },
-    "DevOps Engineer": {
-        "Infrastructure Cost Analysis": {
-            "description": "Analyzing costs associated with cloud infrastructure usage.",
-            "graph": lambda: go.Figure(data=[go.Bar(x=['Month 1', 'Month 2'], y=[1000, 1200])]).update_layout(title='Infrastructure Costs Over Time', xaxis_title='Month', yaxis_title='Cost ($)')
-        },
-        "Deployment Success Rate": {
-            "description": "Tracking the success rate of deployments to improve processes.",
-            "graph": lambda: go.Figure(data=[go.Bar(x=['Successful', 'Failed'], y=[90, 10])]).update_layout(title='Deployment Success Rate', xaxis_title='Status', yaxis_title='Percentage (%)')
-        }
-    }
-}
-business_scenarios = get_business_scenarios()
-# Render pages based on the selection
-if page == "Home":
-    st.title("🌍 Welcome to My Portfolio!")
-    st.write("I’m **Karim Osman**, a passionate **Machine Learning Engineer** dedicated to solving real-world challenges through data-driven models and algorithms.")
-
-   
-
-    st.markdown("<h2 style='text-align: center;'>Explore My Expertise</h2>", unsafe_allow_html=True)
-
-    # Create columns for animations
-    col1, col2, col3, col4, col5, col6 = st.columns(6)
-
-    animations = [
-        (data_analysis_animation, "Machine Learning Engineer"),
-        (data_engineer_animation, "Data Engineer"),
-        (ai_engineering_animation, "Data Scientist"),
-        (ai_animation, "AI Engineer"),
-        (deep_learning_animation, "Deep Learning Engineer"),
-        (dev_ops_animation, "DevOps Engineer")
+# Interactive AI Chat Bot Section
+def ai_chat_interface():
+    st.markdown("### 🤖 Ask Me Anything - Interactive AI Assistant")
+    
+    if 'chat_history' not in st.session_state:
+        st.session_state.chat_history = []
+    
+    # Predefined questions for quick interaction
+    quick_questions = [
+        "What's your strongest AI skill?",
+        "Tell me about your most impactful project",
+        "How do you approach problem-solving?",
+        "What makes you different from other AI engineers?",
+        "What's your vision for AI in the next 5 years?"
     ]
-
-    for col, (animation, title) in zip([col1, col2, col3, col4, col5, col6], animations):
-        with col:
-            st_lottie(animation, height=80, width=80,key=title)
-            st.markdown(f"<h4>{title}</h4>", unsafe_allow_html=True)
-
-    # Profile Photo Section
-   
-    image = Image.open("profile-photo.jpg")
-    # Display the profile photo with custom styling
-    st.markdown("""
-     <div class="profile-photo">
-        <img src="profile-photo.jpg" alt="Karim Osman" width="150">
-      </div>
-""", unsafe_allow_html=True)
-    st.write("""
-        As a Machine Learning Engineer, I specialize in building intelligent systems that help businesses make better decisions. 
-        My expertise spans various domains including machine learning, AI engineering, and data science. I’m driven by my passion for turning data into actionable insights.
-    """)
     
+    col1, col2 = st.columns([3, 1])
     
-
-    # Role Examples Section
-    st.markdown("<h2>Role Examples</h2>", unsafe_allow_html=True)
-
-    role_descriptions = {
-        "Machine Learning Engineer": (
-            "As a **Machine Learning Engineer**, I specialize in developing predictive models that address complex business challenges. "
-            "My expertise lies in analyzing vast datasets to extract meaningful insights, which inform strategic decision-making. "
-            "I leverage a variety of machine learning algorithms, including supervised and unsupervised learning techniques, to build robust models that not only predict outcomes but also adapt over time. "
-            "My proficiency in tools like TensorFlow and Scikit-learn enables me to implement solutions that enhance efficiency and drive innovation."
-        ),
-        "Data Engineer": (
-            "In the role of a **Data Engineer**, I design and build comprehensive data pipelines that facilitate the ingestion and transformation of data from diverse sources. "
-            "My approach involves optimizing data flow and ensuring data integrity to support analytics and machine learning initiatives. "
-            "By utilizing technologies such as Apache Kafka, Spark, and various database systems (SQL and NoSQL), I ensure that data is accessible, reliable, and structured, enabling teams to derive actionable insights and make data-driven decisions."
-        ),
-        "Data Scientist": (
-            "As a **Data Scientist**, I apply statistical analysis and machine learning techniques to transform raw data into strategic insights. "
-            "I utilize data visualization tools like Tableau and Matplotlib to present findings in an easily digestible format for stakeholders. "
-            "My experience includes conducting exploratory data analysis, feature engineering, and model evaluation, ensuring that the insights provided are both actionable and aligned with business objectives. "
-            "My goal is to turn complex data sets into stories that drive impactful decisions."
-        ),
-        "AI Engineer": (
-            "In my capacity as an **AI Engineer**, I develop and deploy AI models and algorithms that enable machines to perform tasks intelligently. "
-            "I work with deep learning frameworks such as Keras and PyTorch to build systems that mimic human cognitive functions, including natural language processing and computer vision. "
-            "My projects focus on creating scalable solutions that enhance user experiences and streamline operations, positioning businesses at the forefront of technological advancements."
-        ),
-        "Deep Learning Engineer": (
-            "As a **Deep Learning Engineer**, my focus is on harnessing the power of advanced neural networks to tackle complex problems. "
-            "I specialize in designing architectures that improve model accuracy and efficiency, particularly in applications involving image recognition, speech processing, and reinforcement learning. "
-            "My work involves rigorous experimentation and tuning to achieve optimal results, ensuring that the models I develop are both effective and scalable for real-world applications."
-        ),
-        "DevOps Engineer": (
-            "As a **DevOps Engineer**, I bridge the gap between development and operations by implementing practices that streamline application deployment and management. "
-            "My expertise includes managing infrastructure as code (IaC) with tools like Docker and Kubernetes, which enhance scalability and reliability. "
-            "I advocate for continuous integration and delivery (CI/CD) practices to ensure rapid and safe software releases, enabling teams to respond quickly to changing business needs."
-        ),
+    with col1:
+        user_question = st.text_input("Ask me about my experience, skills, or approach to AI:", placeholder="Type your question here...")
+    
+    with col2:
+        if st.button("🎲 Random Question"):
+            user_question = random.choice(quick_questions)
+            st.session_state.random_question = user_question
+    
+    # Quick question buttons
+    st.markdown("**Quick Questions:**")
+    cols = st.columns(len(quick_questions))
+    for i, question in enumerate(quick_questions):
+        if cols[i].button(f"❓ {question[:20]}...", key=f"quick_{i}"):
+            user_question = question
+    
+    # AI responses based on questions
+    ai_responses = {
+        "What's your strongest AI skill?": "My strongest skill is bridging the gap between complex AI theory and practical business solutions. I excel at taking cutting-edge research and transforming it into scalable, production-ready systems that deliver measurable value.",
+        
+        "Tell me about your most impactful project": "At Bakerhughes, I developed a 'RAG as a service' platform that democratized AI access across the organization. This project increased AI adoption by 300% and reduced development time for new AI applications by 60%.",
+        
+        "How do you approach problem-solving?": "I follow a three-step approach: First, I deeply understand the business context and constraints. Second, I prototype rapidly to validate assumptions. Third, I iterate based on real-world feedback, always keeping scalability and maintainability in mind.",
+        
+        "What makes you different from other AI engineers?": "I combine technical depth with business acumen. I don't just build models; I create AI solutions that align with strategic objectives. My proactive approach means I often identify opportunities before they become obvious needs.",
+        
+        "What's your vision for AI in the next 5 years?": "I see AI becoming truly democratized - where non-technical users can leverage sophisticated AI capabilities through intuitive interfaces. I'm particularly excited about AI agents that can understand context and intent, making technology more human-centric."
     }
+    
+    if user_question:
+        # Simulate typing effect
+        with st.spinner("🤔 Thinking..."):
+            time.sleep(1)
+        
+        response = ai_responses.get(user_question, 
+            f"That's a great question about '{user_question}'. Based on my experience in AI engineering, I'd approach this by leveraging my expertise in machine learning, deep learning, and practical implementation. I believe in creating solutions that are not just technically sound but also deliver real business value.")
+        
+        st.markdown(f"**🤖 Karim's AI Assistant:** {response}")
+        
+        # Add to chat history
+        st.session_state.chat_history.append({"question": user_question, "answer": response})
 
-    for role, description in role_descriptions.items():
-        with st.expander(role):
-            st.write(description)
-            if role in business_scenarios:
-                for scenario, details in business_scenarios[role].items():
-                    st.markdown(f"### {scenario}")
-                    st.write(details["description"])
-                    st.plotly_chart(details["graph"]())
+# Enhanced metrics display
+def show_impact_metrics():
+    st.markdown("### 📊 Impact Metrics")
+    
+    col1, col2, col3, col4 = st.columns(4)
+    
+    with col1:
+        st.markdown("""
+        <div class="metric-card pulse">
+            <h3 style="color: #e74c3c; margin: 0;">20%</h3>
+            <p style="margin: 0;">Performance Improvement</p>
+        </div>
+        """, unsafe_allow_html=True)
+    
+    with col2:
+        st.markdown("""
+        <div class="metric-card pulse">
+            <h3 style="color: #27ae60; margin: 0;">30%</h3>
+            <p style="margin: 0;">Workflow Efficiency</p>
+        </div>
+        """, unsafe_allow_html=True)
+    
+    with col3:
+        st.markdown("""
+        <div class="metric-card pulse">
+            <h3 style="color: #3498db; margin: 0;">25%</h3>
+            <p style="margin: 0;">Data Processing Speed</p>
+        </div>
+        """, unsafe_allow_html=True)
+    
+    with col4:
+        st.markdown("""
+        <div class="metric-card pulse">
+            <h3 style="color: #f39c12; margin: 0;">5+</h3>
+            <p style="margin: 0;">Years Experience</p>
+        </div>
+        """, unsafe_allow_html=True)
 
-    # Footer
+# Proactive approach showcase
+def proactive_showcase():
     st.markdown("""
-    <hr style="border: 1px solid #ddd; margin-top: 50px;">
-    <p class='footer'>© 2024 Karim Osman</p>
+    <div class="proactive-section">
+        <h2 style="color: white; margin-bottom: 2rem;">🚀 My Proactive Approach</h2>
+        <p style="font-size: 1.2rem; margin-bottom: 2rem;">
+            I don't just respond to problems - I anticipate them. Here's how I would revolutionize your company's AI capabilities:
+        </p>
+    </div>
     """, unsafe_allow_html=True)
+    
+    col1, col2 = st.columns(2)
+    
+    with col1:
+        st.markdown("""
+        <div class="interactive-card">
+            <h3>🎯 Intelligent Candidate Assistant</h3>
+            <p>An AI-powered system that analyzes applications beyond keywords, providing personalized feedback and creating an exceptional candidate experience.</p>
+            <ul>
+                <li>Semantic analysis of CVs and proposals</li>
+                <li>Personalized feedback generation</li>
+                <li>Interactive chatbot for candidates</li>
+                <li>Hidden talent identification</li>
+            </ul>
+        </div>
+        """, unsafe_allow_html=True)
+    
+    with col2:
+        st.markdown("""
+        <div class="interactive-card">
+            <h3>⚡ Technical Implementation</h3>
+            <p>Leveraging cutting-edge technologies to create scalable, robust solutions:</p>
+            <ul>
+                <li>Advanced NLP with Hugging Face models</li>
+                <li>Vector databases for semantic search</li>
+                <li>Cloud-native architecture (AWS/GCP)</li>
+                <li>Real-time interactive interfaces</li>
+            </ul>
+        </div>
+        """, unsafe_allow_html=True)
 
-elif page == "Skills":
+# Main page rendering
+if page == "🏠 Home":
+    # Hero section with typing effect
+    st.markdown("""
+    <div class="hero-section">
+        <h1 class="typing-effect">Welcome to My AI Universe! 🌟</h1>
+        <p style="text-align: center; font-size: 1.3rem; color: #555; margin-top: 2rem;">
+            I'm <strong>Karim Osman</strong>, an AI Engineer who transforms complex challenges into intelligent solutions
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # Interactive AI Chat Interface
+    ai_chat_interface()
+    
+    # Impact Metrics
+    show_impact_metrics()
+    
+    # Proactive Approach Showcase
+    proactive_showcase()
+    
+    # Enhanced expertise showcase
+    st.markdown("### 🎯 My Expertise Areas")
+    
+    col1, col2, col3 = st.columns(3)
+    
+    expertise_areas = [
+        ("🤖 Machine Learning", "Building predictive models that drive business decisions", data_analysis_animation),
+        ("🔧 AI Engineering", "Deploying scalable AI solutions in production", ai_engineering_animation),
+        ("📊 Data Science", "Extracting insights from complex datasets", ai_animation),
+        ("🧠 Deep Learning", "Creating neural networks for complex problems", deep_learning_animation),
+        ("☁️ Cloud & DevOps", "Scalable infrastructure and deployment", dev_ops_animation),
+        ("💡 Innovation", "Proactive problem-solving and future-thinking", data_engineer_animation)
+    ]
+    
+    for i, (title, desc, animation) in enumerate(expertise_areas):
+        col = [col1, col2, col3][i % 3]
+        with col:
+            st.markdown(f"""
+            <div class="interactive-card">
+                <h4>{title}</h4>
+                <p>{desc}</p>
+            </div>
+            """, unsafe_allow_html=True)
+            st_lottie(animation, height=100, key=f"expertise_{i}")
+
+elif page == "👨‍💻 About":
+    logging.info("Loading About Page")
+    importlib.reload(about)
+
+elif page == "🚀 Projects":
+    logging.info("Loading Projects Page")
+    importlib.reload(projects)
+
+elif page == "⚡ Skills":
     logging.info("Loading Skills Page")
-    #import skills
     importlib.reload(skills)
-    
 
-elif page == "Projects":
-     logging.info("Loading Projects Page")
-     #import projects
-     importlib.reload(projects)
-       
+elif page == "📞 Contact":
+    logging.info("Loading Contact Page")
+    importlib.reload(contact)
 
-elif page == "About":
-     logging.info("Loading About Page")
-     #import about
-     importlib.reload(about)
-    
-
-elif page == "Contact":
-     logging.info("Loading Contact Page")
-     #import contact
-     importlib.reload(contact)
-     
-
-elif page == "Resume":
-     logging.info("Loading Resume Page")
-     #import resume
-     importlib.reload(resume) 
+elif page == "📄 Resume":
+    logging.info("Loading Resume Page")
+    importlib.reload(resume)
