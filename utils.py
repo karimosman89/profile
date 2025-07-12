@@ -45,7 +45,7 @@ def language_selector():
     }
     
     # Create display names with flags
-    display_options = [f"{lang_options[code]['flag']} {lang_options[code]['name']}" 
+    display_options = [f"{lang_options[code]['flag']}" 
                       for code in lang_options.keys()]
     
     # Get current language index
