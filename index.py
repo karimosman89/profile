@@ -151,7 +151,7 @@ st.markdown("""
 # Make sure utils.language_selector returns the selected page name or handles navigation directly.
 # If utils.language_selector sets st.session_state.page, then 'page' variable isn't needed here.
 # Assuming it sets st.session_state.page and returns it for clarity.
-page = utils.language_selector()
+page = language_selector()
 
 
 # Interactive AI Chat Bot Section
