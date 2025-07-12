@@ -38,14 +38,14 @@ def language_selector():
     st.sidebar.markdown(f"### 🌐 {tr('LANGUAGE')}")
     
     lang_options = {
-        "en": "🇬🇧 English",
-        "fr": "🇫🇷 Français",
-        "de": "🇩🇪 Deutsch",
-        "sv": "🇸🇪 Svenska",
-        "no": "🇳🇴 Norsk",
-        "nl": "🇳🇱 Nederlands",
-        "da": "🇩🇰 Dansk",
-        "ja": "🇯🇵 日本語"
+        "en": "🇬🇧",
+        "fr": "🇫🇷",
+        "de": "🇩🇪",
+        "sv": "🇸🇪",
+        "no": "🇳🇴",
+        "nl": "🇳🇱",
+        "da": "🇩🇰",
+        "ja": "🇯🇵"
     }
     
     selected_lang = st.sidebar.selectbox(
