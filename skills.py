@@ -5,7 +5,7 @@ import plotly.express as px
 from PIL import Image
 import pandas as pd
 import numpy as np
-from utils import tr # Import the translation function
+from utils import tr 
 
 # Get the directory of the current script
 current_dir = os.path.dirname(__file__)
