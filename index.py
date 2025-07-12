@@ -156,7 +156,7 @@ page = language_selector()
 
 # Interactive AI Chat Bot Section
 def ai_chat_interface():
-    st.markdown(f"### {tr('AI_CHAT_TITLE')}") # Corrected tr()
+    st.markdown(f"### {tr('AI_CHAT_TITLE')}") 
     
     if 'chat_history' not in st.session_state:
         st.session_state.chat_history = []
@@ -181,7 +181,7 @@ def ai_chat_interface():
             st.session_state.random_question = user_question
     
     # Quick question buttons
-    st.markdown(f"**{tr('QUICK_QUESTIONS')}**") # Corrected tr()
+    st.markdown(f"**{tr('QUICK_QUESTIONS')}**") 
     cols = st.columns(len(quick_questions))
     for i, question in enumerate(quick_questions):
         if cols[i].button(f"❓ {question[:20]}...", key=f"quick_{i}"):
@@ -198,20 +198,20 @@ def ai_chat_interface():
     
     if user_question:
         # Simulate typing effect
-        with st.spinner("🤔 " + tr("THINKING")): # Corrected tr()
+        with st.spinner("🤔 " + tr("THINKING")): 
             time.sleep(1)
         
         response = ai_responses.get(user_question, 
-            tr("DEFAULT_RESPONSE").format(question=user_question)) # Corrected tr()
+            tr("DEFAULT_RESPONSE").format(question=user_question)) 
         
-        st.markdown(f"**🤖 {tr('AI_ASSISTANT')}:** {response}") # Corrected tr()
+        st.markdown(f"**🤖 {tr('AI_ASSISTANT')}:** {response}") 
         
         # Add to chat history
         st.session_state.chat_history.append({"question": user_question, "answer": response})
 
 # Enhanced metrics display
 def show_impact_metrics():
-    st.markdown(f"### {tr('METRICS_TITLE')}") # Corrected tr()
+    st.markdown(f"### {tr('METRICS_TITLE')}") 
     
     col1, col2, col3, col4 = st.columns(4)
     
@@ -289,13 +289,13 @@ def proactive_showcase():
         """, unsafe_allow_html=True)
 
 # Main page rendering
-if page == tr("NAV_HOME"): # Corrected tr()
+if page == tr("NAV_HOME"): 
     # Hero section with typing effect
     st.markdown(f"""
     <div class="hero-section">
-        <h1 class="typing-effect">{tr('WELCOME_TITLE')}</h1> # Corrected tr()
+        <h1 class="typing-effect">{tr('WELCOME_TITLE')}</h1> 
         <p style="text-align: center; font-size: 1.3rem; color: #555; margin-top: 2rem;">
-            {tr('TAGLINE')} # Corrected tr()
+            {tr('TAGLINE')} 
         </p>
     </div>
     """, unsafe_allow_html=True)
@@ -334,22 +334,22 @@ if page == tr("NAV_HOME"): # Corrected tr()
             """, unsafe_allow_html=True)
             st_lottie(animation, height=100, key=f"expertise_{i}")
 
-elif page == tr("NAV_ABOUT"): # Corrected tr()
+elif page == tr("NAV_ABOUT"): 
     logging.info("Loading About Page")
     importlib.reload(about)
 
-elif page == tr("NAV_PROJECTS"): # Corrected tr()
+elif page == tr("NAV_PROJECTS"): 
     logging.info("Loading Projects Page")
     importlib.reload(projects)
 
-elif page == tr("NAV_SKILLS"): # Corrected tr()
+elif page == tr("NAV_SKILLS"): 
     logging.info("Loading Skills Page")
     importlib.reload(skills)
 
-elif page == tr("NAV_CONTACT"): # Corrected tr()
+elif page == tr("NAV_CONTACT"): 
     logging.info("Loading Contact Page")
     importlib.reload(contact)
 
-elif page == tr("NAV_RESUME"): # Corrected tr()
+elif page == tr("NAV_RESUME"): 
     logging.info("Loading Resume Page")
     importlib.reload(resume)
