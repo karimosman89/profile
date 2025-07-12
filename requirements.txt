@@ -11,4 +11,4 @@ librosa
 streamlit
 numpy
 streamlit_lottie 
-
+streamlit_javascript
