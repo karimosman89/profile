@@ -60,7 +60,6 @@
     "CLOUD_DESC": "Scalable infrastructure and deployment",
     "INNOVATION_TITLE": "💡 Innovation",
     "INNOVATION_DESC": "Proactive problem-solving and future-thinking"
-    // about.py translations
     "ABOUT_HERO_TITLE": "The Story Behind the Code 🚀",
     "ABOUT_HERO_SUBTITLE": "From curiosity-driven student to impact-focused AI engineer - here's how I transform complex challenges into intelligent solutions",
     "ABOUT_PHILOSOPHY_TITLE": "💡 My Philosophy",
@@ -102,8 +101,6 @@
     "ABOUT_CALL_TEXT": "I'm always excited to discuss new challenges, share insights, or explore how AI can transform your business.",
     "ABOUT_CALL_TEXT2": "Whether you're looking for technical expertise, strategic AI guidance, or just want to chat about the future of technology - I'm here for it!",
     "ABOUT_FOOTER": "© 2024 Karim Osman - Passionate about AI, Driven by Impact",
-
-    // contact.py translations
     "CONTACT_HERO_TITLE": "🤝 Let's Build Something Amazing Together",
     "CONTACT_HERO_SUBTITLE": "Ready to transform your AI vision into reality? I'm here to collaborate, innovate, and deliver exceptional results.",
     "CONTACT_AVAILABILITY_TITLE": "🟢 Currently Available for New Projects",
@@ -162,8 +159,6 @@
     "CONTACT_CALL_TEXT": "Whether you have a specific project in mind or just want to explore possibilities, I'm excited to hear from you. Let's create something extraordinary together!",
     "CONTACT_CALL_TEXT2": "Every great project starts with a conversation. Let's have ours.",
     "CONTACT_FOOTER": "© 2024 Karim Osman - Always Ready to Innovate and Collaborate",
-
-    // projects.py translations
     "PROJECTS_HERO_TITLE": "🚀 Portfolio of Impact-Driven Projects",
     "PROJECTS_HERO_SUBTITLE": "Each project represents a real-world solution with measurable business impact and technical innovation",
     "PROJECTS_TAB_FEATURED": "🌟 Featured Projects",
@@ -187,14 +182,10 @@
     "PROJECTS_CALL_TITLE": "🤝 Ready to Create Impact Together?",
     "PROJECTS_CALL_TEXT": "These projects demonstrate my ability to deliver measurable results. Let's discuss how I can bring similar value to your organization.",
     "PROJECTS_FOOTER": "© 2024 Karim Osman - Transforming Ideas into Intelligent Solutions",
-
-    // resume.py translations
     "RESUME_SUBHEADER": "Resume",
     "RESUME_DESCRIPTION": "You can view or download my detailed resume below.",
     "RESUME_DOWNLOAD_LINK": "Download",
     "RESUME_FOOTER": "© 2024 Karim Osman - Machine Learning Engineer",
-
-    // skills.py translations
     "SKILLS_HERO_TITLE": "🚀 Technical Expertise & Innovation Arsenal",
     "SKILLS_HERO_SUBTITLE": "A comprehensive toolkit of cutting-edge technologies and proven methodologies for delivering impactful AI solutions",
     "SKILLS_OVERVIEW_TITLE": "📊 Skills at a Glance",
