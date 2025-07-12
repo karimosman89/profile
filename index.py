@@ -219,7 +219,7 @@ def show_impact_metrics():
         st.markdown("""
         <div class="metric-card pulse">
             <h3 style="color: #e74c3c; margin: 0;">20%</h3>
-            <p style="margin: 0;">tr("PERFORMANCE")</p>
+            <p style="margin: 0;">utils.tr("PERFORMANCE")</p>
         </div>
         """, unsafe_allow_html=True)
     
@@ -227,7 +227,7 @@ def show_impact_metrics():
         st.markdown("""
         <div class="metric-card pulse">
             <h3 style="color: #27ae60; margin: 0;">30%</h3>
-            <p style="margin: 0;">tr("EFFICIENCY")</p>
+            <p style="margin: 0;">utils.tr("EFFICIENCY")</p>
         </div>
         """, unsafe_allow_html=True)
     
@@ -235,7 +235,7 @@ def show_impact_metrics():
         st.markdown("""
         <div class="metric-card pulse">
             <h3 style="color: #3498db; margin: 0;">25%</h3>
-            <p style="margin: 0;">tr('PROCESSING')</p>
+            <p style="margin: 0;">utils.tr('PROCESSING')</p>
         </div>
         """, unsafe_allow_html=True)
     
@@ -243,7 +243,7 @@ def show_impact_metrics():
         st.markdown("""
         <div class="metric-card pulse">
             <h3 style="color: #f39c12; margin: 0;">5+</h3>
-            <p style="margin: 0;">tr('EXPERIENCE')</p>
+            <p style="margin: 0;">utils.tr('EXPERIENCE')</p>
         </div>
         """, unsafe_allow_html=True)
 
@@ -251,9 +251,9 @@ def show_impact_metrics():
 def proactive_showcase():
     st.markdown("""
     <div class="proactive-section">
-        <h2 style="color: white; margin-bottom: 2rem;">tr('PROACTIVE_TITLE')</h2>
+        <h2 style="color: white; margin-bottom: 2rem;">utils.tr('PROACTIVE_TITLE')</h2>
         <p style="font-size: 1.2rem; margin-bottom: 2rem;">
-            tr('PROACTIVE_TEXT')
+            utils.tr('PROACTIVE_TEXT')
         </p>
     </div>
     """, unsafe_allow_html=True)
@@ -263,13 +263,13 @@ def proactive_showcase():
     with col1:
         st.markdown("""
         <div class="interactive-card">
-            <h3>tr('CANDIDATE_ASSISTANT')</h3>
-            <p>tr('CANDIDATE_DESC')</p>
+            <h3>utils.tr('CANDIDATE_ASSISTANT')</h3>
+            <p>utils.tr('CANDIDATE_DESC')</p>
             <ul>
-                <li>tr('CANDIDATE_FEATURE1')</li>
-                <li>tr('CANDIDATE_FEATURE2')</li>
-                <li>tr('CANDIDATE_FEATURE3')</li>
-                <li>tr('CANDIDATE_FEATURE4')</li>
+                <li>utils.tr('CANDIDATE_FEATURE1')</li>
+                <li>utils.tr('CANDIDATE_FEATURE2')</li>
+                <li>utils.tr('CANDIDATE_FEATURE3')</li>
+                <li>utils.tr('CANDIDATE_FEATURE4')</li>
             </ul>
         </div>
         """, unsafe_allow_html=True)
@@ -277,13 +277,13 @@ def proactive_showcase():
     with col2:
         st.markdown("""
         <div class="interactive-card">
-            <h3>tr('TECH_IMPLEMENTATION')</h3>
-            <p>tr('TECH_DESC')</p>
+            <h3>utils.tr('TECH_IMPLEMENTATION')</h3>
+            <p>utils.tr('TECH_DESC')</p>
             <ul>
-                <li>tr('TECH_FEATURE1')</li>
-                <li>tr('TECH_FEATURE2')</li>
-                <li>tr('TECH_FEATURE3')</li>
-                <li>tr('TECH_FEATURE4')</li>
+                <li>utils.tr('TECH_FEATURE1')</li>
+                <li>utils.tr('TECH_FEATURE2')</li>
+                <li>utils.tr('TECH_FEATURE3')</li>
+                <li>utils.tr('TECH_FEATURE4')</li>
             </ul>
         </div>
         """, unsafe_allow_html=True)
@@ -334,22 +334,22 @@ if page == utils.tr("NAV_HOME"):
             """, unsafe_allow_html=True)
             st_lottie(animation, height=100, key=f"expertise_{i}")
 
-elif page == tr("NAV_ABOUT"):
+elif page == utils.tr("NAV_ABOUT"):
     logging.info("Loading About Page")
     importlib.reload(about)
 
-elif page == tr("NAV_PROJECTS"):
+elif page == utils.tr("NAV_PROJECTS"):
     logging.info("Loading Projects Page")
     importlib.reload(projects)
 
-elif page == tr("NAV_SKILLS"):
+elif page == utils.tr("NAV_SKILLS"):
     logging.info("Loading Skills Page")
     importlib.reload(skills)
 
-elif page == tr("NAV_CONTACT"):
+elif page == utils.tr("NAV_CONTACT"):
     logging.info("Loading Contact Page")
     importlib.reload(contact)
 
-elif page == tr("NAV_RESUME"):
+elif page == utils.tr("NAV_RESUME"):
     logging.info("Loading Resume Page")
     importlib.reload(resume)
