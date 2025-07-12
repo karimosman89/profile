@@ -12,48 +12,12 @@ import contact
 import importlib
 import random
 import time
-import os
-from datetime import datetime
-from streamlit_javascript import st_javascript
-
-# Language detection function
-def get_browser_lang():
-    try:
-        lang = st_javascript("""const lang = navigator.language || navigator.userLanguage; 
-        return lang.split('-')[0];""")
-        return lang if lang else "en"
-    except:
-        return "en"
-
-# Initialize session state for language
-if 'lang' not in st.session_state:
-    st.session_state.lang = get_browser_lang()
-
-# Load translations
-@st.cache_data
-def load_translations(lang):
-    try:
-        with open(f"locales/{lang}/translation.json", "r", encoding='utf-8') as f:
-            return json.load(f)
-    except Exception as e:
-        logging.error(f"Error loading translations for {lang}: {str(e)}")
-        try:
-            # Fallback to English
-            with open("locales/en/translation.json", "r", encoding='utf-8') as f:
-                return json.load(f)
-        except:
-            return {}
-
-# Translation function
-def tr(key):
-    translations = load_translations(st.session_state.lang)
-    return translations.get(key, key)
 
 # Configure the page
-st.set_page_config(page_title=tr("PAGE_TITLE"), layout="wide", initial_sidebar_state="expanded")
+st.set_page_config(page_title=utils.tr("PAGE_TITLE"), layout="wide", initial_sidebar_state="expanded")
 logging.basicConfig(level=logging.INFO)
 
-# Load resources
+
 @st.cache_resource
 def load_lottie_local(filepath: str):
     with open(filepath, "r") as f:
@@ -73,26 +37,26 @@ dev_ops_animation = load_lottie_local('devops.json')
 profile_photo = load_profile_photo()
 
 # Enhanced styles with modern design
-st.markdown(f"""
+st.markdown("""
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
     
-    .main {{
+    .main {
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         padding: 2rem;
         font-family: 'Inter', sans-serif;
-    }}
+    }
     
-    .hero-section {{
+    .hero-section {
         background: rgba(255, 255, 255, 0.95);
         border-radius: 20px;
         padding: 3rem;
         margin: 2rem 0;
         box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
         backdrop-filter: blur(10px);
-    }}
+    }
     
-    .interactive-card {{
+    .interactive-card {
         background: linear-gradient(145deg, #ffffff, #f0f0f0);
         border-radius: 15px;
         padding: 2rem;
@@ -100,31 +64,31 @@ st.markdown(f"""
         box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
         transition: transform 0.3s ease, box-shadow 0.3s ease;
         cursor: pointer;
-    }}
+    }
     
-    .interactive-card:hover {{
+    .interactive-card:hover {
         transform: translateY(-5px);
         box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-    }}
+    }
     
-    .proactive-section {{
+    .proactive-section {
         background: linear-gradient(135deg, #ff6b6b, #ee5a24);
         color: white;
         border-radius: 20px;
         padding: 3rem;
         margin: 2rem 0;
         text-align: center;
-    }}
+    }
     
-    .chat-interface {{
+    .chat-interface {
         background: #f8f9fa;
         border-radius: 15px;
         padding: 2rem;
         margin: 2rem 0;
         border: 2px solid #e9ecef;
-    }}
+    }
     
-    h1 {{
+    h1 {
         font-size: 3.5rem;
         font-weight: 700;
         background: linear-gradient(135deg, #667eea, #764ba2);
@@ -132,52 +96,50 @@ st.markdown(f"""
         -webkit-text-fill-color: transparent;
         text-align: center;
         margin-bottom: 1rem;
-    }}
+    }
     
-    h2 {{
+    h2 {
         color: #2c3e50;
         font-weight: 600;
         margin: 2rem 0 1rem 0;
-    }}
+    }
     
-    .metric-card {{
+    .metric-card {
         background: white;
         border-radius: 10px;
         padding: 1.5rem;
         text-align: center;
         box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
-    }}
+    }
     
-    .pulse {{
+    .pulse {
         animation: pulse 2s infinite;
-    }}
+    }
     
-    @keyframes pulse {{
-        0% {{ transform: scale(1); }}
-        50% {{ transform: scale(1.05); }}
-        100% {{ transform: scale(1); }}
-    }}
+    @keyframes pulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+        100% { transform: scale(1); }
+    }
     
-    .typing-effect {{
+    .typing-effect {
         overflow: hidden;
         border-right: .15em solid orange;
         white-space: nowrap;
         margin: 0 auto;
         letter-spacing: .15em;
         animation: typing 3.5s steps(40, end), blink-caret .75s step-end infinite;
-    }}
+    }
     
-    @keyframes typing {{
-        from {{ width: 0 }}
-        to {{ width: 100% }}
-    }}
+    @keyframes typing {
+        from { width: 0 }
+        to { width: 100% }
+    }
     
-    @keyframes blink-caret {{
-        from, to {{ border-color: transparent }}
-        50% {{ border-color: orange; }}
-    }}
-    
-    /* RTL support */
+    @keyframes blink-caret {
+        from, to { border-color: transparent }
+        50% { border-color: orange; }
+    }
     [lang="ar"], [lang="he"] {{
         direction: rtl;
         text-align: right;
@@ -185,66 +147,39 @@ st.markdown(f"""
 </style>
 """, unsafe_allow_html=True)
 
-# Sidebar Navigation with enhanced design
-st.sidebar.markdown(f"### 🌐 {tr('LANGUAGE')}")
+# Sidebar Navigation
+page = utils.language_selector()
 
-# Language options with flags
-lang_options = {
-    "en": "🇬🇧 English",
-    "fr": "🇫🇷 Français",
-    "de": "🇩🇪 Deutsch",
-    "sv": "🇸🇪 Svenska",
-    "no": "🇳🇴 Norsk",
-    "nl": "🇳🇱 Nederlands",
-    "da": "🇩🇰 Dansk",
-    "ja": "🇯🇵 日本語"
-}
 
-selected_lang = st.sidebar.selectbox(
-    "", 
-    list(lang_options.values()),
-    index=list(lang_options.keys()).index(st.session_state.lang)
-)
-st.session_state.lang = list(lang_options.keys())[list(lang_options.values()).index(selected_lang)]
-
-st.sidebar.markdown(f"### 🚀 {tr('NAVIGATION')}")
-page = st.sidebar.radio("", [
-    tr("NAV_HOME"),
-    tr("NAV_ABOUT"),
-    tr("NAV_PROJECTS"),
-    tr("NAV_SKILLS"),
-    tr("NAV_CONTACT"),
-    tr("NAV_RESUME")
-])
 
 # Interactive AI Chat Bot Section
 def ai_chat_interface():
-    st.markdown(f"### {tr('AI_CHAT_TITLE')}")
+    st.markdown(f"### {utils.tr('AI_CHAT_TITLE')}")
     
     if 'chat_history' not in st.session_state:
         st.session_state.chat_history = []
     
     # Predefined questions for quick interaction
     quick_questions = [
-        tr("STRONGEST_SKILL"),
-        tr("IMPACTFUL_PROJECT"),
-        tr("PROBLEM_SOLVING"),
-        tr("DIFFERENT"),
-        tr("AI_VISION")
+        utils.tr("STRONGEST_SKILL"),
+        utils.tr("IMPACTFUL_PROJECT"),
+        utils.tr("PROBLEM_SOLVING"),
+        utils.tr("DIFFERENT"),
+        utils.tr("AI_VISION")
     ]
     
     col1, col2 = st.columns([3, 1])
     
     with col1:
-        user_question = st.text_input(tr("AI_CHAT_PROMPT"), placeholder=tr("AI_CHAT_PLACEHOLDER"))
+        user_question = st.text_input(utils.tr("AI_CHAT_PROMPT"), placeholder=utils.tr("AI_CHAT_PLACEHOLDER"))
     
     with col2:
-        if st.button(tr("AI_CHAT_RANDOM")):
+        if st.button(utils.tr("AI_CHAT_RANDOM")):
             user_question = random.choice(quick_questions)
             st.session_state.random_question = user_question
     
     # Quick question buttons
-    st.markdown(f"**{tr('QUICK_QUESTIONS')}**")
+    st.markdown(f"**{utils.tr('QUICK_QUESTIONS')}**")
     cols = st.columns(len(quick_questions))
     for i, question in enumerate(quick_questions):
         if cols[i].button(f"❓ {question[:20]}...", key=f"quick_{i}"):
@@ -252,71 +187,71 @@ def ai_chat_interface():
     
     # AI responses based on questions
     ai_responses = {
-        tr("STRONGEST_SKILL"): tr("STRONGEST_SKILL_RESPONSE"),
-        tr("IMPACTFUL_PROJECT"): tr("IMPACTFUL_PROJECT_RESPONSE"),
-        tr("PROBLEM_SOLVING"): tr("PROBLEM_SOLVING_RESPONSE"),
-        tr("DIFFERENT"): tr("DIFFERENT_RESPONSE"),
-        tr("AI_VISION"): tr("AI_VISION_RESPONSE")
+        utils.tr("STRONGEST_SKILL"): utils.tr("STRONGEST_SKILL_RESPONSE"),
+        utils.tr("IMPACTFUL_PROJECT"): utils.tr("IMPACTFUL_PROJECT_RESPONSE"),
+        utils.tr("PROBLEM_SOLVING"): utils.tr("PROBLEM_SOLVING_RESPONSE"),
+        utils.tr("DIFFERENT"): utils.tr("DIFFERENT_RESPONSE"),
+        utils.tr("AI_VISION"): utils.tr("AI_VISION_RESPONSE")
     }
     
     if user_question:
         # Simulate typing effect
-        with st.spinner("🤔 " + tr("THINKING")):
+        with st.spinner("🤔 " + utils.tr("THINKING")):
             time.sleep(1)
         
         response = ai_responses.get(user_question, 
-            tr("DEFAULT_RESPONSE").format(question=user_question))
+            utils.tr("DEFAULT_RESPONSE").format(question=user_question))
         
-        st.markdown(f"**🤖 {tr('AI_ASSISTANT')}:** {response}")
+        st.markdown(f"**🤖 {utils.tr('AI_ASSISTANT')}:** {response}")
         
         # Add to chat history
         st.session_state.chat_history.append({"question": user_question, "answer": response})
 
 # Enhanced metrics display
 def show_impact_metrics():
-    st.markdown(f"### {tr('METRICS_TITLE')}")
+    st.markdown(f"### {utils.tr('METRICS_TITLE')}")
     
     col1, col2, col3, col4 = st.columns(4)
     
     with col1:
-        st.markdown(f"""
+        st.markdown("""
         <div class="metric-card pulse">
             <h3 style="color: #e74c3c; margin: 0;">20%</h3>
-            <p style="margin: 0;">{tr('PERFORMANCE')}</p>
+            <p style="margin: 0;">{utils.tr('PERFORMANCE')}</p>
         </div>
         """, unsafe_allow_html=True)
     
     with col2:
-        st.markdown(f"""
+        st.markdown("""
         <div class="metric-card pulse">
             <h3 style="color: #27ae60; margin: 0;">30%</h3>
-            <p style="margin: 0;">{tr('EFFICIENCY')}</p>
+            <p style="margin: 0;">Workflow Efficiency</p>
         </div>
         """, unsafe_allow_html=True)
     
     with col3:
-        st.markdown(f"""
+        st.markdown("""
         <div class="metric-card pulse">
             <h3 style="color: #3498db; margin: 0;">25%</h3>
-            <p style="margin: 0;">{tr('PROCESSING')}</p>
+            <p style="margin: 0;">Data Processing Speed</p>
         </div>
         """, unsafe_allow_html=True)
     
     with col4:
-        st.markdown(f"""
+        st.markdown("""
         <div class="metric-card pulse">
             <h3 style="color: #f39c12; margin: 0;">5+</h3>
-            <p style="margin: 0;">{tr('EXPERIENCE')}</p>
+            <p style="margin: 0;">Years Experience</p>
         </div>
         """, unsafe_allow_html=True)
 
 # Proactive approach showcase
 def proactive_showcase():
-    st.markdown(f"""
+    st.markdown("""
     <div class="proactive-section">
-        <h2 style="color: white; margin-bottom: 2rem;">{tr('PROACTIVE_TITLE')}</h2>
+        <h2 style="color: white; margin-bottom: 2rem;">🚀 My Proactive Approach</h2>
         <p style="font-size: 1.2rem; margin-bottom: 2rem;">
-            {tr('PROACTIVE_TEXT')}
+            I don't just respond to problems - I anticipate them. Here's how I would revolutionize your company's AI capabilities:
         </p>
     </div>
     """, unsafe_allow_html=True)
@@ -324,41 +259,41 @@ def proactive_showcase():
     col1, col2 = st.columns(2)
     
     with col1:
-        st.markdown(f"""
+        st.markdown("""
         <div class="interactive-card">
-            <h3>{tr('CANDIDATE_ASSISTANT')}</h3>
-            <p>{tr('CANDIDATE_DESC')}</p>
+            <h3>🎯 Intelligent Candidate Assistant</h3>
+            <p>An AI-powered system that analyzes applications beyond keywords, providing personalized feedback and creating an exceptional candidate experience.</p>
             <ul>
-                <li>{tr('CANDIDATE_FEATURE1')}</li>
-                <li>{tr('CANDIDATE_FEATURE2')}</li>
-                <li>{tr('CANDIDATE_FEATURE3')}</li>
-                <li>{tr('CANDIDATE_FEATURE4')}</li>
+                <li>Semantic analysis of CVs and proposals</li>
+                <li>Personalized feedback generation</li>
+                <li>Interactive chatbot for candidates</li>
+                <li>Hidden talent identification</li>
             </ul>
         </div>
         """, unsafe_allow_html=True)
     
     with col2:
-        st.markdown(f"""
+        st.markdown("""
         <div class="interactive-card">
-            <h3>{tr('TECH_IMPLEMENTATION')}</h3>
-            <p>{tr('TECH_DESC')}</p>
+            <h3>⚡ Technical Implementation</h3>
+            <p>Leveraging cutting-edge technologies to create scalable, robust solutions:</p>
             <ul>
-                <li>{tr('TECH_FEATURE1')}</li>
-                <li>{tr('TECH_FEATURE2')}</li>
-                <li>{tr('TECH_FEATURE3')}</li>
-                <li>{tr('TECH_FEATURE4')}</li>
+                <li>Advanced NLP with Hugging Face models</li>
+                <li>Vector databases for semantic search</li>
+                <li>Cloud-native architecture (AWS/GCP)</li>
+                <li>Real-time interactive interfaces</li>
             </ul>
         </div>
         """, unsafe_allow_html=True)
 
 # Main page rendering
-if page == tr("NAV_HOME"):
+if page == utils.tr("NAV_HOME"):
     # Hero section with typing effect
     st.markdown(f"""
     <div class="hero-section">
-        <h1 class="typing-effect">{tr('WELCOME_TITLE')}</h1>
+        <h1 class="typing-effect">{utils.tr('WELCOME_TITLE')}</h1>
         <p style="text-align: center; font-size: 1.3rem; color: #555; margin-top: 2rem;">
-            {tr('TAGLINE')}
+            {utils.tr('TAGLINE')}
         </p>
     </div>
     """, unsafe_allow_html=True)
@@ -373,17 +308,17 @@ if page == tr("NAV_HOME"):
     proactive_showcase()
     
     # Enhanced expertise showcase
-    st.markdown(f"### {tr('EXPERTISE_TITLE')}")
+    st.markdown(f"### {utils.tr('EXPERTISE_TITLE')}")
     
     col1, col2, col3 = st.columns(3)
     
     expertise_areas = [
-        (tr("ML_TITLE"), tr("ML_DESC"), data_analysis_animation),
-        (tr("AI_ENGINEERING_TITLE"), tr("AI_ENGINEERING_DESC"), ai_engineering_animation),
-        (tr("DATA_SCIENCE_TITLE"), tr("DATA_SCIENCE_DESC"), ai_animation),
-        (tr("DL_TITLE"), tr("DL_DESC"), deep_learning_animation),
-        (tr("CLOUD_TITLE"), tr("CLOUD_DESC"), dev_ops_animation),
-        (tr("INNOVATION_TITLE"), tr("INNOVATION_DESC"), data_engineer_animation)
+        ("🤖 Machine Learning", "Building predictive models that drive business decisions", data_analysis_animation),
+        ("🔧 AI Engineering", "Deploying scalable AI solutions in production", ai_engineering_animation),
+        ("📊 Data Science", "Extracting insights from complex datasets", ai_animation),
+        ("🧠 Deep Learning", "Creating neural networks for complex problems", deep_learning_animation),
+        ("☁️ Cloud & DevOps", "Scalable infrastructure and deployment", dev_ops_animation),
+        ("💡 Innovation", "Proactive problem-solving and future-thinking", data_engineer_animation)
     ]
     
     for i, (title, desc, animation) in enumerate(expertise_areas):
@@ -397,22 +332,22 @@ if page == tr("NAV_HOME"):
             """, unsafe_allow_html=True)
             st_lottie(animation, height=100, key=f"expertise_{i}")
 
-elif page == tr("NAV_ABOUT"):
+elif page == utils.tr("NAV_ABOUT"):
     logging.info("Loading About Page")
     importlib.reload(about)
 
-elif page == tr("NAV_PROJECTS"):
+elif page == "🚀 Projects":
     logging.info("Loading Projects Page")
     importlib.reload(projects)
 
-elif page == tr("NAV_SKILLS"):
+elif page == "⚡ Skills":
     logging.info("Loading Skills Page")
     importlib.reload(skills)
 
-elif page == tr("NAV_CONTACT"):
+elif page == "📞 Contact":
     logging.info("Loading Contact Page")
     importlib.reload(contact)
 
-elif page == tr("NAV_RESUME"):
+elif page == "📄 Resume":
     logging.info("Loading Resume Page")
     importlib.reload(resume)
