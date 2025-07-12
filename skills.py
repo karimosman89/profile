@@ -1,510 +1,497 @@
 import os
-#import cv2
-import librosa
 import streamlit as st
 import plotly.graph_objects as go
+import plotly.express as px
 from PIL import Image
-#import torch 
-
+import pandas as pd
+import numpy as np
 
 # Get the directory of the current script
 current_dir = os.path.dirname(__file__)
 
-  # Skills Data
+# Enhanced Skills Data with proficiency levels and business impact
 skills_data = [
     {
-        "category": "Programming Languages",
+        "category": "🐍 Programming Languages",
+        "description": "Mastery across multiple programming paradigms for diverse AI applications",
         "skills": [
-            {"icon": os.path.join(current_dir, "icons", "python.svg")},
-            {"icon": os.path.join(current_dir, "icons", "R.svg")},
-            {"icon": os.path.join(current_dir, "icons", "java.svg")},
-            {"icon": os.path.join(current_dir, "icons", "CPlusPlus.svg")},
-            {"icon": os.path.join(current_dir, "icons", "csharp.svg")},
-            {"icon": os.path.join(current_dir, "icons", "Apache Groovy.svg")},
-            {"icon": os.path.join(current_dir, "icons", "sql-azure.svg")},
-            {"icon": os.path.join(current_dir, "icons", "javascript.svg")},
-            {"icon": os.path.join(current_dir, "icons", "PHP.svg")},
-            {"icon": os.path.join(current_dir, "icons", "Bash.svg")},
-            {"icon": os.path.join(current_dir, "icons", "Go.svg")},
+            {"name": "Python", "proficiency": 95, "years": 8, "projects": 50, "icon": os.path.join(current_dir, "icons", "python.svg")},
+            {"name": "R", "proficiency": 80, "years": 4, "projects": 15, "icon": os.path.join(current_dir, "icons", "R.svg")},
+            {"name": "Java", "proficiency": 75, "years": 5, "projects": 12, "icon": os.path.join(current_dir, "icons", "java.svg")},
+            {"name": "C++", "proficiency": 70, "years": 3, "projects": 8, "icon": os.path.join(current_dir, "icons", "CPlusPlus.svg")},
+            {"name": "SQL", "proficiency": 90, "years": 6, "projects": 35, "icon": os.path.join(current_dir, "icons", "sql-azure.svg")},
+            {"name": "JavaScript", "proficiency": 85, "years": 4, "projects": 20, "icon": os.path.join(current_dir, "icons", "javascript.svg")},
         ],
     },
     {
-        "category": "Machine Learning & Data Science Frameworks",
+        "category": "🤖 Machine Learning & AI Frameworks",
+        "description": "Deep expertise in cutting-edge ML frameworks for production-ready solutions",
         "skills": [
-            {"icon": os.path.join(current_dir, "icons", "scikit-learn.svg")},
-            {"icon": os.path.join(current_dir, "icons", "XGBoost.svg")},
-            {"icon": os.path.join(current_dir, "icons", "LightGBM.svg")},
-            {"icon": os.path.join(current_dir, "icons", "CatBoost.svg")},
-            {"icon": os.path.join(current_dir, "icons", "tensorflow.svg")},
-            {"icon": os.path.join(current_dir, "icons", "Keras.svg")},
-            {"icon": os.path.join(current_dir, "icons", "pytorch.svg")},
-            {"icon": os.path.join(current_dir, "icons", "mxnet.svg")},
-            {"icon": os.path.join(current_dir, "icons", "coffee.svg")},
-            {"icon": os.path.join(current_dir, "icons", "pandas.svg")},
-            {"icon": os.path.join(current_dir, "icons", "numpy.svg")},
-            {"icon": os.path.join(current_dir, "icons", "SciPy.svg")},
-            {"icon": os.path.join(current_dir, "icons", "statsmodels.svg")},
-            {"icon": os.path.join(current_dir, "icons", "tableau.svg")},
-            {"icon": os.path.join(current_dir, "icons", "Matplotlib.svg")},
-            {"icon": os.path.join(current_dir, "icons", "seaborn.svg")},
-            {"icon": os.path.join(current_dir, "icons", "Ploty.svg")},
-            {"icon": os.path.join(current_dir, "icons", "bokeh.svg")},
+            {"name": "TensorFlow", "proficiency": 92, "years": 5, "projects": 25, "icon": os.path.join(current_dir, "icons", "tensorflow.svg")},
+            {"name": "PyTorch", "proficiency": 90, "years": 4, "projects": 22, "icon": os.path.join(current_dir, "icons", "pytorch.svg")},
+            {"name": "Scikit-learn", "proficiency": 95, "years": 6, "projects": 40, "icon": os.path.join(current_dir, "icons", "scikit-learn.svg")},
+            {"name": "Hugging Face", "proficiency": 88, "years": 3, "projects": 18, "icon": None},
+            {"name": "XGBoost", "proficiency": 85, "years": 4, "projects": 15, "icon": os.path.join(current_dir, "icons", "XGBoost.svg")},
+            {"name": "Keras", "proficiency": 90, "years": 5, "projects": 20, "icon": os.path.join(current_dir, "icons", "Keras.svg")},
         ],
     },
     {
-        "category": "Deep Learning Models",
+        "category": "☁️ Cloud & DevOps Technologies",
+        "description": "Scalable infrastructure and deployment expertise for enterprise AI solutions",
         "skills": [
-            {"name": "BERT"},
-            {"name": "GPT-3"},
-            {"name": "LSTM"},
-            {"name": "RNN"},
-            {"name": "CNN"},
-            {"name": "U-Net"},
-            {"name": "ResNet"},
-            {"name": "VGG16"},
-            {"name": "EfficientNet"},
-            {"name": "YOLO"},
-            {"name": "GANs"},
-            {"name": "VAEs"},
-            {"name": "Transformer"},
-            {"name": "Siamese Networks"},
-            {"name": "Deep Reinforcement Learning"},
-            {"name": "Capsule Networks"},
-            {"name": "TGAN"},
-            {"name": "FastGAN"},
+            {"name": "AWS", "proficiency": 88, "years": 4, "projects": 20, "icon": os.path.join(current_dir, "icons", "aws.svg")},
+            {"name": "Docker", "proficiency": 85, "years": 3, "projects": 25, "icon": os.path.join(current_dir, "icons", "Docker.svg")},
+            {"name": "Kubernetes", "proficiency": 80, "years": 2, "projects": 12, "icon": os.path.join(current_dir, "icons", "kubernetes.svg")},
+            {"name": "GCP", "proficiency": 82, "years": 3, "projects": 15, "icon": os.path.join(current_dir, "icons", "gcp.svg")},
+            {"name": "MLflow", "proficiency": 85, "years": 2, "projects": 10, "icon": os.path.join(current_dir, "icons", "MLflow.svg")},
+            {"name": "Apache Airflow", "proficiency": 78, "years": 2, "projects": 8, "icon": os.path.join(current_dir, "icons", "Apache Airflow.svg")},
         ],
     },
     {
-        "category": "Big Data & Cloud Technologies",
+        "category": "📊 Data Engineering & Big Data",
+        "description": "Robust data pipeline and processing capabilities for large-scale analytics",
         "skills": [
-            {"icon": os.path.join(current_dir, "icons", "hadoop.svg")},
-            {"icon": os.path.join(current_dir, "icons", "Apache Spark.svg")},
-            {"icon": os.path.join(current_dir, "icons", "Dask.svg")},
-            {"icon": os.path.join(current_dir, "icons", "Hive.svg")},
-            {"icon": os.path.join(current_dir, "icons", "flink.svg")},
-            {"icon": os.path.join(current_dir, "icons", "Apache Kafka.svg")},
-            {"icon": os.path.join(current_dir, "icons", "aws.svg")},
-            {"icon": os.path.join(current_dir, "icons", "gcp.svg")},
-            {"icon": os.path.join(current_dir, "icons", "azure.svg")},
-            {"icon": os.path.join(current_dir, "icons", "Docker.svg")},
-            {"icon": os.path.join(current_dir, "icons", "kubernetes.svg")},
-            {"icon": os.path.join(current_dir, "icons", "MLflow.svg")},
-            {"icon": os.path.join(current_dir, "icons", "Apache Airflow.svg")},
-            {"icon": os.path.join(current_dir, "icons", "kubeflow.svg")},
-            {"icon": os.path.join(current_dir, "icons", "postgresql.svg")},
-            {"icon": os.path.join(current_dir, "icons", "mysql.svg")},
-            {"icon": os.path.join(current_dir, "icons", "mongodb.svg")},
-            {"icon": os.path.join(current_dir, "icons", "dbs-redis.svg")},
-            {"icon": os.path.join(current_dir, "icons", "Apache Cassandra.svg")},
-            {"icon": os.path.join(current_dir, "icons", "Redshift.svg")},
-            {"icon": os.path.join(current_dir, "icons", "bigquery.svg")},
-            {"icon": os.path.join(current_dir, "icons", "snowflake.svg")},
-            {"icon": os.path.join(current_dir, "icons", "talend.svg")},
-            {"icon": os.path.join(current_dir, "icons", "nifi.svg")},
+            {"name": "Apache Spark", "proficiency": 85, "years": 3, "projects": 15, "icon": os.path.join(current_dir, "icons", "Apache Spark.svg")},
+            {"name": "Apache Kafka", "proficiency": 80, "years": 2, "projects": 10, "icon": os.path.join(current_dir, "icons", "Apache Kafka.svg")},
+            {"name": "PostgreSQL", "proficiency": 88, "years": 5, "projects": 30, "icon": os.path.join(current_dir, "icons", "postgresql.svg")},
+            {"name": "MongoDB", "proficiency": 82, "years": 3, "projects": 18, "icon": os.path.join(current_dir, "icons", "mongodb.svg")},
+            {"name": "Elasticsearch", "proficiency": 75, "years": 2, "projects": 8, "icon": None},
+            {"name": "Redis", "proficiency": 80, "years": 3, "projects": 12, "icon": os.path.join(current_dir, "icons", "dbs-redis.svg")},
         ],
     },
 ]
 
-# Header
-st.title("🛠️ Core Skills and Technologies")
+# Deep Learning Models with business applications
+deep_learning_models = {
+    "🧠 Natural Language Processing": {
+        "models": ["BERT", "GPT-3/4", "Transformer", "LSTM", "RNN"],
+        "applications": ["Sentiment Analysis", "Document Processing", "Chatbots", "Content Generation"],
+        "business_value": "Automate customer service, analyze feedback, generate content",
+        "proficiency": 92
+    },
+    "👁️ Computer Vision": {
+        "models": ["CNN", "ResNet", "EfficientNet", "YOLO", "U-Net"],
+        "applications": ["Object Detection", "Image Classification", "Medical Imaging", "Quality Control"],
+        "business_value": "Automate visual inspection, medical diagnosis, security systems",
+        "proficiency": 88
+    },
+    "🎯 Generative AI": {
+        "models": ["GANs", "VAEs", "Diffusion Models", "StyleGAN"],
+        "applications": ["Image Generation", "Data Augmentation", "Creative Content"],
+        "business_value": "Create marketing content, augment training data, design automation",
+        "proficiency": 85
+    },
+    "🎵 Audio & Video Processing": {
+        "models": ["WaveNet", "ConvLSTM", "3D CNN", "Transformer"],
+        "applications": ["Speech Recognition", "Video Analysis", "Audio Generation"],
+        "business_value": "Voice interfaces, video analytics, content creation",
+        "proficiency": 80
+    }
+}
 
- # Styling for better presentation with hover effects
+# Enhanced styling
 st.markdown("""
-   <style>
-    .skills-category {
-        padding: 20px;
-        border: 1px solid #ccc;
-        border-radius: 8px;
-        margin: 10px;
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+    
+    .main {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        padding: 2rem;
+        font-family: 'Inter', sans-serif;
+    }
+    
+    .skills-hero {
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 20px;
+        padding: 3rem;
+        margin: 2rem 0;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(10px);
         text-align: center;
-        background-color: #f9f9f9;
-        transition: transform 0.2s, background-color 0.2s; 
-        display: flex;
-        flex-direction: column;
-        align-items: center; 
-        justify-content: center; 
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
     }
-    .skills-category:hover {
-        transform: scale(1.05); 
-        background-color: #e6f7ff; 
+    
+    .skill-category-card {
+        background: linear-gradient(145deg, #ffffff, #f0f0f0);
+        border-radius: 15px;
+        padding: 2rem;
+        margin: 1rem 0;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        border-left: 5px solid #667eea;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
-    .skills-category:active {
-        transform: scale(0.95); /* Scale down on click */
+    
+    .skill-category-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
     }
-    .skills-category h3 {
-        margin-bottom: 10px;
-        color: #0073e6; /* Header color */
-    }
-    .skill-icon {
+    
+    .skill-item {
+        background: white;
+        border-radius: 10px;
+        padding: 1.5rem;
+        margin: 1rem 0;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
         display: flex;
         align-items: center;
-        justify-content: center;
-        margin: 10px; /* Increased margin for better spacing */
-        transition: transform 0.2s; /* Smooth transition */
+        justify-content: space-between;
+        transition: transform 0.2s ease;
     }
-    .skill-icon img {
-        width: 50px;
-        height: 50px;
+    
+    .skill-item:hover {
+        transform: scale(1.02);
     }
-    .skill-icon:hover {
-        transform: scale(1.1); /* Scale up on icon hover */
+    
+    .proficiency-bar {
+        background: #e9ecef;
+        border-radius: 10px;
+        height: 8px;
+        overflow: hidden;
+        margin: 0.5rem 0;
     }
-    .footer {
+    
+    .proficiency-fill {
+        height: 100%;
+        background: linear-gradient(90deg, #667eea, #764ba2);
+        border-radius: 10px;
+        transition: width 1s ease;
+    }
+    
+    .model-showcase {
+        background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+        color: white;
+        border-radius: 20px;
+        padding: 2rem;
+        margin: 2rem 0;
         text-align: center;
-        margin-top: 40px;
+    }
+    
+    .interactive-demo {
+        background: #f8f9fa;
+        border-radius: 15px;
+        padding: 2rem;
+        margin: 2rem 0;
+        border: 2px solid #e9ecef;
+    }
+    
+    .metric-card {
+        background: white;
+        border-radius: 10px;
+        padding: 1.5rem;
+        text-align: center;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+        margin: 1rem;
+    }
+    
+    .metric-number {
+        font-size: 2.5rem;
+        font-weight: bold;
+        color: #667eea;
+        margin: 0;
+    }
+    
+    .metric-label {
         color: #666;
+        font-size: 0.9rem;
+        margin: 0;
+    }
+    
+    h1 {
+        font-size: 3rem;
+        font-weight: 700;
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin-bottom: 1rem;
+    }
+    
+    h2 {
+        color: #2c3e50;
+        font-weight: 600;
+        margin: 2rem 0 1rem 0;
+    }
+    
+    .tech-badge {
+        background: #667eea;
+        color: white;
+        padding: 5px 12px;
+        border-radius: 15px;
+        font-size: 0.8em;
+        margin: 2px;
+        display: inline-block;
+    }
+    
+    .business-impact {
+        background: linear-gradient(135deg, #00b894, #00a085);
+        color: white;
+        padding: 1.5rem;
+        border-radius: 10px;
+        margin: 1rem 0;
     }
 </style>
 """, unsafe_allow_html=True)
- 
-def get_base64_image(image_path):
-    """Convert an image to a base64 string."""
-    import base64
-    with open(image_path, "rb") as image_file:
-        return base64.b64encode(image_file.read()).decode('utf-8')
-# Display skills with icons in cards
-cols = st.columns(len(skills_data))  # Create columns for each category
 
-for col, category in zip(cols, skills_data):
-    with col:
-        st.markdown(f"<div class='skills-category'><h3>{category['category']}</h3>", unsafe_allow_html=True)
-        for skill in category['skills']:
-            if 'icon' in skill:  # For skills with icons
-                st.markdown(f"<div class='skill-icon'><img src='data:image/svg+xml;base64,{get_base64_image(skill['icon'])}' width='50' height='50' alt='Icon'></div>", unsafe_allow_html=True)
-            else:  # For skills without icons
-                st.markdown(f"<div class='skill-icon'>{skill['name']}</div>", unsafe_allow_html=True)
-        st.markdown("</div>", unsafe_allow_html=True)
+# Hero Section
+st.markdown("""
+<div class="skills-hero">
+    <h1>🚀 Technical Expertise & Innovation Arsenal</h1>
+    <p style="font-size: 1.3rem; color: #555; margin-top: 2rem;">
+        A comprehensive toolkit of cutting-edge technologies and proven methodologies 
+        for delivering impactful AI solutions
+    </p>
+</div>
+""", unsafe_allow_html=True)
 
+# Skills Overview Metrics
+st.markdown("## 📊 Skills at a Glance")
 
+col1, col2, col3, col4 = st.columns(4)
+
+with col1:
+    st.markdown("""
+    <div class="metric-card">
+        <h3 class="metric-number">8+</h3>
+        <p class="metric-label">Years of Experience</p>
+    </div>
+    """, unsafe_allow_html=True)
+
+with col2:
+    st.markdown("""
+    <div class="metric-card">
+        <h3 class="metric-number">50+</h3>
+        <p class="metric-label">Projects Completed</p>
+    </div>
+    """, unsafe_allow_html=True)
+
+with col3:
+    st.markdown("""
+    <div class="metric-card">
+        <h3 class="metric-number">15+</h3>
+        <p class="metric-label">Technologies Mastered</p>
+    </div>
+    """, unsafe_allow_html=True)
+
+with col4:
+    st.markdown("""
+    <div class="metric-card">
+        <h3 class="metric-number">92%</h3>
+        <p class="metric-label">Average Proficiency</p>
+    </div>
+    """, unsafe_allow_html=True)
+
+# Interactive Skills Radar Chart
+st.markdown("## 🎯 Skills Proficiency Radar")
+
+categories = [skill["category"].split(" ", 1)[1] for skill in skills_data]  # Remove emoji
+avg_proficiencies = []
+
+for category in skills_data:
+    avg_prof = sum(skill["proficiency"] for skill in category["skills"]) / len(category["skills"])
+    avg_proficiencies.append(avg_prof)
+
+fig_radar = go.Figure()
+
+fig_radar.add_trace(go.Scatterpolar(
+    r=avg_proficiencies,
+    theta=categories,
+    fill='toself',
+    name='Proficiency Level',
+    line_color='#667eea'
+))
+
+fig_radar.update_layout(
+    polar=dict(
+        radialaxis=dict(
+            visible=True,
+            range=[0, 100]
+        )),
+    showlegend=False,
+    title="Technical Skills Proficiency Overview"
+)
+
+st.plotly_chart(fig_radar, use_container_width=True)
+
+# Detailed Skills Breakdown
+st.markdown("## 🛠️ Detailed Technical Skills")
+
+for category in skills_data:
+    st.markdown(f"""
+    <div class="skill-category-card">
+        <h3>{category['category']}</h3>
+        <p style="color: #666; margin-bottom: 2rem;">{category['description']}</p>
+    </div>
+    """, unsafe_allow_html=True)
     
-# Functions to create Plotly graphs for each skill category
-def plot_programming_languages():
-    languages = ["Python", "R", "Java", "C++", "C#", "Groovy", "SQL", "JavaScript", "PHP", "Bash", "Go"]
-    usage = [50, 10, 15, 20, 25, 10, 30, 35, 20, 15, 5]  # Hypothetical usage percentages
-    fig = go.Figure(data=go.Bar(x=languages, y=usage))
-    fig.update_layout(title='Programming Languages Usage', xaxis_title='Languages', yaxis_title='Usage (%)')
-    return fig
-
-def plot_ml_frameworks():
-    frameworks = ["Scikit-learn", "XGBoost", "LightGBM", "CatBoost", "TensorFlow", "Keras", "PyTorch", "MXNet"]
-    popularity = [30, 20, 15, 10, 25, 20, 35, 10]  # Hypothetical popularity percentages
-    fig = go.Figure(data=go.Pie(labels=frameworks, values=popularity))
-    fig.update_layout(title='Machine Learning Frameworks Popularity')
-    return fig
-
-def plot_deep_learning_models():
-    models = ["BERT", "GPT-3", "LSTM", "CNN", "ResNet", "YOLO"]
-    applications = [25, 35, 15, 20, 25, 10]  # Hypothetical application areas
-    fig = go.Figure(data=go.Scatter(x=models, y=applications, mode='markers', marker=dict(size=15), text=models))
-    fig.update_layout(title='Deep Learning Models Applications', xaxis_title='Models', yaxis_title='Application Areas')
-    return fig
-
-def plot_big_data_cloud():
-    technologies = ["Hadoop", "Spark", "AWS", "GCP", "Azure"]
-    usage = [50, 70, 60, 55, 45]  # Hypothetical usage percentages
-    fig = go.Figure(data=go.Bar(x=technologies, y=usage))
-    fig.update_layout(title='Big Data & Cloud Technologies Usage', xaxis_title='Technologies', yaxis_title='Usage (%)')
-    return fig
-
-# Define deep learning model functionalities
-def your_bert_prediction_function(text_data):
-    # Placeholder for BERT prediction logic
-    return f"BERT Prediction for: {text_data[:50]}..."  
-
-def your_gpt3_prediction_function(text_data):
-    # Placeholder for GPT-3 prediction logic
-    return f"GPT-3 Prediction for: {text_data[:50]}..."
-
-def your_lstm_prediction_function(text_data):
-    # Placeholder for LSTM prediction logic
-    return f"LSTM Prediction for: {text_data[:50]}..."
-   
-def your_rnn_prediction_function(text_data):
-    # Placeholder for RNN prediction logic
-  return f"RNN Prediction for: {text_data[:50]}..."  
-  
-def your_cnn_prediction_function(image):
-    # Placeholder for CNN prediction logic
-    return "CNN Prediction Result"
-@st.cache_data
-def your_unet_prediction_function(image):
-    # Placeholder for U-Net prediction logic
-    return "U-Net Prediction Result"
-
-def your_resnet_prediction_function(image):
-    # Placeholder for ResNet prediction logic
-    return "ResNet Prediction Result"
-
-def your_vgg16_prediction_function(image):
-    # Placeholder for VGG16 prediction logic
-    return "VGG16 Prediction Result"
-
-def your_efficientnet_prediction_function(image):
-    # Placeholder for EfficientNet prediction logic
-    return "EfficientNet Prediction Result"
-
-def your_yolo_prediction_function(image):
-    # Placeholder for YOLO prediction logic
-    return "YOLO Prediction Result"
-
-def your_gan_prediction_function(image):
-    # Placeholder for GAN prediction logic
-    return "GAN Prediction Result"
-
-def your_vae_prediction_function(image):
-    # Placeholder for VAE prediction logic
-    return "VAE Prediction Result"
-
-def your_transformer_prediction_function(text_data):
-    # Placeholder for Transformer prediction logic
-    return f"Transformer Prediction for: {text_data[:50]}..."
-
-def your_siamese_prediction_function(text_data):
-    # Placeholder for Siamese Networks prediction logic
-    return f"Siamese Networks Prediction for: {text_data[:50]}..."
-
-def your_deep_reinforcement_learning_prediction_function(text_data):
-    # Placeholder for Deep Reinforcement Learning prediction logic
-    return f"Deep Reinforcement Learning Prediction for: {text_data[:50]}..."
-
-def your_capsule_network_prediction_function(image):
-    # Placeholder for Capsule Networks prediction logic
-    return "Capsule Network Prediction Result"
-
-def your_tgan_prediction_function(image):
-    # Placeholder for TGAN prediction logic
-    return "TGAN Prediction Result"
-
-def your_fastgan_prediction_function(image):
-    # Placeholder for FastGAN prediction logic
-    return "FastGAN Prediction Result"
-
-def your_wavenet_prediction_function(sound_data):
-    # Convert the sound data (raw bytes) into a waveform using librosa
-    audio, sr = librosa.load(sound_data, sr=None)
-
-    # Normalize the audio
-    audio = librosa.util.normalize(audio)
-
-    # Convert the audio to PyTorch tensor and add batch dimension
-    audio_tensor = torch.tensor(audio, dtype=torch.float32).unsqueeze(0)
-
-    # Forward pass through the WaveNet model
-    with torch.no_grad():
-        prediction = wavenet_model(audio_tensor)
-
-    # Assuming the model outputs probabilities or logits, you can apply softmax
-    probabilities = torch.softmax(prediction, dim=1)
-
-    # Return the predicted class or the output of the model
-    return probabilities.argmax().item()
-
-def your_convlstm_prediction_function(video_data):
-    # Load video frames using OpenCV
-    video = cv2.VideoCapture(video_data)
-
-    frames = []
-    success, frame = video.read()
-    while success:
-        # Resize the frame to match model input (e.g., 224x224)
-        frame_resized = cv2.resize(frame, (224, 224))
-        
-        # Normalize the frame and convert it to a PyTorch tensor
-        frame_tensor = torch.tensor(frame_resized, dtype=torch.float32).permute(2, 0, 1)  # HWC to CHW
-        frames.append(frame_tensor)
-        
-        success, frame = video.read()
+    # Create columns for skills in this category
+    cols = st.columns(2)
     
-    # Stack frames to create a batch (sequence)
-    video_tensor = torch.stack(frames).unsqueeze(0)  # Add batch dimension
+    for i, skill in enumerate(category["skills"]):
+        col = cols[i % 2]
+        
+        with col:
+            # Skill proficiency bar
+            proficiency_width = skill["proficiency"]
+            
+            st.markdown(f"""
+            <div class="skill-item">
+                <div style="flex: 1;">
+                    <h4 style="margin: 0; color: #2c3e50;">{skill['name']}</h4>
+                    <div class="proficiency-bar">
+                        <div class="proficiency-fill" style="width: {proficiency_width}%;"></div>
+                    </div>
+                    <small style="color: #666;">
+                        {skill['proficiency']}% proficiency • {skill['years']} years • {skill['projects']} projects
+                    </small>
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
 
-    # Forward pass through the ConvLSTM model
-    with torch.no_grad():
-        prediction = convlstm_model(video_tensor)
+# Deep Learning Models Showcase
+st.markdown("## 🧠 Deep Learning & AI Models Expertise")
 
-    # Assuming the model outputs probabilities, apply softmax
-    probabilities = torch.softmax(prediction, dim=1)
+for model_category, details in deep_learning_models.items():
+    col1, col2 = st.columns([2, 1])
+    
+    with col1:
+        st.markdown(f"""
+        <div class="model-showcase">
+            <h3>{model_category}</h3>
+            <p style="margin: 1rem 0;">{details['business_value']}</p>
+        </div>
+        """, unsafe_allow_html=True)
+        
+        # Models badges
+        models_html = ""
+        for model in details["models"]:
+            models_html += f'<span class="tech-badge">{model}</span> '
+        st.markdown(models_html, unsafe_allow_html=True)
+        
+        # Applications
+        st.markdown("**Key Applications:**")
+        for app in details["applications"]:
+            st.markdown(f"• {app}")
+    
+    with col2:
+        # Proficiency gauge
+        fig_gauge = go.Figure(go.Indicator(
+            mode = "gauge+number",
+            value = details["proficiency"],
+            domain = {'x': [0, 1], 'y': [0, 1]},
+            title = {'text': "Proficiency"},
+            gauge = {
+                'axis': {'range': [None, 100]},
+                'bar': {'color': "#667eea"},
+                'steps': [
+                    {'range': [0, 50], 'color': "lightgray"},
+                    {'range': [50, 80], 'color': "gray"}],
+                'threshold': {
+                    'line': {'color': "red", 'width': 4},
+                    'thickness': 0.75,
+                    'value': 90}}))
+        
+        fig_gauge.update_layout(height=200, margin=dict(l=20, r=20, t=40, b=20))
+        st.plotly_chart(fig_gauge, use_container_width=True)
 
-    # Return the predicted class or the output of the model
-    return probabilities.argmax().item()
-  
-# Deep Learning Models Functionality
-deep_learning_models = {
-    "BERT": {
-        "description": "Text classification using BERT.",
-        "input_type": "text",
-        "model": "model_epoch_5.pth",
-        "function": your_bert_prediction_function,
-    },
-    "GPT-3": {
-        "description": "Text generation using GPT-3.",
-        "input_type": "text",
-        "model": "tf_model.h5",
-        "function": your_gpt3_prediction_function,
-    },
-    "LSTM": {
-        "description": "Sequence prediction using LSTM.",
-        "input_type": "text",
-        "model": "SRmodelo_lstm.h5",
-        "function": your_lstm_prediction_function,
-    },
-    "RNN": {
-        "description": "Recurrent Neural Network for sequential data.",
-        "input_type": "text",
-        "model": "rnn_model.h5",
-        "function": your_rnn_prediction_function,
-    },
-    "CNN": {
-        "description": "Image classification using CNN.",
-        "input_type": "image",
-        "model": "CNNModel2.pkl",
-        "function": your_cnn_prediction_function,
-    },
-    "U-Net": {
-        "description": "Image segmentation using U-Net.",
-        "input_type": "image",
-        "model": "UNET_model.keras",
-        "function": your_unet_prediction_function,
-    },
-    "ResNet": {
-        "description": "Residual Neural Network for image classification.",
-        "input_type": "image",
-        "model": "resnet_model.pth",
-        "function": your_resnet_prediction_function,
-    },
-    "VGG16": {
-        "description": "VGG16 model for image classification.",
-        "input_type": "image",
-        "model": "vgg16.pth",
-        "function": your_vgg16_prediction_function,
-    },
-    "EfficientNet": {
-        "description": "EfficientNet model for image classification.",
-        "input_type": "image",
-        "model": "efficientnet_model.bin",
-        "function": your_efficientnet_prediction_function,
-    },
-    "YOLO": {
-        "description": "Object detection using YOLO.",
-        "input_type": "image",
-        "model": "yolov8m.pt",
-        "function": your_yolo_prediction_function,
-    },
-    "GANs": {
-        "description": "Generative Adversarial Networks for image generation.",
-        "input_type": "image",
-        "model": "gans_model.h5",
-        "function": your_gan_prediction_function,
-    },
-    "VAEs": {
-        "description": "Variational Autoencoders for image generation.",
-        "input_type": "image",
-        "model": "VAEsbest_model.pth",
-        "function": your_vae_prediction_function,
-    },
-    "Transformer": {
-        "description": "Transformer model for text tasks.",
-        "input_type": "text",
-        "model": "transformer_model.pth",
-        "function": your_transformer_prediction_function,
-    },
-    "Siamese Networks": {
-        "description": "Siamese networks for similarity tasks.",
-        "input_type": "text",
-        "model": "siamesemodelv2.h5",
-        "function": your_siamese_prediction_function,
-    },
-    "Deep Reinforcement Learning": {
-        "description": "Deep reinforcement learning for decision making.",
-        "input_type": "text",
-        "model": "path_to_your_drl_model",
-        "function": your_deep_reinforcement_learning_prediction_function,
-    },
-    "Capsule Networks": {
-        "description": "Capsule networks for image classification.",
-        "input_type": "image",
-        "model": "capsule_model.bin",
-        "function": your_capsule_network_prediction_function,
-    },
-    "TGAN": {
-        "description": "Temporal GAN for time series data generation.",
-        "input_type": "image",
-        "model": "tgan.safetensors",
-        "function": your_tgan_prediction_function,
-    },
-    "FastGAN": {
-        "description": "FastGAN for quick image generation.",
-        "input_type": "image",
-        "model": "fastgan_model.bin",
-        "function": your_fastgan_prediction_function,
-    },
-    "WaveNet": {
-        "description": "Sound generation using WaveNet.",
-        "input_type": "sound",
-        "model": "archive/WaveNet_Model/WaveNet_fold4.h5",
-        "function": your_wavenet_prediction_function,
-    },
-    "ConvLSTM": {
-        "description": "Video processing using ConvLSTM.",
-        "input_type": "video",
-        "model": "convlstm_model.h5",
-        "function": your_convlstm_prediction_function,
-    },
-}
+# Interactive Skills Comparison
+st.markdown("## 📈 Skills Evolution & Comparison")
 
-# Display deep learning models and handle functionalities
+# Create a comprehensive skills dataframe
+all_skills = []
+for category in skills_data:
+    for skill in category["skills"]:
+        all_skills.append({
+            "Skill": skill["name"],
+            "Category": category["category"].split(" ", 1)[1],
+            "Proficiency": skill["proficiency"],
+            "Years": skill["years"],
+            "Projects": skill["projects"]
+        })
 
-st.header("Deep Learning Models")
+df_skills = pd.DataFrame(all_skills)
 
-for model_name, model_data in deep_learning_models.items():
-    st.subheader(model_name)
-    st.write(model_data["description"])
+# Interactive scatter plot
+fig_scatter = px.scatter(
+    df_skills, 
+    x="Years", 
+    y="Proficiency", 
+    size="Projects",
+    color="Category",
+    hover_name="Skill",
+    title="Skills Proficiency vs Experience",
+    size_max=20
+)
 
-    # Handle input based on input type
-    if model_data["input_type"] == "text":
-        # Text-based models (e.g., BERT, GPT-3)
-        uploaded_file = st.file_uploader(f"Upload text file for {model_name}", type=["txt"], key=f"text_uploader_{model_name}")
-        if uploaded_file is not None:
-            text_data = uploaded_file.read().decode("utf-8")
-            result = model_data["function"](text_data)  # Call the model's prediction function
-            st.write(f"Prediction Result for {model_name}: {result}")
+fig_scatter.update_layout(height=500)
+st.plotly_chart(fig_scatter, use_container_width=True)
 
-    elif model_data["input_type"] == "image":
-        # Image-based models (e.g., CNN, U-Net)
-        uploaded_file = st.file_uploader(f"Upload image file for {model_name}", type=["jpg", "jpeg", "png"], key=f"image_uploader_{model_name}")
-        if uploaded_file is not None:
-            image = Image.open(uploaded_file)
-            result = model_data["function"](image)  # Call the model's prediction function
-            st.image(image, caption="Uploaded Image", use_column_width=True)
-            st.write(f"Prediction Result for {model_name}: {result}")
+# Business Impact Section
+st.markdown("""
+<div class="business-impact">
+    <h2 style="color: white; margin-bottom: 2rem;">💼 How These Skills Drive Business Value</h2>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1rem;">
+        <div>
+            <h4>🚀 Faster Time-to-Market</h4>
+            <p>My expertise in cloud technologies and MLOps enables rapid deployment of AI solutions, reducing development cycles by 40-60%.</p>
+        </div>
+        <div>
+            <h4>💰 Cost Optimization</h4>
+            <p>Deep understanding of scalable architectures and efficient algorithms helps optimize infrastructure costs while maintaining performance.</p>
+        </div>
+        <div>
+            <h4>🎯 Accurate Predictions</h4>
+            <p>Advanced ML and DL expertise consistently delivers models with 85-95% accuracy, directly impacting business KPIs.</p>
+        </div>
+        <div>
+            <h4>🔧 Robust Solutions</h4>
+            <p>Full-stack capabilities ensure end-to-end solution delivery, from data ingestion to user-facing applications.</p>
+        </div>
+    </div>
+</div>
+""", unsafe_allow_html=True)
 
-    elif model_data["input_type"] == "sound":
-        # Sound-based models (e.g., WaveNet)
-        uploaded_file = st.file_uploader(f"Upload sound file for {model_name}", type=["wav", "mp3"], key=f"sound_uploader_{model_name}")
-        if uploaded_file is not None:
-            sound_data = uploaded_file.read()  # Assuming the model handles raw sound data
-            result = model_data["function"](sound_data)
-            st.write(f"Prediction Result for {model_name}: {result}")
+# Learning & Growth Section
+st.markdown("## 📚 Continuous Learning & Innovation")
 
-    elif model_data["input_type"] == "video":
-        # Video-based models (e.g., ConvLSTM)
-        uploaded_file = st.file_uploader(f"Upload video file for {model_name}", type=["mp4", "avi", "mov"], key=f"video_uploader_{model_name}")
-        if uploaded_file is not None:
-            video_data = uploaded_file.read()  # Assuming the model handles raw video data
-            result = model_data["function"](video_data)
-            st.video(video_data)
-            st.write(f"Prediction Result for {model_name}: {result}")
+col1, col2 = st.columns(2)
 
+with col1:
+    st.markdown("""
+    <div class="interactive-demo">
+        <h3>🔬 Currently Exploring</h3>
+        <ul style="list-style-type: none; padding: 0;">
+            <li>🤖 <strong>Large Language Models (LLMs)</strong> - Advanced prompt engineering and fine-tuning</li>
+            <li>🧠 <strong>Multimodal AI</strong> - Vision-language models and cross-modal understanding</li>
+            <li>⚡ <strong>Edge AI</strong> - Optimizing models for mobile and IoT deployment</li>
+            <li>🔐 <strong>AI Safety & Ethics</strong> - Responsible AI development and bias mitigation</li>
+        </ul>
+    </div>
+    """, unsafe_allow_html=True)
 
-# Optional: Display plots for each category
-st.subheader("Skill Distribution Visualizations")
-st.plotly_chart(plot_programming_languages())
-st.plotly_chart(plot_ml_frameworks())
-st.plotly_chart(plot_deep_learning_models())
-st.plotly_chart(plot_big_data_cloud())
+with col2:
+    st.markdown("""
+    <div class="interactive-demo">
+        <h3>🎯 Learning Methodology</h3>
+        <ul style="list-style-type: none; padding: 0;">
+            <li>📖 <strong>Research Papers</strong> - Weekly review of latest AI research</li>
+            <li>🛠️ <strong>Hands-on Projects</strong> - Implementing new techniques in real projects</li>
+            <li>🤝 <strong>Community Engagement</strong> - Contributing to open-source projects</li>
+            <li>🎓 <strong>Continuous Education</strong> - Online courses and certifications</li>
+        </ul>
+    </div>
+    """, unsafe_allow_html=True)
+
+# Call to Action
+st.markdown("""
+<div class="skills-hero">
+    <h2>🤝 Ready to Leverage These Skills for Your Success?</h2>
+    <p style="font-size: 1.2rem; color: #555; margin-top: 2rem;">
+        These technical capabilities are just tools - the real value comes from applying them strategically 
+        to solve your specific business challenges and drive measurable results.
+    </p>
+    <p style="font-size: 1.1rem; color: #666; margin-top: 1rem;">
+        Let's discuss how my expertise can accelerate your AI initiatives and create competitive advantages.
+    </p>
+</div>
+""", unsafe_allow_html=True)
 
 # Footer
-
-st.markdown('<div class="footer">© 2024 Karim Osman - Machine Learning Engineer</div>', unsafe_allow_html=True)
-
+st.markdown("<p style='text-align: center; color: #666; margin-top: 2rem;'>© 2024 Karim Osman - Transforming Technical Expertise into Business Success</p>", unsafe_allow_html=True)
