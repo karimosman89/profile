@@ -5,6 +5,7 @@ import plotly.express as px
 from PIL import Image
 import pandas as pd
 import numpy as np
+from utils import tr # Import the translation function
 
 # Get the directory of the current script
 current_dir = os.path.dirname(__file__)
@@ -12,8 +13,8 @@ current_dir = os.path.dirname(__file__)
 # Enhanced Skills Data with proficiency levels and business impact
 skills_data = [
     {
-        "category": "🐍 Programming Languages",
-        "description": "Mastery across multiple programming paradigms for diverse AI applications",
+        "category": tr("SKILLS_PROGRAMMING_LANGUAGES_CATEGORY"),
+        "description": tr("SKILLS_PROGRAMMING_LANGUAGES_DESC"),
         "skills": [
             {"name": "Python", "proficiency": 95, "years": 8, "projects": 50, "icon": os.path.join(current_dir, "icons", "python.svg")},
             {"name": "R", "proficiency": 80, "years": 4, "projects": 15, "icon": os.path.join(current_dir, "icons", "R.svg")},
@@ -21,477 +22,370 @@ skills_data = [
             {"name": "C++", "proficiency": 70, "years": 3, "projects": 8, "icon": os.path.join(current_dir, "icons", "CPlusPlus.svg")},
             {"name": "SQL", "proficiency": 90, "years": 6, "projects": 35, "icon": os.path.join(current_dir, "icons", "sql-azure.svg")},
             {"name": "JavaScript", "proficiency": 85, "years": 4, "projects": 20, "icon": os.path.join(current_dir, "icons", "javascript.svg")},
-        ],
+        ]
     },
     {
-        "category": "🤖 Machine Learning & AI Frameworks",
-        "description": "Deep expertise in cutting-edge ML frameworks for production-ready solutions",
+        "category": tr("SKILLS_ML_FRAMEWORKS_CATEGORY"),
+        "description": tr("SKILLS_ML_FRAMEWORKS_DESC"),
         "skills": [
-            {"name": "TensorFlow", "proficiency": 92, "years": 5, "projects": 25, "icon": os.path.join(current_dir, "icons", "tensorflow.svg")},
-            {"name": "PyTorch", "proficiency": 90, "years": 4, "projects": 22, "icon": os.path.join(current_dir, "icons", "pytorch.svg")},
-            {"name": "Scikit-learn", "proficiency": 95, "years": 6, "projects": 40, "icon": os.path.join(current_dir, "icons", "scikit-learn.svg")},
-            {"name": "Hugging Face", "proficiency": 88, "years": 3, "projects": 18, "icon": None},
-            {"name": "XGBoost", "proficiency": 85, "years": 4, "projects": 15, "icon": os.path.join(current_dir, "icons", "XGBoost.svg")},
-            {"name": "Keras", "proficiency": 90, "years": 5, "projects": 20, "icon": os.path.join(current_dir, "icons", "Keras.svg")},
-        ],
+            {"name": "TensorFlow", "proficiency": 90, "years": 7, "projects": 40, "icon": os.path.join(current_dir, "icons", "tensorflow.svg")},
+            {"name": "PyTorch", "proficiency": 88, "years": 6, "projects": 30, "icon": os.path.join(current_dir, "icons", "pytorch.svg")},
+            {"name": "Scikit-learn", "proficiency": 95, "years": 8, "projects": 50, "icon": os.path.join(current_dir, "icons", "scikitlearn.svg")},
+            {"name": "Keras", "proficiency": 92, "years": 6, "projects": 35, "icon": os.path.join(current_dir, "icons", "keras.svg")},
+            {"name": "XGBoost/LightGBM", "proficiency": 87, "years": 5, "projects": 25, "icon": os.path.join(current_dir, "icons", "xgboost.svg")},
+        ]
     },
     {
-        "category": "☁️ Cloud & DevOps Technologies",
-        "description": "Scalable infrastructure and deployment expertise for enterprise AI solutions",
+        "category": tr("SKILLS_DATA_TOOLS_CATEGORY"),
+        "description": tr("SKILLS_DATA_TOOLS_DESC"),
         "skills": [
-            {"name": "AWS", "proficiency": 88, "years": 4, "projects": 20, "icon": os.path.join(current_dir, "icons", "aws.svg")},
-            {"name": "Docker", "proficiency": 85, "years": 3, "projects": 25, "icon": os.path.join(current_dir, "icons", "Docker.svg")},
-            {"name": "Kubernetes", "proficiency": 80, "years": 2, "projects": 12, "icon": os.path.join(current_dir, "icons", "kubernetes.svg")},
-            {"name": "GCP", "proficiency": 82, "years": 3, "projects": 15, "icon": os.path.join(current_dir, "icons", "gcp.svg")},
-            {"name": "MLflow", "proficiency": 85, "years": 2, "projects": 10, "icon": os.path.join(current_dir, "icons", "MLflow.svg")},
-            {"name": "Apache Airflow", "proficiency": 78, "years": 2, "projects": 8, "icon": os.path.join(current_dir, "icons", "Apache Airflow.svg")},
-        ],
+            {"name": "Pandas", "proficiency": 98, "years": 8, "projects": 50, "icon": os.path.join(current_dir, "icons", "pandas.svg")},
+            {"name": "NumPy", "proficiency": 97, "years": 8, "projects": 50, "icon": os.path.join(current_dir, "icons", "numpy.svg")},
+            {"name": "Spark", "proficiency": 85, "years": 5, "projects": 18, "icon": os.path.join(current_dir, "icons", "spark.svg")},
+            {"name": "Kafka", "proficiency": 80, "years": 4, "projects": 10, "icon": os.path.join(current_dir, "icons", "kafka.svg")},
+            {"name": "Tableau", "proficiency": 75, "years": 3, "projects": 8, "icon": os.path.join(current_dir, "icons", "tableau.svg")},
+        ]
     },
     {
-        "category": "📊 Data Engineering & Big Data",
-        "description": "Robust data pipeline and processing capabilities for large-scale analytics",
+        "category": tr("SKILLS_CLOUD_DEVOPS_CATEGORY"),
+        "description": tr("SKILLS_CLOUD_DEVOPS_DESC"),
         "skills": [
-            {"name": "Apache Spark", "proficiency": 85, "years": 3, "projects": 15, "icon": os.path.join(current_dir, "icons", "Apache Spark.svg")},
-            {"name": "Apache Kafka", "proficiency": 80, "years": 2, "projects": 10, "icon": os.path.join(current_dir, "icons", "Apache Kafka.svg")},
-            {"name": "PostgreSQL", "proficiency": 88, "years": 5, "projects": 30, "icon": os.path.join(current_dir, "icons", "postgresql.svg")},
-            {"name": "MongoDB", "proficiency": 82, "years": 3, "projects": 18, "icon": os.path.join(current_dir, "icons", "mongodb.svg")},
-            {"name": "Elasticsearch", "proficiency": 75, "years": 2, "projects": 8, "icon": None},
-            {"name": "Redis", "proficiency": 80, "years": 3, "projects": 12, "icon": os.path.join(current_dir, "icons", "dbs-redis.svg")},
-        ],
+            {"name": "AWS", "proficiency": 90, "years": 6, "projects": 30, "icon": os.path.join(current_dir, "icons", "aws.svg")},
+            {"name": "GCP", "proficiency": 85, "years": 5, "projects": 20, "icon": os.path.join(current_dir, "icons", "gcp.svg")},
+            {"name": "Docker", "proficiency": 92, "years": 5, "projects": 25, "icon": os.path.join(current_dir, "icons", "docker.svg")},
+            {"name": "Kubernetes", "proficiency": 80, "years": 4, "projects": 15, "icon": os.path.join(current_dir, "icons", "kubernetes.svg")},
+            {"name": "MLflow", "proficiency": 88, "years": 4, "projects": 12, "icon": os.path.join(current_dir, "icons", "mlflow.svg")},
+            {"name": "Git", "proficiency": 95, "years": 8, "projects": 50, "icon": os.path.join(current_dir, "icons", "git.svg")},
+        ]
     },
+    {
+        "category": tr("SKILLS_NLP_LLM_CATEGORY"),
+        "description": tr("SKILLS_NLP_LLM_DESC"),
+        "skills": [
+            {"name": "Hugging Face", "proficiency": 90, "years": 4, "projects": 20, "icon": os.path.join(current_dir, "icons", "huggingface.svg")},
+            {"name": "LangChain", "proficiency": 85, "years": 2, "projects": 10, "icon": os.path.join(current_dir, "icons", "langchain.svg")},
+            {"name": "Vector DBs", "proficiency": 87, "years": 3, "projects": 15, "icon": os.path.join(current_dir, "icons", "vectordb.svg")},
+            {"name": "RAG", "proficiency": 90, "years": 2, "projects": 10, "icon": os.path.join(current_dir, "icons", "rag.svg")},
+        ]
+    }
 ]
 
-# Deep Learning Models with business applications
-deep_learning_models = {
-    "🧠 Natural Language Processing": {
-        "models": ["BERT", "GPT-3/4", "Transformer", "LSTM", "RNN"],
-        "applications": ["Sentiment Analysis", "Document Processing", "Chatbots", "Content Generation"],
-        "business_value": "Automate customer service, analyze feedback, generate content",
-        "proficiency": 92
-    },
-    "👁️ Computer Vision": {
-        "models": ["CNN", "ResNet", "EfficientNet", "YOLO", "U-Net"],
-        "applications": ["Object Detection", "Image Classification", "Medical Imaging", "Quality Control"],
-        "business_value": "Automate visual inspection, medical diagnosis, security systems",
-        "proficiency": 88
-    },
-    "🎯 Generative AI": {
-        "models": ["GANs", "VAEs", "Diffusion Models", "StyleGAN"],
-        "applications": ["Image Generation", "Data Augmentation", "Creative Content"],
-        "business_value": "Create marketing content, augment training data, design automation",
-        "proficiency": 85
-    },
-    "🎵 Audio & Video Processing": {
-        "models": ["WaveNet", "ConvLSTM", "3D CNN", "Transformer"],
-        "applications": ["Speech Recognition", "Video Analysis", "Audio Generation"],
-        "business_value": "Voice interfaces, video analytics, content creation",
-        "proficiency": 80
-    }
-}
+# Set page style
+def set_style():
+    st.markdown("""
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        .main {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 2rem;
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .skills-hero {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 3rem;
+            margin: 2rem 0;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            text-align: center;
+        }
+        
+        .metric-card {
+            background: linear-gradient(145deg, #ffffff, #f0f0f0);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .metric-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+        }
+        .metric-card h3 {
+            color: #4a4a4a;
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+        .metric-card p {
+            color: #667eea;
+            font-size: 2.2rem;
+            font-weight: 700;
+        }
+        
+        .skill-category-card {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        .skill-category-card h3 {
+            color: #4a4a4a;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 0.5rem;
+        }
+        .skill-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        .skill-item img {
+            width: 30px;
+            height: 30px;
+            margin-right: 1rem;
+        }
+        .skill-item span {
+            font-size: 1.1rem;
+            color: #333;
+        }
+        
+        .business-value-card {
+            background: linear-gradient(145deg, #e6e6fa, #d0b3ff);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-top: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            color: #333;
+        }
+        .business-value-card h3 {
+            color: #5d3f6a;
+            margin-bottom: 1.5rem;
+        }
+        .business-value-card p {
+            font-size: 1.05rem;
+            line-height: 1.6;
+        }
+        
+        .interactive-demo {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            color: #333;
+        }
+        .interactive-demo h3 {
+            color: #4a4a4a;
+            margin-bottom: 1rem;
+        }
+    </style>
+    """, unsafe_allow_html=True)
 
-# Enhanced styling
-st.markdown("""
-<style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-    
-    .main {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        padding: 2rem;
-        font-family: 'Inter', sans-serif;
-    }
-    
-    .skills-hero {
-        background: rgba(255, 255, 255, 0.95);
-        border-radius: 20px;
-        padding: 3rem;
-        margin: 2rem 0;
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-        backdrop-filter: blur(10px);
-        text-align: center;
-    }
-    
-    .skill-category-card {
-        background: linear-gradient(145deg, #ffffff, #f0f0f0);
-        border-radius: 15px;
-        padding: 2rem;
-        margin: 1rem 0;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-        border-left: 5px solid #667eea;
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-    
-    .skill-category-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-    }
-    
-    .skill-item {
-        background: white;
-        border-radius: 10px;
-        padding: 1.5rem;
-        margin: 1rem 0;
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        transition: transform 0.2s ease;
-    }
-    
-    .skill-item:hover {
-        transform: scale(1.02);
-    }
-    
-    .proficiency-bar {
-        background: #e9ecef;
-        border-radius: 10px;
-        height: 8px;
-        overflow: hidden;
-        margin: 0.5rem 0;
-    }
-    
-    .proficiency-fill {
-        height: 100%;
-        background: linear-gradient(90deg, #667eea, #764ba2);
-        border-radius: 10px;
-        transition: width 1s ease;
-    }
-    
-    .model-showcase {
-        background: linear-gradient(135deg, #ff6b6b, #ee5a24);
-        color: white;
-        border-radius: 20px;
-        padding: 2rem;
-        margin: 2rem 0;
-        text-align: center;
-    }
-    
-    .interactive-demo {
-        background: #f8f9fa;
-        border-radius: 15px;
-        padding: 2rem;
-        margin: 2rem 0;
-        border: 2px solid #e9ecef;
-    }
-    
-    .metric-card {
-        background: white;
-        border-radius: 10px;
-        padding: 1.5rem;
-        text-align: center;
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
-        margin: 1rem;
-    }
-    
-    .metric-number {
-        font-size: 2.5rem;
-        font-weight: bold;
-        color: #667eea;
-        margin: 0;
-    }
-    
-    .metric-label {
-        color: #666;
-        font-size: 0.9rem;
-        margin: 0;
-    }
-    
-    h1 {
-        font-size: 3rem;
-        font-weight: 700;
-        background: linear-gradient(135deg, #667eea, #764ba2);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        margin-bottom: 1rem;
-    }
-    
-    h2 {
-        color: #2c3e50;
-        font-weight: 600;
-        margin: 2rem 0 1rem 0;
-    }
-    
-    .tech-badge {
-        background: #667eea;
-        color: white;
-        padding: 5px 12px;
-        border-radius: 15px;
-        font-size: 0.8em;
-        margin: 2px;
-        display: inline-block;
-    }
-    
-    .business-impact {
-        background: linear-gradient(135deg, #00b894, #00a085);
-        color: white;
-        padding: 1.5rem;
-        border-radius: 10px;
-        margin: 1rem 0;
-    }
-</style>
-""", unsafe_allow_html=True)
+set_style()
 
 # Hero Section
-st.markdown("""
+st.markdown(f"""
 <div class="skills-hero">
-    <h1>🚀 Technical Expertise & Innovation Arsenal</h1>
-    <p style="font-size: 1.3rem; color: #555; margin-top: 2rem;">
-        A comprehensive toolkit of cutting-edge technologies and proven methodologies 
-        for delivering impactful AI solutions
-    </p>
+    <h1>{tr('SKILLS_HERO_TITLE')}</h1>
+    <p style="font-size: 1.2rem; color: #555;">{tr('SKILLS_HERO_SUBTITLE')}</p>
 </div>
 """, unsafe_allow_html=True)
 
 # Skills Overview Metrics
-st.markdown("## 📊 Skills at a Glance")
-
+st.markdown(f"## {tr('SKILLS_OVERVIEW_TITLE')}")
 col1, col2, col3, col4 = st.columns(4)
 
+total_years = sum(skill['years'] for category in skills_data for skill in category['skills']) / len(skills_data) if skills_data else 0 # Simple average of years across all skills
+total_projects = sum(skill['projects'] for category in skills_data for skill in category['skills'])
+total_technologies = sum(len(category['skills']) for category in skills_data)
+avg_proficiency = np.mean([skill['proficiency'] for category in skills_data for skill in category['skills']])
+
 with col1:
-    st.markdown("""
+    st.markdown(f"""
     <div class="metric-card">
-        <h3 class="metric-number">8+</h3>
-        <p class="metric-label">Years of Experience</p>
+        <h3>{tr('SKILLS_METRIC_EXPERIENCE')}</h3>
+        <p>{total_years:.1f}+</p>
     </div>
     """, unsafe_allow_html=True)
-
 with col2:
-    st.markdown("""
+    st.markdown(f"""
     <div class="metric-card">
-        <h3 class="metric-number">50+</h3>
-        <p class="metric-label">Projects Completed</p>
+        <h3>{tr('SKILLS_METRIC_PROJECTS')}</h3>
+        <p>{total_projects}+</p>
     </div>
     """, unsafe_allow_html=True)
-
 with col3:
-    st.markdown("""
+    st.markdown(f"""
     <div class="metric-card">
-        <h3 class="metric-number">15+</h3>
-        <p class="metric-label">Technologies Mastered</p>
+        <h3>{tr('SKILLS_METRIC_TECHNOLOGIES')}</h3>
+        <p>{total_technologies}+</p>
     </div>
     """, unsafe_allow_html=True)
-
 with col4:
-    st.markdown("""
+    st.markdown(f"""
     <div class="metric-card">
-        <h3 class="metric-number">92%</h3>
-        <p class="metric-label">Average Proficiency</p>
+        <h3>{tr('SKILLS_METRIC_AVG_PROFICIENCY')}</h3>
+        <p>{avg_proficiency:.1f}%</p>
     </div>
     """, unsafe_allow_html=True)
 
-# Interactive Skills Radar Chart
-st.markdown("## 🎯 Skills Proficiency Radar")
+# Skills Radar Chart
+st.markdown(f"## {tr('SKILLS_RADAR_TITLE')}")
+categories = [category['category'] for category in skills_data]
+avg_proficiencies = [np.mean([skill['proficiency'] for skill in category['skills']]) for category in skills_data]
 
-categories = [skill["category"].split(" ", 1)[1] for skill in skills_data]  # Remove emoji
-avg_proficiencies = []
-
-for category in skills_data:
-    avg_prof = sum(skill["proficiency"] for skill in category["skills"]) / len(category["skills"])
-    avg_proficiencies.append(avg_prof)
-
-fig_radar = go.Figure()
-
-fig_radar.add_trace(go.Scatterpolar(
+fig = go.Figure(data=go.Scatterpolar(
     r=avg_proficiencies,
     theta=categories,
     fill='toself',
-    name='Proficiency Level',
-    line_color='#667eea'
+    name='Proficiency',
+    hovertemplate='<b>%{theta}</b><br>Proficiency: %{r:.1f}%<extra></extra>',
+    marker=dict(color='#764ba2'),
+    line_color='#667eea',
 ))
-
-fig_radar.update_layout(
+fig.update_layout(
     polar=dict(
         radialaxis=dict(
             visible=True,
-            range=[0, 100]
-        )),
+            range=[0, 100],
+            color='#333',
+            linecolor='#555',
+            gridcolor='#ccc'
+        ),
+        angularaxis=dict(
+            linecolor='#555',
+            gridcolor='#ccc',
+            tickfont=dict(size=12, color='#333')
+        )
+    ),
     showlegend=False,
-    title="Technical Skills Proficiency Overview"
+    height=400,
+    margin=dict(l=70, r=70, t=70, b=70),
+    paper_bgcolor='rgba(0,0,0,0)',
+    plot_bgcolor='rgba(0,0,0,0)',
+    font=dict(family='Inter', color='#333')
 )
+st.plotly_chart(fig, use_container_width=True)
 
-st.plotly_chart(fig_radar, use_container_width=True)
-
-# Detailed Skills Breakdown
-st.markdown("## 🛠️ Detailed Technical Skills")
-
-for category in skills_data:
+# Detailed Technical Skills
+st.markdown(f"## {tr('SKILLS_DETAILED_TITLE')}")
+for category_data in skills_data:
     st.markdown(f"""
     <div class="skill-category-card">
-        <h3>{category['category']}</h3>
-        <p style="color: #666; margin-bottom: 2rem;">{category['description']}</p>
-    </div>
+        <h3>{category_data['category']}</h3>
+        <p style="color: #666; margin-bottom: 1.5rem;">{category_data['description']}</p>
+        <div class="skill-list">
     """, unsafe_allow_html=True)
     
-    # Create columns for skills in this category
-    cols = st.columns(2)
+    # Create columns for skills within each category
+    cols_per_row = 3
+    skill_cols = st.columns(cols_per_row)
     
-    for i, skill in enumerate(category["skills"]):
-        col = cols[i % 2]
-        
-        with col:
-            # Skill proficiency bar
-            proficiency_width = skill["proficiency"]
-            
+    for i, skill in enumerate(category_data['skills']):
+        with skill_cols[i % cols_per_row]:
             st.markdown(f"""
             <div class="skill-item">
-                <div style="flex: 1;">
-                    <h4 style="margin: 0; color: #2c3e50;">{skill['name']}</h4>
-                    <div class="proficiency-bar">
-                        <div class="proficiency-fill" style="width: {proficiency_width}%;"></div>
-                    </div>
-                    <small style="color: #666;">
-                        {skill['proficiency']}% proficiency • {skill['years']} years • {skill['projects']} projects
-                    </small>
+                <img src="{skill['icon']}" alt="{skill['name']}" title="{skill['name']}">
+                <span>{skill['name']}</span>
+                <div style="flex-grow: 1; margin-left: 1rem; background-color: #eee; border-radius: 5px;">
+                    <div style="width: {skill['proficiency']}%; background-color: #667eea; height: 10px; border-radius: 5px;"></div>
                 </div>
+                <span style="margin-left: 0.5rem; font-weight: bold;">{skill['proficiency']}%</span>
             </div>
             """, unsafe_allow_html=True)
+    st.markdown("</div></div>", unsafe_allow_html=True) # Close skill-list and skill-category-card divs
 
-# Deep Learning Models Showcase
-st.markdown("## 🧠 Deep Learning & AI Models Expertise")
-
-for model_category, details in deep_learning_models.items():
-    col1, col2 = st.columns([2, 1])
-    
-    with col1:
-        st.markdown(f"""
-        <div class="model-showcase">
-            <h3>{model_category}</h3>
-            <p style="margin: 1rem 0;">{details['business_value']}</p>
-        </div>
-        """, unsafe_allow_html=True)
-        
-        # Models badges
-        models_html = ""
-        for model in details["models"]:
-            models_html += f'<span class="tech-badge">{model}</span> '
-        st.markdown(models_html, unsafe_allow_html=True)
-        
-        # Applications
-        st.markdown("**Key Applications:**")
-        for app in details["applications"]:
-            st.markdown(f"• {app}")
-    
-    with col2:
-        # Proficiency gauge
-        fig_gauge = go.Figure(go.Indicator(
-            mode = "gauge+number",
-            value = details["proficiency"],
-            domain = {'x': [0, 1], 'y': [0, 1]},
-            title = {'text': "Proficiency"},
-            gauge = {
-                'axis': {'range': [None, 100]},
-                'bar': {'color': "#667eea"},
-                'steps': [
-                    {'range': [0, 50], 'color': "lightgray"},
-                    {'range': [50, 80], 'color': "gray"}],
-                'threshold': {
-                    'line': {'color': "red", 'width': 4},
-                    'thickness': 0.75,
-                    'value': 90}}))
-        
-        fig_gauge.update_layout(height=200, margin=dict(l=20, r=20, t=40, b=20))
-        st.plotly_chart(fig_gauge, use_container_width=True)
-
-# Interactive Skills Comparison
-st.markdown("## 📈 Skills Evolution & Comparison")
-
-# Create a comprehensive skills dataframe
-all_skills = []
-for category in skills_data:
-    for skill in category["skills"]:
-        all_skills.append({
-            "Skill": skill["name"],
-            "Category": category["category"].split(" ", 1)[1],
-            "Proficiency": skill["proficiency"],
-            "Years": skill["years"],
-            "Projects": skill["projects"]
-        })
-
-df_skills = pd.DataFrame(all_skills)
-
-# Interactive scatter plot
-fig_scatter = px.scatter(
-    df_skills, 
-    x="Years", 
-    y="Proficiency", 
-    size="Projects",
-    color="Category",
-    hover_name="Skill",
-    title="Skills Proficiency vs Experience",
-    size_max=20
-)
-
-fig_scatter.update_layout(height=500)
-st.plotly_chart(fig_scatter, use_container_width=True)
-
-# Business Impact Section
+# Deep Learning & AI Model Expertise
+st.markdown(f"## {tr('SKILLS_DL_TITLE')}")
+st.markdown(f"<h3>{tr('SKILLS_DL_APPLICATIONS')}</h3>")
 st.markdown("""
-<div class="business-impact">
-    <h2 style="color: white; margin-bottom: 2rem;">💼 How These Skills Drive Business Value</h2>
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1rem;">
-        <div>
-            <h4>🚀 Faster Time-to-Market</h4>
-            <p>My expertise in cloud technologies and MLOps enables rapid deployment of AI solutions, reducing development cycles by 40-60%.</p>
-        </div>
-        <div>
-            <h4>💰 Cost Optimization</h4>
-            <p>Deep understanding of scalable architectures and efficient algorithms helps optimize infrastructure costs while maintaining performance.</p>
-        </div>
-        <div>
-            <h4>🎯 Accurate Predictions</h4>
-            <p>Advanced ML and DL expertise consistently delivers models with 85-95% accuracy, directly impacting business KPIs.</p>
-        </div>
-        <div>
-            <h4>🔧 Robust Solutions</h4>
-            <p>Full-stack capabilities ensure end-to-end solution delivery, from data ingestion to user-facing applications.</p>
-        </div>
-    </div>
+<div class="interactive-demo">
+    <ul style="list-style-type: disc; padding-left: 20px;">
+        <li>Computer Vision (Object Detection, Segmentation, Image Generation - GANs, Diffusion Models)</li>
+        <li>Natural Language Processing (Text Classification, Sentiment Analysis, Named Entity Recognition, LLMs, RAG)</li>
+        <li>Time Series Analysis (Forecasting, Anomaly Detection)</li>
+        <li>Generative AI (Content Creation, Data Augmentation)</li>
+        <li>Reinforcement Learning (Optimal Control, Decision Making)</li>
+    </ul>
 </div>
 """, unsafe_allow_html=True)
 
-# Learning & Growth Section
-st.markdown("## 📚 Continuous Learning & Innovation")
+# Skills Evolution and Comparison (Placeholder for a more complex visualization)
+st.markdown(f"## {tr('SKILLS_COMPARISON_TITLE')}")
+st.info(tr("SKILLS_COMPARISON_INFO")) # Placeholder for a more dynamic chart
 
+# How these skills create business value
+st.markdown(f"## {tr('SKILLS_BUSINESS_TITLE')}")
+col1, col2 = st.columns(2)
+with col1:
+    st.markdown(f"""
+    <div class="business-value-card">
+        <h3>{tr('SKILLS_BUSINESS_TIME_TO_MARKET')}</h3>
+        <p>{tr('SKILLS_BUSINESS_TIME_TO_MARKET_DESC')}</p>
+    </div>
+    """, unsafe_allow_html=True)
+with col2:
+    st.markdown(f"""
+    <div class="business-value-card">
+        <h3>{tr('SKILLS_BUSINESS_COST')}</h3>
+        <p>{tr('SKILLS_BUSINESS_COST_DESC')}</p>
+    </div>
+    """, unsafe_allow_html=True)
+
+col3, col4 = st.columns(2)
+with col3:
+    st.markdown(f"""
+    <div class="business-value-card">
+        <h3>{tr('SKILLS_BUSINESS_ACCURACY')}</h3>
+        <p>{tr('SKILLS_BUSINESS_ACCURACY_DESC')}</p>
+    </div>
+    """, unsafe_allow_html=True)
+with col4:
+    st.markdown(f"""
+    <div class="business-value-card">
+        <h3>{tr('SKILLS_BUSINESS_ROBUST')}</h3>
+        <p>{tr('SKILLS_BUSINESS_ROBUST_DESC')}</p>
+    </div>
+    """, unsafe_allow_html=True)
+
+# Continuous Learning and Innovation
+st.markdown(f"## {tr('SKILLS_LEARNING_TITLE')}")
 col1, col2 = st.columns(2)
 
 with col1:
-    st.markdown("""
+    st.markdown(f"""
     <div class="interactive-demo">
-        <h3>🔬 Currently Exploring</h3>
-        <ul style="list-style-type: none; padding: 0;">
-            <li>🤖 <strong>Large Language Models (LLMs)</strong> - Advanced prompt engineering and fine-tuning</li>
-            <li>🧠 <strong>Multimodal AI</strong> - Vision-language models and cross-modal understanding</li>
-            <li>⚡ <strong>Edge AI</strong> - Optimizing models for mobile and IoT deployment</li>
-            <li>🔐 <strong>AI Safety & Ethics</strong> - Responsible AI development and bias mitigation</li>
+        <h3>{tr('SKILLS_EXPLORING_TITLE')}</h3>
+        <ul style="list-style-type: disc; padding-left: 20px;">
+            <li>{tr('ABOUT_AI_AGENTS_TITLE')}</li>
+            <li>{tr('ABOUT_EXPLAINABLE_AI_TITLE')}</li>
+            <li>Reinforcement Learning from Human Feedback (RLHF)</li>
+            <li>Edge AI and TinyML for resource-constrained environments</li>
+            <li>Ethical AI and bias mitigation</li>
         </ul>
     </div>
     """, unsafe_allow_html=True)
 
 with col2:
-    st.markdown("""
+    st.markdown(f"""
     <div class="interactive-demo">
-        <h3>🎯 Learning Methodology</h3>
+        <h3>{tr('SKILLS_LEARNING_METHOD_TITLE')}</h3>
         <ul style="list-style-type: none; padding: 0;">
-            <li>📖 <strong>Research Papers</strong> - Weekly review of latest AI research</li>
-            <li>🛠️ <strong>Hands-on Projects</strong> - Implementing new techniques in real projects</li>
-            <li>🤝 <strong>Community Engagement</strong> - Contributing to open-source projects</li>
-            <li>🎓 <strong>Continuous Education</strong> - Online courses and certifications</li>
+            <li>📖 <strong>{tr('SKILLS_LEARNING_METHOD_RESEARCH')}</strong> - {tr('SKILLS_LEARNING_METHOD_RESEARCH_DESC')}</li>
+            <li>🛠️ <strong>{tr('SKILLS_LEARNING_METHOD_HANDS_ON')}</strong> - {tr('SKILLS_LEARNING_METHOD_HANDS_ON_DESC')}</li>
+            <li>🤝 <strong>{tr('SKILLS_LEARNING_METHOD_COMMUNITY')}</strong> - {tr('SKILLS_LEARNING_METHOD_COMMUNITY_DESC')}</li>
+            <li>🎓 <strong>{tr('SKILLS_LEARNING_METHOD_EDUCATION')}</strong> - {tr('SKILLS_LEARNING_METHOD_EDUCATION_DESC')}</li>
         </ul>
     </div>
     """, unsafe_allow_html=True)
 
 # Call to Action
-st.markdown("""
+st.markdown(f"""
 <div class="skills-hero">
-    <h2>🤝 Ready to Leverage These Skills for Your Success?</h2>
+    <h2>{tr('SKILLS_CALL_TITLE')}</h2>
     <p style="font-size: 1.2rem; color: #555; margin-top: 2rem;">
-        These technical capabilities are just tools - the real value comes from applying them strategically 
-        to solve your specific business challenges and drive measurable results.
+        {tr('SKILLS_CALL_TEXT')}
     </p>
     <p style="font-size: 1.1rem; color: #666; margin-top: 1rem;">
-        Let's discuss how my expertise can accelerate your AI initiatives and create competitive advantages.
+        {tr('SKILLS_CALL_TEXT2')}
     </p>
 </div>
 """, unsafe_allow_html=True)
 
 # Footer
-st.markdown("<p style='text-align: center; color: #666; margin-top: 2rem;'>© 2024 Karim Osman - Transforming Technical Expertise into Business Success</p>", unsafe_allow_html=True)
+st.markdown(f"<p style='text-align: center; color: #666; margin-top: 2rem;'>{tr('SKILLS_FOOTER')}</p>", unsafe_allow_html=True)
