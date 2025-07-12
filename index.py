@@ -12,13 +12,11 @@ import contact
 import importlib
 import random
 import time
-import utils
-from utils import tr
+from utils import tr # Corrected import
 
 # Configure the page
 st.set_page_config(page_title=tr("PAGE_TITLE"), layout="wide", initial_sidebar_state="expanded")
 logging.basicConfig(level=logging.INFO)
-
 
 @st.cache_resource
 def load_lottie_local(filepath: str):
@@ -150,38 +148,40 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # Sidebar Navigation
+# Make sure utils.language_selector returns the selected page name or handles navigation directly.
+# If utils.language_selector sets st.session_state.page, then 'page' variable isn't needed here.
+# Assuming it sets st.session_state.page and returns it for clarity.
 page = utils.language_selector()
-
 
 
 # Interactive AI Chat Bot Section
 def ai_chat_interface():
-    st.markdown(f"### {utils.tr('AI_CHAT_TITLE')}")
+    st.markdown(f"### {tr('AI_CHAT_TITLE')}") # Corrected tr()
     
     if 'chat_history' not in st.session_state:
         st.session_state.chat_history = []
     
     # Predefined questions for quick interaction
     quick_questions = [
-        utils.tr("STRONGEST_SKILL"),
-        utils.tr("IMPACTFUL_PROJECT"),
-        utils.tr("PROBLEM_SOLVING"),
-        utils.tr("DIFFERENT"),
-        utils.tr("AI_VISION")
+        tr("STRONGEST_SKILL"),
+        tr("IMPACTFUL_PROJECT"),
+        tr("PROBLEM_SOLVING"),
+        tr("DIFFERENT"),
+        tr("AI_VISION")
     ]
     
     col1, col2 = st.columns([3, 1])
     
     with col1:
-        user_question = st.text_input(utils.tr("AI_CHAT_PROMPT"), placeholder=utils.tr("AI_CHAT_PLACEHOLDER"))
+        user_question = st.text_input(tr("AI_CHAT_PROMPT"), placeholder=tr("AI_CHAT_PLACEHOLDER")) # Corrected tr()
     
     with col2:
-        if st.button(utils.tr("AI_CHAT_RANDOM")):
+        if st.button(tr("AI_CHAT_RANDOM")): # Corrected tr()
             user_question = random.choice(quick_questions)
             st.session_state.random_question = user_question
     
     # Quick question buttons
-    st.markdown(f"**{utils.tr('QUICK_QUESTIONS')}**")
+    st.markdown(f"**{tr('QUICK_QUESTIONS')}**") # Corrected tr()
     cols = st.columns(len(quick_questions))
     for i, question in enumerate(quick_questions):
         if cols[i].button(f"❓ {question[:20]}...", key=f"quick_{i}"):
@@ -189,71 +189,71 @@ def ai_chat_interface():
     
     # AI responses based on questions
     ai_responses = {
-        utils.tr("STRONGEST_SKILL"): utils.tr("STRONGEST_SKILL_RESPONSE"),
-        utils.tr("IMPACTFUL_PROJECT"): utils.tr("IMPACTFUL_PROJECT_RESPONSE"),
-        utils.tr("PROBLEM_SOLVING"): utils.tr("PROBLEM_SOLVING_RESPONSE"),
-        utils.tr("DIFFERENT"): utils.tr("DIFFERENT_RESPONSE"),
-        utils.tr("AI_VISION"): utils.tr("AI_VISION_RESPONSE")
+        tr("STRONGEST_SKILL"): tr("STRONGEST_SKILL_RESPONSE"),
+        tr("IMPACTFUL_PROJECT"): tr("IMPACTFUL_PROJECT_RESPONSE"),
+        tr("PROBLEM_SOLVING"): tr("PROBLEM_SOLVING_RESPONSE"),
+        tr("DIFFERENT"): tr("DIFFERENT_RESPONSE"),
+        tr("AI_VISION"): tr("AI_VISION_RESPONSE")
     }
     
     if user_question:
         # Simulate typing effect
-        with st.spinner("🤔 " + utils.tr("THINKING")):
+        with st.spinner("🤔 " + tr("THINKING")): # Corrected tr()
             time.sleep(1)
         
         response = ai_responses.get(user_question, 
-            utils.tr("DEFAULT_RESPONSE").format(question=user_question))
+            tr("DEFAULT_RESPONSE").format(question=user_question)) # Corrected tr()
         
-        st.markdown(f"**🤖 {utils.tr('AI_ASSISTANT')}:** {response}")
+        st.markdown(f"**🤖 {tr('AI_ASSISTANT')}:** {response}") # Corrected tr()
         
         # Add to chat history
         st.session_state.chat_history.append({"question": user_question, "answer": response})
 
 # Enhanced metrics display
 def show_impact_metrics():
-    st.markdown(f"### {utils.tr('METRICS_TITLE')}")
+    st.markdown(f"### {tr('METRICS_TITLE')}") # Corrected tr()
     
     col1, col2, col3, col4 = st.columns(4)
     
     with col1:
-        st.markdown("""
+        st.markdown(f"""
         <div class="metric-card pulse">
             <h3 style="color: #e74c3c; margin: 0;">20%</h3>
-            <p style="margin: 0;">utils.tr("PERFORMANCE")</p>
+            <p style="margin: 0;">{tr("PERFORMANCE")}</p>
         </div>
         """, unsafe_allow_html=True)
     
     with col2:
-        st.markdown("""
+        st.markdown(f"""
         <div class="metric-card pulse">
             <h3 style="color: #27ae60; margin: 0;">30%</h3>
-            <p style="margin: 0;">utils.tr("EFFICIENCY")</p>
+            <p style="margin: 0;">{tr("EFFICIENCY")}</p>
         </div>
         """, unsafe_allow_html=True)
     
     with col3:
-        st.markdown("""
+        st.markdown(f"""
         <div class="metric-card pulse">
             <h3 style="color: #3498db; margin: 0;">25%</h3>
-            <p style="margin: 0;">utils.tr('PROCESSING')</p>
+            <p style="margin: 0;">{tr('PROCESSING')}</p>
         </div>
         """, unsafe_allow_html=True)
     
     with col4:
-        st.markdown("""
+        st.markdown(f"""
         <div class="metric-card pulse">
             <h3 style="color: #f39c12; margin: 0;">5+</h3>
-            <p style="margin: 0;">utils.tr('EXPERIENCE')</p>
+            <p style="margin: 0;">{tr('EXPERIENCE')}</p>
         </div>
         """, unsafe_allow_html=True)
 
 # Proactive approach showcase
 def proactive_showcase():
-    st.markdown("""
+    st.markdown(f"""
     <div class="proactive-section">
-        <h2 style="color: white; margin-bottom: 2rem;">utils.tr('PROACTIVE_TITLE')</h2>
+        <h2 style="color: white; margin-bottom: 2rem;">{tr('PROACTIVE_TITLE')}</h2>
         <p style="font-size: 1.2rem; margin-bottom: 2rem;">
-            utils.tr('PROACTIVE_TEXT')
+            {tr('PROACTIVE_TEXT')}
         </p>
     </div>
     """, unsafe_allow_html=True)
@@ -261,41 +261,41 @@ def proactive_showcase():
     col1, col2 = st.columns(2)
     
     with col1:
-        st.markdown("""
+        st.markdown(f"""
         <div class="interactive-card">
-            <h3>utils.tr('CANDIDATE_ASSISTANT')</h3>
-            <p>utils.tr('CANDIDATE_DESC')</p>
+            <h3>{tr('CANDIDATE_ASSISTANT')}</h3>
+            <p>{tr('CANDIDATE_DESC')}</p>
             <ul>
-                <li>utils.tr('CANDIDATE_FEATURE1')</li>
-                <li>utils.tr('CANDIDATE_FEATURE2')</li>
-                <li>utils.tr('CANDIDATE_FEATURE3')</li>
-                <li>utils.tr('CANDIDATE_FEATURE4')</li>
+                <li>{tr('CANDIDATE_FEATURE1')}</li>
+                <li>{tr('CANDIDATE_FEATURE2')}</li>
+                <li>{tr('CANDIDATE_FEATURE3')}</li>
+                <li>{tr('CANDIDATE_FEATURE4')}</li>
             </ul>
         </div>
         """, unsafe_allow_html=True)
     
     with col2:
-        st.markdown("""
+        st.markdown(f"""
         <div class="interactive-card">
-            <h3>utils.tr('TECH_IMPLEMENTATION')</h3>
-            <p>utils.tr('TECH_DESC')</p>
+            <h3>{tr('TECH_IMPLEMENTATION')}</h3>
+            <p>{tr('TECH_DESC')}</p>
             <ul>
-                <li>utils.tr('TECH_FEATURE1')</li>
-                <li>utils.tr('TECH_FEATURE2')</li>
-                <li>utils.tr('TECH_FEATURE3')</li>
-                <li>utils.tr('TECH_FEATURE4')</li>
+                <li>{tr('TECH_FEATURE1')}</li>
+                <li>{tr('TECH_FEATURE2')}</li>
+                <li>{tr('TECH_FEATURE3')}</li>
+                <li>{tr('TECH_FEATURE4')}</li>
             </ul>
         </div>
         """, unsafe_allow_html=True)
 
 # Main page rendering
-if page == utils.tr("NAV_HOME"):
+if page == tr("NAV_HOME"): # Corrected tr()
     # Hero section with typing effect
     st.markdown(f"""
     <div class="hero-section">
-        <h1 class="typing-effect">{utils.tr('WELCOME_TITLE')}</h1>
+        <h1 class="typing-effect">{tr('WELCOME_TITLE')}</h1> # Corrected tr()
         <p style="text-align: center; font-size: 1.3rem; color: #555; margin-top: 2rem;">
-            {utils.tr('TAGLINE')}
+            {tr('TAGLINE')} # Corrected tr()
         </p>
     </div>
     """, unsafe_allow_html=True)
@@ -310,18 +310,18 @@ if page == utils.tr("NAV_HOME"):
     proactive_showcase()
     
     # Enhanced expertise showcase
-    st.markdown(f"### {utils.tr('EXPERTISE_TITLE')}")
+    st.markdown(f"### {tr('EXPERTISE_TITLE')}") # Corrected tr()
     
     col1, col2, col3 = st.columns(3)
     
     expertise_areas = [
-    (tr("ML_TITLE"), tr("ML_DESC"), data_analysis_animation), # Use tr() for title and description
-    (tr("AI_ENGINEERING_TITLE"), tr("AI_ENGINEERING_DESC"), ai_engineering_animation), # Use tr() for title and description
-    (tr("DATA_SCIENCE_TITLE"), tr("DATA_SCIENCE_DESC"), ai_animation), # Use tr() for title and description
-    (tr("DL_TITLE"), tr("DL_DESC"), deep_learning_animation), # Use tr() for title and description
-    (tr("CLOUD_TITLE"), tr("CLOUD_DESC"), dev_ops_animation), # Use tr() for title and description
-    (tr("INNOVATION_TITLE"), tr("INNOVATION_DESC"), data_engineer_animation) # Use tr() for title and description
-]
+        (tr("ML_TITLE"), tr("ML_DESC"), data_analysis_animation),
+        (tr("AI_ENGINEERING_TITLE"), tr("AI_ENGINEERING_DESC"), ai_engineering_animation),
+        (tr("DATA_SCIENCE_TITLE"), tr("DATA_SCIENCE_DESC"), ai_animation),
+        (tr("DL_TITLE"), tr("DL_DESC"), deep_learning_animation),
+        (tr("CLOUD_TITLE"), tr("CLOUD_DESC"), dev_ops_animation),
+        (tr("INNOVATION_TITLE"), tr("INNOVATION_DESC"), data_engineer_animation)
+    ]
     
     for i, (title, desc, animation) in enumerate(expertise_areas):
         col = [col1, col2, col3][i % 3]
@@ -334,22 +334,22 @@ if page == utils.tr("NAV_HOME"):
             """, unsafe_allow_html=True)
             st_lottie(animation, height=100, key=f"expertise_{i}")
 
-elif page == utils.tr("NAV_ABOUT"):
+elif page == tr("NAV_ABOUT"): # Corrected tr()
     logging.info("Loading About Page")
     importlib.reload(about)
 
-elif page == utils.tr("NAV_PROJECTS"):
+elif page == tr("NAV_PROJECTS"): # Corrected tr()
     logging.info("Loading Projects Page")
     importlib.reload(projects)
 
-elif page == utils.tr("NAV_SKILLS"):
+elif page == tr("NAV_SKILLS"): # Corrected tr()
     logging.info("Loading Skills Page")
     importlib.reload(skills)
 
-elif page == utils.tr("NAV_CONTACT"):
+elif page == tr("NAV_CONTACT"): # Corrected tr()
     logging.info("Loading Contact Page")
     importlib.reload(contact)
 
-elif page == utils.tr("NAV_RESUME"):
+elif page == tr("NAV_RESUME"): # Corrected tr()
     logging.info("Loading Resume Page")
     importlib.reload(resume)
