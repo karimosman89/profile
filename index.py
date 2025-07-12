@@ -12,10 +12,10 @@ import contact
 import importlib
 import random
 import time
-import utils
+from utils import tr
 
 # Configure the page
-st.set_page_config(page_title=utils.tr("PAGE_TITLE"), layout="wide", initial_sidebar_state="expanded")
+st.set_page_config(page_title=tr("PAGE_TITLE"), layout="wide", initial_sidebar_state="expanded")
 logging.basicConfig(level=logging.INFO)
 
 
@@ -218,7 +218,7 @@ def show_impact_metrics():
         st.markdown("""
         <div class="metric-card pulse">
             <h3 style="color: #e74c3c; margin: 0;">20%</h3>
-            <p style="margin: 0;">{utils.tr('PERFORMANCE')}</p>
+            <p style="margin: 0;">{tr('PERFORMANCE')}</p>
         </div>
         """, unsafe_allow_html=True)
     
@@ -314,13 +314,13 @@ if page == utils.tr("NAV_HOME"):
     col1, col2, col3 = st.columns(3)
     
     expertise_areas = [
-        ("🤖 Machine Learning", "Building predictive models that drive business decisions", data_analysis_animation),
-        ("🔧 AI Engineering", "Deploying scalable AI solutions in production", ai_engineering_animation),
-        ("📊 Data Science", "Extracting insights from complex datasets", ai_animation),
-        ("🧠 Deep Learning", "Creating neural networks for complex problems", deep_learning_animation),
-        ("☁️ Cloud & DevOps", "Scalable infrastructure and deployment", dev_ops_animation),
-        ("💡 Innovation", "Proactive problem-solving and future-thinking", data_engineer_animation)
-    ]
+    (tr("ML_TITLE"), tr("ML_DESC"), data_analysis_animation), # Use tr() for title and description
+    (tr("AI_ENGINEERING_TITLE"), tr("AI_ENGINEERING_DESC"), ai_engineering_animation), # Use tr() for title and description
+    (tr("DATA_SCIENCE_TITLE"), tr("DATA_SCIENCE_DESC"), ai_animation), # Use tr() for title and description
+    (tr("DL_TITLE"), tr("DL_DESC"), deep_learning_animation), # Use tr() for title and description
+    (tr("CLOUD_TITLE"), tr("CLOUD_DESC"), dev_ops_animation), # Use tr() for title and description
+    (tr("INNOVATION_TITLE"), tr("INNOVATION_DESC"), data_engineer_animation) # Use tr() for title and description
+]
     
     for i, (title, desc, animation) in enumerate(expertise_areas):
         col = [col1, col2, col3][i % 3]
@@ -333,7 +333,7 @@ if page == utils.tr("NAV_HOME"):
             """, unsafe_allow_html=True)
             st_lottie(animation, height=100, key=f"expertise_{i}")
 
-elif page == utils.tr("NAV_ABOUT"):
+elif page == tr("NAV_ABOUT"):
     logging.info("Loading About Page")
     importlib.reload(about)
 
