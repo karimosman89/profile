@@ -219,7 +219,7 @@ def show_impact_metrics():
         st.markdown("""
         <div class="metric-card pulse">
             <h3 style="color: #e74c3c; margin: 0;">20%</h3>
-            <p style="margin: 0;">utils.tr("PERFORMANCE")</p>
+            <p style="margin: 0;">(f"### {utils.tr("PERFORMANCE")}")</p>
         </div>
         """, unsafe_allow_html=True)
     
@@ -227,7 +227,7 @@ def show_impact_metrics():
         st.markdown("""
         <div class="metric-card pulse">
             <h3 style="color: #27ae60; margin: 0;">30%</h3>
-            <p style="margin: 0;">utils.tr("EFFICIENCY")</p>
+            <p style="margin: 0;">{utils.tr("EFFICIENCY")}</p>
         </div>
         """, unsafe_allow_html=True)
     
