@@ -131,17 +131,32 @@ def set_style():
         }
         .skill-item {
             display: flex;
-            align-items: center;
+            align-items: center; /* Ensures vertical alignment */
             margin-bottom: 1rem;
+            flex-wrap: nowrap; /* Prevent wrapping of items within the skill bar */
+            gap: 0.5rem; /* Add some space between elements */
         }
         .skill-item img {
             width: 30px;
             height: 30px;
-            margin-right: 1rem;
+            flex-shrink: 0; /* Prevent image from shrinking */
         }
         .skill-item span {
             font-size: 1.1rem;
             color: #333;
+            white-space: nowrap; /* Prevent skill name from wrapping */
+            flex-shrink: 0; /* Prevent skill name from shrinking */
+        }
+        .skill-item > div[style*="flex-grow: 1"] { /* Target the progress bar container */
+            flex-grow: 1;
+            margin-left: 0.5rem; /* Adjust margin here if needed */
+            margin-right: 0.5rem; /* Adjust margin here if needed */
+            background-color: #eee;
+            border-radius: 5px;
+        }
+        .skill-item > div[style*="flex-grow: 1"] > div { /* Target the actual proficiency bar */
+            height: 10px;
+            border-radius: 5px;
         }
         
         .business-value-card {
@@ -175,7 +190,7 @@ def set_style():
         }
     </style>
     """, unsafe_allow_html=True)
-
+    
 set_style()
 
 # Hero Section
