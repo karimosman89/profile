@@ -8,15 +8,21 @@ def get_browser_lang():
     return "en"
 
 def load_translations(lang):
+    st.write(f"Attempting to load translations for: {lang}")
     try:
         with open(f"locales/{lang}/translation.json", "r", encoding='utf-8') as f:
-            return json.load(f)
+            translations = json.load(f)
+            st.write(f"Successfully loaded translations for {lang}")
+            return translations
     except Exception as e:
-        # Fallback to English
+        st.warning(f"Could not load translations for {lang}. Error: {e}. Falling back to English.")
         try:
             with open("locales/en/translation.json", "r", encoding='utf-8') as f:
-                return json.load(f)
-        except:
+                translations_en = json.load(f)
+                st.write("Successfully loaded English fallback translations.")
+                return translations_en
+        except Exception as e_en:
+            st.error(f"Could not load English fallback translations. Error: {e_en}. Returning empty dict.")
             return {}
 
 def tr(key):
