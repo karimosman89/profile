@@ -1,11 +1,15 @@
 import streamlit as st
 import json
 import os
+from streamlit_javascript import st_javascript
 
 def get_browser_lang():
-    """Fallback language detection without JavaScript"""
-    # Default to English
-    return "en"
+    try:
+        lang = st_javascript("""const lang = navigator.language || navigator.userLanguage; 
+        return lang.split('-')[0];""")
+        return lang if lang else "en"
+    except:
+        return "en"
 
 def load_translations(lang):
     try:
@@ -32,74 +36,31 @@ def tr(key):
 def language_selector():
     st.sidebar.markdown(f"### 🌐 {tr('LANGUAGE')}")
     
-    # Language options with flags and full names
     lang_options = {
-        "en": {"flag": "🇬🇧"},
-        "fr": {"flag": "🇫🇷"},
-        "de": {"flag": "🇩🇪"},
-        "sv": {"flag": "🇸🇪"},
-        "no": {"flag": "🇳🇴"},
-        "nl": {"flag": "🇳🇱"},
-        "da": {"flag": "🇩🇰"},
-        "ja": {"flag": "🇯🇵"}
+        "en": "🇬🇧",
+        "fr": "🇫🇷",
+        "de": "🇩🇪",
+        "sv": "🇸🇪",
+        "no": "🇳🇴",
+        "nl": "🇳🇱",
+        "da": "🇩🇰",
+        "ja": "🇯🇵"
     }
     
-    # Create display names with flags
-    display_options = [f"{lang_options[code]['flag']}" 
-                      for code in lang_options.keys()]
-    
-    # Get current language index
-    current_lang = st.session_state.lang
-    lang_keys = list(lang_options.keys())
-    
-    try:
-        current_index = lang_keys.index(current_lang)
-    except ValueError:
-        current_index = 0
-    
-    # Create language selector
-    # MODIFIED: Added a label and label_visibility="hidden"
-    selected_display = st.sidebar.selectbox(
-        "Select Language", # Provide a descriptive label
-        display_options,
-        index=current_index,
-        label_visibility="hidden" # Hide the label if you don't want it visible
+    selected_lang = st.sidebar.selectbox(
+        "", 
+        list(lang_options.values()),
+        index=list(lang_options.keys()).index(st.session_state.lang)
     )
+    st.session_state.lang = list(lang_options.keys())[list(lang_options.values()).index(selected_lang)]
     
-    # Update session state with selected language
-    selected_index = display_options.index(selected_display)
-    st.session_state.lang = lang_keys[selected_index]
-    
-    # Page navigation with keys
     st.sidebar.markdown(f"### 🚀 {tr('NAVIGATION')}")
-    
-    # Page configuration with keys
-    page_config = {
-        "home": tr("NAV_HOME"),
-        "about": tr("NAV_ABOUT"),
-        "projects": tr("NAV_PROJECTS"),
-        "skills": tr("NAV_SKILLS"),
-        "contact": tr("NAV_CONTACT"),
-        "resume": tr("NAV_RESUME")
-    }
-    
-    # Initialize selected page
-    if "page" not in st.session_state:
-        st.session_state.page = "home"
-    
-    # Create radio buttons with translated labels
-    # MODIFIED: Added a label and label_visibility="hidden"
-    selected_label = st.sidebar.radio(
-        "Navigate Pages", # Provide a descriptive label
-        list(page_config.values()),
-        index=list(page_config.keys()).index(st.session_state.page),
-        label_visibility="hidden" # Hide the label if you don't want it visible
-    )
-    
-    # Find the key for the selected label
-    for key, label in page_config.items():
-        if label == selected_label:
-            st.session_state.page = key
-            break
-            
-    return st.session_state.page
+    page = st.sidebar.radio("", [
+        tr("NAV_HOME"),
+        tr("NAV_ABOUT"),
+        tr("NAV_PROJECTS"),
+        tr("NAV_SKILLS"),
+        tr("NAV_CONTACT"),
+        tr("NAV_RESUME")
+    ])
+    return page
