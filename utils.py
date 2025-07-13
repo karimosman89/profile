@@ -17,36 +17,41 @@ def get_browser_lang():
         return "en"
 
 def load_translations(lang):
-    """Handle case sensitivity and Norwegian variants"""
+    """Handle case sensitivity and Norwegian variants with absolute paths"""
     try:
-        # Normalize language code to lowercase
+        # Normalize language code
         lang = lang.lower()
         
         # Handle Norwegian variants
         if lang in ["nb", "nn"]:
             lang = "no"
             
-        # Try a lowercase path first
-        path = f"locales/{lang}/translation.json"
-        if os.path.exists(path):
-            with open(path, "r", encoding='utf-8') as f:
-                return json.load(f)
-                
-        # Try title case as a fallback
-        path_title = f"locales/{lang.title()}/translation.json"
-        if os.path.exists(path_title):
-            with open(path_title, "r", encoding='utf-8') as f:
-                return json.load(f)
-                
-        raise FileNotFoundError(f"No translation file for {lang}")
+        # Get the directory of the current script
+        script_dir = os.path.dirname(os.path.abspath(__file__))
+        
+        # Construct absolute path to translation file
+        base_path = os.path.join(script_dir, "locales", lang, "translation.json")
+        alt_path = os.path.join(script_dir, "locales", lang.upper(), "translation.json")
+        
+        # Try paths in order
+        for path in [base_path, alt_path]:
+            if os.path.exists(path):
+                with open(path, "r", encoding='utf-8') as f:
+                    return json.load(f)
+        
+        # If no file found, raise error
+        raise FileNotFoundError(f"No translation file found for {lang}")
         
     except Exception as e:
         print(f"Translation error: {e}")
         # Fallback to English
         try:
-            with open("locales/en/translation.json", "r", encoding='utf-8') as f:
+            script_dir = os.path.dirname(os.path.abspath(__file__))
+            en_path = os.path.join(script_dir, "locales", "en", "translation.json")
+            with open(en_path, "r", encoding='utf-8') as f:
                 return json.load(f)
-        except:
+        except Exception as e2:
+            print(f"English fallback failed: {e2}")
             return {}
             
 def tr(key):
