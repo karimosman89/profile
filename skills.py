@@ -12,7 +12,8 @@ current_dir = os.path.dirname(__file__)
 
 # Enhanced Skills Data with proficiency levels and business impact
 skills_data = [
-    {
+
+    {
 
         "category": tr("SKILLS_PROGRAMMING_LANGUAGES_CATEGORY"),
 
@@ -35,50 +36,95 @@ skills_data = [
         ]
 
     },
-    {
-        "category": tr("SKILLS_ML_FRAMEWORKS_CATEGORY"),
-        "description": tr("SKILLS_ML_FRAMEWORKS_DESC"),
-        "skills": [
-            {"name": "TensorFlow", "proficiency": 90, "years": 7, "projects": 40, "icon": os.path.join(current_dir, "icons", "tensorflow.svg")},
-            {"name": "PyTorch", "proficiency": 88, "years": 6, "projects": 30, "icon": os.path.join(current_dir, "icons", "pytorch.svg")},
-            {"name": "Scikit-learn", "proficiency": 95, "years": 8, "projects": 50, "icon": os.path.join(current_dir, "icons", "scikitlearn.svg")},
-            {"name": "Keras", "proficiency": 92, "years": 6, "projects": 35, "icon": os.path.join(current_dir, "icons", "keras.svg")},
-            {"name": "XGBoost/LightGBM", "proficiency": 87, "years": 5, "projects": 25, "icon": os.path.join(current_dir, "icons", "xgboost.svg")},
-        ]
-    },
-    {
-        "category": tr("SKILLS_DATA_TOOLS_CATEGORY"),
-        "description": tr("SKILLS_DATA_TOOLS_DESC"),
-        "skills": [
-            {"name": "Pandas", "proficiency": 98, "years": 8, "projects": 50, "icon": os.path.join(current_dir, "icons", "pandas.svg")},
-            {"name": "NumPy", "proficiency": 97, "years": 8, "projects": 50, "icon": os.path.join(current_dir, "icons", "numpy.svg")},
-            {"name": "Spark", "proficiency": 85, "years": 5, "projects": 18, "icon": os.path.join(current_dir, "icons", "spark.svg")},
-            {"name": "Kafka", "proficiency": 80, "years": 4, "projects": 10, "icon": os.path.join(current_dir, "icons", "kafka.svg")},
-            {"name": "Tableau", "proficiency": 75, "years": 3, "projects": 8, "icon": os.path.join(current_dir, "icons", "tableau.svg")},
-        ]
-    },
-    {
-        "category": tr("SKILLS_CLOUD_DEVOPS_CATEGORY"),
-        "description": tr("SKILLS_CLOUD_DEVOPS_DESC"),
-        "skills": [
-            {"name": "AWS", "proficiency": 90, "years": 6, "projects": 30, "icon": os.path.join(current_dir, "icons", "aws.svg")},
-            {"name": "GCP", "proficiency": 85, "years": 5, "projects": 20, "icon": os.path.join(current_dir, "icons", "gcp.svg")},
-            {"name": "Docker", "proficiency": 92, "years": 5, "projects": 25, "icon": os.path.join(current_dir, "icons", "docker.svg")},
-            {"name": "Kubernetes", "proficiency": 80, "years": 4, "projects": 15, "icon": os.path.join(current_dir, "icons", "kubernetes.svg")},
-            {"name": "MLflow", "proficiency": 88, "years": 4, "projects": 12, "icon": os.path.join(current_dir, "icons", "mlflow.svg")},
-            {"name": "Git", "proficiency": 95, "years": 8, "projects": 50, "icon": os.path.join(current_dir, "icons", "git.svg")},
-        ]
-    },
-    {
-        "category": tr("SKILLS_NLP_LLM_CATEGORY"),
-        "description": tr("SKILLS_NLP_LLM_DESC"),
-        "skills": [
-            {"name": "Hugging Face", "proficiency": 90, "years": 4, "projects": 20, "icon": os.path.join(current_dir, "icons", "huggingface.svg")},
-            {"name": "LangChain", "proficiency": 85, "years": 2, "projects": 10, "icon": os.path.join(current_dir, "icons", "langchain.svg")},
-            {"name": "Vector DBs", "proficiency": 87, "years": 3, "projects": 15, "icon": os.path.join(current_dir, "icons", "vectordb.svg")},
-            {"name": "RAG", "proficiency": 90, "years": 2, "projects": 10, "icon": os.path.join(current_dir, "icons", "rag.svg")},
-        ]
-    }
+
+    {
+
+        "category": tr("SKILLS_ML_FRAMEWORKS_CATEGORY"),
+
+        "description": tr("SKILLS_ML_FRAMEWORKS_DESC"),
+
+        "skills": [
+
+            {"name": "TensorFlow", "proficiency": 90, "years": 7, "projects": 40, "icon": os.path.join(current_dir, "icons", "tensorflow.svg")},
+
+            {"name": "PyTorch", "proficiency": 88, "years": 6, "projects": 30, "icon": os.path.join(current_dir, "icons", "pytorch.svg")},
+
+            {"name": "Scikit-learn", "proficiency": 95, "years": 8, "projects": 50, "icon": os.path.join(current_dir, "icons", "scikitlearn.svg")},
+
+            {"name": "Keras", "proficiency": 92, "years": 6, "projects": 35, "icon": os.path.join(current_dir, "icons", "keras.svg")},
+
+            {"name": "XGBoost/LightGBM", "proficiency": 87, "years": 5, "projects": 25, "icon": os.path.join(current_dir, "icons", "xgboost.svg")},
+
+        ]
+
+    },
+
+    {
+
+        "category": tr("SKILLS_DATA_TOOLS_CATEGORY"),
+
+        "description": tr("SKILLS_DATA_TOOLS_DESC"),
+
+        "skills": [
+
+            {"name": "Pandas", "proficiency": 98, "years": 8, "projects": 50, "icon": os.path.join(current_dir, "icons", "pandas.svg")},
+
+            {"name": "NumPy", "proficiency": 97, "years": 8, "projects": 50, "icon": os.path.join(current_dir, "icons", "numpy.svg")},
+
+            {"name": "Spark", "proficiency": 85, "years": 5, "projects": 18, "icon": os.path.join(current_dir, "icons", "spark.svg")},
+
+            {"name": "Kafka", "proficiency": 80, "years": 4, "projects": 10, "icon": os.path.join(current_dir, "icons", "kafka.svg")},
+
+            {"name": "Tableau", "proficiency": 75, "years": 3, "projects": 8, "icon": os.path.join(current_dir, "icons", "tableau.svg")},
+
+        ]
+
+    },
+
+    {
+
+        "category": tr("SKILLS_CLOUD_DEVOPS_CATEGORY"),
+
+        "description": tr("SKILLS_CLOUD_DEVOPS_DESC"),
+
+        "skills": [
+
+            {"name": "AWS", "proficiency": 90, "years": 6, "projects": 30, "icon": os.path.join(current_dir, "icons", "aws.svg")},
+
+            {"name": "GCP", "proficiency": 85, "years": 5, "projects": 20, "icon": os.path.join(current_dir, "icons", "gcp.svg")},
+
+            {"name": "Docker", "proficiency": 92, "years": 5, "projects": 25, "icon": os.path.join(current_dir, "icons", "docker.svg")},
+
+            {"name": "Kubernetes", "proficiency": 80, "years": 4, "projects": 15, "icon": os.path.join(current_dir, "icons", "kubernetes.svg")},
+
+            {"name": "MLflow", "proficiency": 88, "years": 4, "projects": 12, "icon": os.path.join(current_dir, "icons", "mlflow.svg")},
+
+            {"name": "Git", "proficiency": 95, "years": 8, "projects": 50, "icon": os.path.join(current_dir, "icons", "git.svg")},
+
+        ]
+
+    },
+
+    {
+
+        "category": tr("SKILLS_NLP_LLM_CATEGORY"),
+
+        "description": tr("SKILLS_NLP_LLM_DESC"),
+
+        "skills": [
+
+            {"name": "Hugging Face", "proficiency": 90, "years": 4, "projects": 20, "icon": os.path.join(current_dir, "icons", "huggingface.svg")},
+
+            {"name": "LangChain", "proficiency": 85, "years": 2, "projects": 10, "icon": os.path.join(current_dir, "icons", "langchain.svg")},
+
+            {"name": "Vector DBs", "proficiency": 87, "years": 3, "projects": 15, "icon": os.path.join(current_dir, "icons", "vectordb.svg")},
+
+            {"name": "RAG", "proficiency": 90, "years": 2, "projects": 10, "icon": os.path.join(current_dir, "icons", "rag.svg")},
+
+        ]
+
+    }
+
 ]
 
 # Set page style
