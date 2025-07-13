@@ -292,7 +292,7 @@ for category_data in skills_data:
 
 # Deep Learning & AI Model Expertise
 st.markdown(f"## {tr('SKILLS_DL_TITLE')}")
-st.markdown(f"## {tr('SKILLS_DL_APPLICATIONS')}")
+st.markdown(f"#### {tr('SKILLS_DL_APPLICATIONS')}")
 st.markdown(f"""
 <div class="interactive-demo">
     <ul style="list-style-type: disc; padding-left: 20px;">
