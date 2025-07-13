@@ -147,12 +147,8 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-# Sidebar Navigation
-# Make sure utils.language_selector returns the selected page name or handles navigation directly.
-# If utils.language_selector sets st.session_state.page, then 'page' variable isn't needed here.
-# Assuming it sets st.session_state.page and returns it for clarity.
-page = language_selector()
-
+# Sidebar Navigation - returns page key ("home", "about", etc.)
+page_key = language_selector()
 
 # Interactive AI Chat Bot Section
 def ai_chat_interface():
@@ -173,10 +169,10 @@ def ai_chat_interface():
     col1, col2 = st.columns([3, 1])
     
     with col1:
-        user_question = st.text_input(tr("AI_CHAT_PROMPT"), placeholder=tr("AI_CHAT_PLACEHOLDER")) # Corrected tr()
+        user_question = st.text_input(tr("AI_CHAT_PROMPT"), placeholder=tr("AI_CHAT_PLACEHOLDER"))
     
     with col2:
-        if st.button(tr("AI_CHAT_RANDOM")): # Corrected tr()
+        if st.button(tr("AI_CHAT_RANDOM")):
             user_question = random.choice(quick_questions)
             st.session_state.random_question = user_question
     
@@ -288,8 +284,8 @@ def proactive_showcase():
         </div>
         """, unsafe_allow_html=True)
 
-# Main page rendering
-if page == tr("NAV_HOME"): 
+# Main page rendering using page keys
+if page_key == "home":
     # Hero section with typing effect
     st.markdown(f"""
     <div class="hero-section">
@@ -310,7 +306,7 @@ if page == tr("NAV_HOME"):
     proactive_showcase()
     
     # Enhanced expertise showcase
-    st.markdown(f"### {tr('EXPERTISE_TITLE')}") # Corrected tr()
+    st.markdown(f"### {tr('EXPERTISE_TITLE')}")
     
     col1, col2, col3 = st.columns(3)
     
@@ -334,22 +330,22 @@ if page == tr("NAV_HOME"):
             """, unsafe_allow_html=True)
             st_lottie(animation, height=100, key=f"expertise_{i}")
 
-elif page == tr("NAV_ABOUT"): 
+elif page_key == "about":
     logging.info("Loading About Page")
     importlib.reload(about)
 
-elif page == tr("NAV_PROJECTS"): 
+elif page_key == "projects":
     logging.info("Loading Projects Page")
     importlib.reload(projects)
 
-elif page == tr("NAV_SKILLS"): 
+elif page_key == "skills":
     logging.info("Loading Skills Page")
     importlib.reload(skills)
 
-elif page == tr("NAV_CONTACT"): 
+elif page_key == "contact":
     logging.info("Loading Contact Page")
     importlib.reload(contact)
 
-elif page == tr("NAV_RESUME"): 
+elif page_key == "resume":
     logging.info("Loading Resume Page")
     importlib.reload(resume)
