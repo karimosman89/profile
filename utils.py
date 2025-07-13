@@ -69,12 +69,25 @@ def language_selector():
     st.session_state.lang = lang_keys[selected_index]
     
     st.sidebar.markdown(f"### 🚀 {tr('NAVIGATION')}")
-    page = st.sidebar.radio("", [
+    # Initialize selected page
+    if 'selected_page' not in st.session_state:
+        st.session_state.selected_page = tr("NAV_HOME")
+        
+    # Create page options (translated)
+    page_options = [
         tr("NAV_HOME"),
         tr("NAV_ABOUT"),
         tr("NAV_PROJECTS"),
         tr("NAV_SKILLS"),
         tr("NAV_CONTACT"),
         tr("NAV_RESUME")
-    ])
-    return page
+    ]
+    # Update selected page
+    st.session_state.selected_page = st.sidebar.radio(
+        "", 
+        page_options,
+        index=page_options.index(st.session_state.selected_page)
+    )
+    
+    return st.session_state.selected_page
+    
