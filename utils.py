@@ -59,9 +59,10 @@ def language_selector():
     
     # Create language selector
     selected_display = st.sidebar.selectbox(
-        "", 
+        "Language Selector",  
         display_options,
-        index=current_index
+        index=current_index,
+        label_visibility="collapsed"  
     )
     
     # Update session state with selected language
@@ -87,9 +88,10 @@ def language_selector():
     
     # Create radio buttons with translated labels
     selected_label = st.sidebar.radio(
-        "", 
+        "Navigation Menu",  
         list(page_config.values()),
-        index=list(page_config.keys()).index(st.session_state.page)
+        index=list(page_config.keys()).index(st.session_state.page),
+        label_visibility="collapsed"  
     )
     
     # Find the key for the selected label
