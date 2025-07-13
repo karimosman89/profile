@@ -61,17 +61,18 @@ def language_selector():
     
     # Language options with flags and full names
     lang_options = {
-        "en": "🇺🇸",  
-        "fr": "🇫🇷",  
-        "de": "🇩🇪",  
-        "sv": "🇸🇪",  
-        "nl": "🇳🇱",  
-        "da": "🇩🇰",  
-        "ja": "🇯🇵"   
+        "en": {"flag": "US"},
+        "fr": {"flag": "FR"},
+        "de": {"flag": "DE"},
+        "sv": {"flag": "SE"},
+        "nl": {"flag": "NL"},
+        "da": {"flag": "DK"},
+        "ja": {"flag": "JP"}
     }
     
     # Create display names with flags
-   display_options = [lang_options[code] for code in lang_options]
+    display_options = [f"{lang_options[code]['flag']}" 
+                      for code in lang_options.keys()]
     
     # Get current language index
     current_lang = st.session_state.lang
@@ -95,8 +96,9 @@ def language_selector():
     st.session_state.lang = lang_keys[selected_index]
     
     # Page navigation with keys
-   st.sidebar.markdown(f"### 🚀 {tr('NAVIGATION')}")
+    st.sidebar.markdown(f"### 🚀 {tr('NAVIGATION')}")
     
+    # Page configuration with keys
     page_config = {
         "home": tr("NAV_HOME"),
         "about": tr("NAV_ABOUT"),
@@ -106,9 +108,11 @@ def language_selector():
         "resume": tr("NAV_RESUME")
     }
     
+    # Initialize selected page
     if "page" not in st.session_state:
         st.session_state.page = "home"
     
+    # Create radio buttons with translated labels
     selected_label = st.sidebar.radio(
         "Navigation Menu",  
         list(page_config.values()),
@@ -116,6 +120,7 @@ def language_selector():
         label_visibility="collapsed"  
     )
     
+    # Find the key for the selected label
     for key, label in page_config.items():
         if label == selected_label:
             st.session_state.page = key
