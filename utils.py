@@ -3,15 +3,45 @@ import json
 import os
 
 def get_browser_lang():
-    """Fallback language detection without JavaScript"""
-    # Default to English
-    return "en"
+    """Improved browser language detection"""
+    try:
+        # Get browser language from Streamlit headers
+        headers = st.experimental_get_headers()
+        accept_language = headers.get("Accept-Language", "en").split(",")[0].split("-")[0].lower()
+        
+        # Map Norwegian variants to 'no'
+        if accept_language in ["nb", "nn", "no"]:
+            return "no"
+        return accept_language if accept_language in ["en", "fr", "de", "sv", "nl", "da", "ja"] else "en"
+    except:
+        return "en"
 
 def load_translations(lang):
+    """Handle case sensitivity and Norwegian variants"""
     try:
-        with open(f"locales/{lang}/translation.json", "r", encoding='utf-8') as f:
-            return json.load(f)
+        # Normalize language code
+        lang = lang.lower()
+        
+        # Handle Norwegian variants
+        if lang in ["nb", "nn"]:
+            lang = "no"
+            
+        # Try exact match first
+        path = f"locales/{lang}/translation.json"
+        if os.path.exists(path):
+            with open(path, "r", encoding='utf-8') as f:
+                return json.load(f)
+                
+        # Try uppercase version if exists
+        path_upper = f"locales/{lang.upper()}/translation.json"
+        if os.path.exists(path_upper):
+            with open(path_upper, "r", encoding='utf-8') as f:
+                return json.load(f)
+                
+        raise FileNotFoundError(f"No translation file for {lang}")
+        
     except Exception as e:
+        print(f"Translation error: {e}")
         # Fallback to English
         try:
             with open("locales/en/translation.json", "r", encoding='utf-8') as f:
