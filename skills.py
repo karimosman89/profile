@@ -5,7 +5,7 @@ import plotly.express as px
 from PIL import Image
 import pandas as pd
 import numpy as np
-from utils import tr 
+from utils import tr # Assuming utils.py is in the same directory or accessible in PYTHONPATH
 
 # Get the directory of the current script
 current_dir = os.path.dirname(__file__)
@@ -293,14 +293,14 @@ for category_data in skills_data:
 # Deep Learning & AI Model Expertise
 st.markdown(f"## {tr('SKILLS_DL_TITLE')}")
 st.markdown(f"<h3>{tr('SKILLS_DL_APPLICATIONS')}</h3>")
-st.markdown("""
+st.markdown(f"""
 <div class="interactive-demo">
     <ul style="list-style-type: disc; padding-left: 20px;">
-        <li>Computer Vision (Object Detection, Segmentation, Image Generation - GANs, Diffusion Models)</li>
-        <li>Natural Language Processing (Text Classification, Sentiment Analysis, Named Entity Recognition, LLMs, RAG)</li>
-        <li>Time Series Analysis (Forecasting, Anomaly Detection)</li>
-        <li>Generative AI (Content Creation, Data Augmentation)</li>
-        <li>Reinforcement Learning (Optimal Control, Decision Making)</li>
+        <li>{tr('SKILLS_DL_APP_CV')}</li>
+        <li>{tr('SKILLS_DL_APP_NLP')}</li>
+        <li>{tr('SKILLS_DL_APP_TSA')}</li>
+        <li>{tr('SKILLS_DL_APP_GENAI')}</li>
+        <li>{tr('SKILLS_DL_APP_RL')}</li>
     </ul>
 </div>
 """, unsafe_allow_html=True)
@@ -352,11 +352,10 @@ with col1:
     <div class="interactive-demo">
         <h3>{tr('SKILLS_EXPLORING_TITLE')}</h3>
         <ul style="list-style-type: disc; padding-left: 20px;">
-            <li>{tr('ABOUT_AI_AGENTS_TITLE')}</li>
-            <li>{tr('ABOUT_EXPLAINABLE_AI_TITLE')}</li>
-            <li>Reinforcement Learning from Human Feedback (RLHF)</li>
-            <li>Edge AI and TinyML for resource-constrained environments</li>
-            <li>Ethical AI and bias mitigation</li>
+            <li>{tr('SKILLS_EXPLORING_LLMS')}</li>
+            <li>{tr('SKILLS_EXPLORING_MULTIMODAL_AI')}</li>
+            <li>{tr('SKILLS_EXPLORING_EDGE_AI')}</li>
+            <li>{tr('SKILLS_EXPLORING_AI_SAFETY_ETHICS')}</li>
         </ul>
     </div>
     """, unsafe_allow_html=True)
