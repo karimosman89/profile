@@ -111,18 +111,33 @@ st.markdown(f"""
 </div>
 """, unsafe_allow_html=True)
 
+# Current availability status
+current_time = datetime.now()
+st.markdown(f"""
+<div class="availability-section pulse">
+    <h2 style="color: white; margin-bottom: 1rem;">{tr('CONTACT_AVAILABILITY_TITLE')}</h2>
+    <p style="font-size: 1.2rem; margin-bottom: 1rem;">
+        {tr('CONTACT_AVAILABILITY_TEXT')}
+    </p>
+    <p style="font-size: 1rem;">
+        {tr('CONTACT_AVAILABILITY_UPDATED')} {current_time.strftime('%B %d, %Y at %I:%M %p')} {tr('CONTACT_TIMEZONE_SHORT')}
+    </p>
+</div>
+""", unsafe_allow_html=True)
+
+
 # Contact Information Section
-st.markdown(f"## {tr('CONTACT_INFO_TITLE')}")
+st.markdown(f"## {tr('CONTACT_METHODS_TITLE')}") # Using existing key from JSON
 col1, col2 = st.columns(2)
 
 with col1:
     st.markdown(f"""
     <div class="contact-card">
-        <h3>{tr('CONTACT_EMAIL_TITLE')}</h3>
+        <h3>{tr('CONTACT_PROFESSIONAL_TITLE')}</h3>
         <p>
-            {tr('CONTACT_EMAIL_DESC')}
+            {tr('CONTACT_PROFESSIONAL_DESC')}
             <br><br>
-            <a href="mailto:karim.programmer2020@gmail.com">karim.programmer2020@gmail.com</a>
+            <a href="https://www.linkedin.com/in/karimosman89" target="_blank">linkedin.com/in/karimosman89</a>
         </p>
     </div>
     """, unsafe_allow_html=True)
@@ -130,11 +145,11 @@ with col1:
 with col2:
     st.markdown(f"""
     <div class="contact-card">
-        <h3>{tr('CONTACT_LINKEDIN_TITLE')}</h3>
+        <h3>{tr('CONTACT_DIRECT_TITLE')}</h3>
         <p>
-            {tr('CONTACT_LINKEDIN_DESC')}
+            {tr('CONTACT_DIRECT_DESC')}
             <br><br>
-            <a href="https://www.linkedin.com/in/karimosman89" target="_blank">linkedin.com/in/karimosman89</a>
+            <a href="mailto:karim.programmer2020@gmail.com">karim.programmer2020@gmail.com</a>
         </p>
     </div>
     """, unsafe_allow_html=True)
@@ -166,32 +181,61 @@ with col4:
 # Quick Contact Form (if applicable, simplified for demo)
 st.markdown(f"## {tr('CONTACT_FORM_TITLE')}")
 with st.form("contact_form"):
-    name = st.text_input(tr("CONTACT_FORM_NAME_LABEL"), placeholder=tr("CONTACT_FORM_NAME_PLACEHOLDER"))
-    email = st.text_input(tr("CONTACT_FORM_EMAIL_LABEL"), placeholder=tr("CONTACT_FORM_EMAIL_PLACEHOLDER"))
-    message = st.text_area(tr("CONTACT_FORM_MESSAGE_LABEL"), placeholder=tr("CONTACT_FORM_MESSAGE_PLACEHOLDER"))
-    submit_button = st.form_submit_button(tr("CONTACT_FORM_SUBMIT_BUTTON"))
-
-    if submit_button:
-        # In a real application, you would send this email (e.g., using smtplib or a service like SendGrid)
-        st.success(tr("CONTACT_FORM_SUCCESS_MESSAGE").format(name=name))
-        time.sleep(2) # Simulate sending
-        st.experimental_rerun() # Clear form after submission
+    st.markdown(f"""
+    <div class="quick-contact-form">
+        <h3 style="margin-top: 0;">{tr('CONTACT_FORM_SUBTITLE')}</h3>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    col1_form, col2_form = st.columns(2)
+    
+    with col1_form:
+        name = st.text_input(tr("CONTACT_FORM_NAME"), placeholder=tr("CONTACT_FORM_NAME_PLACEHOLDER"))
+        email = st.text_input(tr("CONTACT_FORM_EMAIL"), placeholder=tr("CONTACT_FORM_EMAIL_PLACEHOLDER"))
+    
+    with col2_form:
+        company = st.text_input(tr("CONTACT_FORM_COMPANY"), placeholder=tr("CONTACT_FORM_COMPANY_PLACEHOLDER"))
+        subject = st.selectbox(tr("CONTACT_FORM_SUBJECT"), [
+            tr("CONTACT_FORM_SUBJECT_OPTION_JOB"),
+            tr("CONTACT_FORM_SUBJECT_OPTION_CONSULTING"),
+            tr("CONTACT_FORM_SUBJECT_OPTION_COLLABORATION"),
+            tr("CONTACT_FORM_SUBJECT_OPTION_TECHNICAL"),
+            tr("CONTACT_FORM_SUBJECT_OPTION_OTHER")
+        ])
+    
+    message = st.text_area(tr("CONTACT_FORM_MESSAGE"), placeholder=tr("CONTACT_FORM_MESSAGE_PLACEHOLDER"), height=150)
+    
+    submitted = st.form_submit_button(tr("CONTACT_FORM_SUBMIT"), use_container_width=True)
+    
+    if submitted:
+        if name and email and message:
+            # Create mailto link with pre-filled information
+            mailto_link = f"mailto:karim.programmer2020@gmail.com?subject={subject} - {name}&body=Name: {name}%0D%0AEmail: {email}%0D%0ACompany: {company}%0D%0A%0D%0AMessage:%0D%0A{message}"
+            
+            st.success(tr("CONTACT_FORM_SUCCESS"))
+            st.markdown(f"""
+            <a href="{mailto_link}" class="contact-button" style="display: block; text-align: center; margin: 1rem auto; max-width: 300px;">
+                📧 {tr('CONTACT_FORM_EMAIL_BUTTON')}
+            </a>
+            """, unsafe_allow_html=True)
+        else:
+            st.error(tr("CONTACT_FORM_ERROR"))
 
 # Social Proof/Engagement Metrics (Example)
-st.markdown(f"## {tr('CONTACT_STATS_TITLE')}")
+st.markdown(f"## {tr('CONTACT_SOCIAL_TITLE')}") # Using existing key from JSON
 st.markdown(f"""
 <div class="social-stats-container">
     <div class="social-stat">
-        <div class="social-number">50+</div>
-        <div class="social-label">{tr('CONTACT_STATS_PROJECTS_LABEL')}</div>
+        <div class="social-number">{tr('CONTACT_REPOS')}</div>
+        <div class="social-label">{tr('CONTACT_REPOS_LABEL')}</div>
     </div>
     <div class="social-stat">
-        <div class="social-number">8+</div>
-        <div class="social-label">{tr('CONTACT_STATS_EXPERIENCE_LABEL')}</div>
+        <div class="social-number">{tr('CONTACT_EXPERIENCE')}</div>
+        <div class="social-label">{tr('CONTACT_EXPERIENCE_LABEL')}</div>
     </div>
     <div class="social-stat">
-        <div class="social-number">100%</div>
-        <div class="social-label">{tr('CONTACT_STATS_RESPONSE_LABEL')}</div>
+        <div class="social-number">{tr('CONTACT_RESPONSE_RATE')}</div>
+        <div class="social-label">{tr('CONTACT_RESPONSE_RATE_LABEL')}</div>
     </div>
 </div>
 """, unsafe_allow_html=True)
@@ -201,7 +245,7 @@ st.markdown(f"""
 <div class="testimonial-card">
     <h3 style="color: white; margin-bottom: 2rem;">{tr('CONTACT_TESTIMONIAL_TITLE')}</h3>
     <p style="font-size: 1.2rem; font-style: italic; margin-bottom: 1rem;">
-        {tr('CONTACT_TESTIMONIAL_QUOTE')}
+        {tr('CONTACT_TESTIMONIAL_TEXT')}
     </p>
     <p style="font-size: 1rem; opacity: 0.9;">
         {tr('CONTACT_TESTIMONIAL_AUTHOR')}
@@ -214,7 +258,7 @@ st.markdown(f"""
 <div class="contact-hero">
     <h2>{tr('CONTACT_CALL_TITLE')}</h2>
     <p style="font-size: 1.2rem; color: #555; margin: 2rem 0;">
-        {tr('CONTACT_CALL_TEXT1')}
+        {tr('CONTACT_CALL_TEXT')}
     </p>
     <p style="font-size: 1rem; color: #666;">
         {tr('CONTACT_CALL_TEXT2')}
