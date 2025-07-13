@@ -150,6 +150,9 @@ st.markdown("""
 # Sidebar Navigation - returns page key ("home", "about", etc.)
 page_key = language_selector()
 
+if 'lang' not in st.session_state:
+    st.session_state.lang = get_browser_lang()
+    
 # Interactive AI Chat Bot Section
 def ai_chat_interface():
     st.markdown(f"### {tr('AI_CHAT_TITLE')}") 
