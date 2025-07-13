@@ -58,10 +58,12 @@ def language_selector():
         current_index = 0
     
     # Create language selector
+    # MODIFIED: Added a label and label_visibility="hidden"
     selected_display = st.sidebar.selectbox(
-        "", 
+        "Select Language", # Provide a descriptive label
         display_options,
-        index=current_index
+        index=current_index,
+        label_visibility="hidden" # Hide the label if you don't want it visible
     )
     
     # Update session state with selected language
@@ -86,10 +88,12 @@ def language_selector():
         st.session_state.page = "home"
     
     # Create radio buttons with translated labels
+    # MODIFIED: Added a label and label_visibility="hidden"
     selected_label = st.sidebar.radio(
-        "", 
+        "Navigate Pages", # Provide a descriptive label
         list(page_config.values()),
-        index=list(page_config.keys()).index(st.session_state.page)
+        index=list(page_config.keys()).index(st.session_state.page),
+        label_visibility="hidden" # Hide the label if you don't want it visible
     )
     
     # Find the key for the selected label
