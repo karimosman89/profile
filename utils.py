@@ -8,10 +8,6 @@ def get_browser_lang():
         # Get browser language from Streamlit headers
         headers = st.experimental_get_headers()
         accept_language = headers.get("Accept-Language", "en").split(",")[0].split("-")[0].lower()
-        
-        # Map Norwegian variants to 'no'
-        if accept_language in ["nb", "nn", "no","nob"]:
-            return "nob"
         return accept_language if accept_language in ["en", "fr", "de", "sv", "nl", "da", "ja"] else "en"
     except:
         return "en"
@@ -21,10 +17,6 @@ def load_translations(lang):
     try:
         # Normalize language code
         lang = lang.lower()
-        
-        # Handle Norwegian variants
-        if lang in ["nb", "nn"]:
-            lang = "nob"
             
         # Get the directory of the current script
         script_dir = os.path.dirname(os.path.abspath(__file__))
@@ -73,7 +65,6 @@ def language_selector():
         "fr": {"flag": "FR"},
         "de": {"flag": "DE"},
         "sv": {"flag": "SE"},
-        "nob": {"flag": "NO"},
         "nl": {"flag": "NL"},
         "da": {"flag": "DK"},
         "ja": {"flag": "JP"}
