@@ -4,6 +4,12 @@ from datetime import datetime
 import time
 from utils import tr 
 
+
+
+# Initialize session state for page
+if 'page' not in st.session_state:
+    st.session_state.page = 'contact'
+
 # Enhanced styling for modern contact page
 def set_style():
     st.markdown("""
@@ -180,7 +186,7 @@ with col4:
 
 # Quick Contact Form (if applicable, simplified for demo)
 st.markdown(f"## {tr('CONTACT_FORM_TITLE')}")
-with st.form(key=f"contact_form_{st.session_state.page}"):
+with st.form(key="contact_form"):
     st.markdown(f"""
     <div class="quick-contact-form">
         <h3 style="margin-top: 0;">{tr('CONTACT_FORM_SUBTITLE')}</h3>
