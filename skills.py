@@ -275,7 +275,7 @@ fig.update_layout(
     plot_bgcolor='rgba(0,0,0,0)',
     font=dict(family='Inter', color='#333')
 )
-st.plotly_chart(fig, use_container_width=True)
+st.plotly_chart(fig, use_container_width=True, key="skills_radar_chart")
 
 # Detailed Technical Skills
 st.markdown(f"## {tr('SKILLS_DETAILED_TITLE')}")
