@@ -180,7 +180,7 @@ with col4:
 
 # Quick Contact Form (if applicable, simplified for demo)
 st.markdown(f"## {tr('CONTACT_FORM_TITLE')}")
-with st.form("contact_form"):
+with st.form(key=f"contact_form_{st.session_state.page}"):
     st.markdown(f"""
     <div class="quick-contact-form">
         <h3 style="margin-top: 0;">{tr('CONTACT_FORM_SUBTITLE')}</h3>
