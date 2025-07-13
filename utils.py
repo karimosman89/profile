@@ -69,14 +69,14 @@ def language_selector():
     
     # Language options with flags and full names
     lang_options = {
-        "en": {"flag": "🇬🇧"},
-        "fr": {"flag": "🇫🇷"},
-        "de": {"flag": "🇩🇪"},
-        "sv": {"flag": "🇸🇪"},
-        "no": {"flag": "🇳🇴"},
-        "nl": {"flag": "🇳🇱"},
-        "da": {"flag": "🇩🇰"},
-        "ja": {"flag": "🇯🇵"}
+        "en": {"flag": "US"},
+        "fr": {"flag": "FR"},
+        "de": {"flag": "DE"},
+        "sv": {"flag": "SE"},
+        "no": {"flag": "NO"},
+        "nl": {"flag": "NL"},
+        "da": {"flag": "DK"},
+        "ja": {"flag": "JP"}
     }
     
     # Create display names with flags
