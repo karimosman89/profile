@@ -13,17 +13,28 @@ current_dir = os.path.dirname(__file__)
 # Enhanced Skills Data with proficiency levels and business impact
 skills_data = [
     {
-        "category": tr("SKILLS_PROGRAMMING_LANGUAGES_CATEGORY"),
-        "description": tr("SKILLS_PROGRAMMING_LANGUAGES_DESC"),
-        "skills": [
-            { "proficiency": 95, "years": 8, "projects": 50, "icon": os.path.join(current_dir, "icons", "python.svg")},
-            { "proficiency": 80, "years": 4, "projects": 15, "icon": os.path.join(current_dir, "icons", "R.svg")},
-            { "proficiency": 75, "years": 5, "projects": 12, "icon": os.path.join(current_dir, "icons", "java.svg")},
-            { "proficiency": 70, "years": 3, "projects": 8, "icon": os.path.join(current_dir, "icons", "CPlusPlus.svg")},
-            { "proficiency": 90, "years": 6, "projects": 35, "icon": os.path.join(current_dir, "icons", "sql-azure.svg")},
-            { "proficiency": 85, "years": 4, "projects": 20, "icon": os.path.join(current_dir, "icons", "javascript.svg")},
-        ]
-    },
+
+        "category": tr("SKILLS_PROGRAMMING_LANGUAGES_CATEGORY"),
+
+        "description": tr("SKILLS_PROGRAMMING_LANGUAGES_DESC"),
+
+        "skills": [
+
+            {"name": "Python", "proficiency": 95, "years": 8, "projects": 50, "icon": os.path.join(current_dir, "icons", "python.svg")},
+
+            {"name": "R", "proficiency": 80, "years": 4, "projects": 15, "icon": os.path.join(current_dir, "icons", "R.svg")},
+
+            {"name": "Java", "proficiency": 75, "years": 5, "projects": 12, "icon": os.path.join(current_dir, "icons", "java.svg")},
+
+            {"name": "C++", "proficiency": 70, "years": 3, "projects": 8, "icon": os.path.join(current_dir, "icons", "CPlusPlus.svg")},
+
+            {"name": "SQL", "proficiency": 90, "years": 6, "projects": 35, "icon": os.path.join(current_dir, "icons", "sql-azure.svg")},
+
+            {"name": "JavaScript", "proficiency": 85, "years": 4, "projects": 20, "icon": os.path.join(current_dir, "icons", "javascript.svg")},
+
+        ]
+
+    },
     {
         "category": tr("SKILLS_ML_FRAMEWORKS_CATEGORY"),
         "description": tr("SKILLS_ML_FRAMEWORKS_DESC"),
