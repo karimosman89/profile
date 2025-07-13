@@ -3,7 +3,7 @@ import streamlit as st
 from PIL import Image
 import requests
 import json
-from utils import tr # Import the translation function
+from utils import tr 
 from datetime import datetime
 
 # Get the directory of the current script
