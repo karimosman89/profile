@@ -122,7 +122,7 @@ with col1:
         <p>
             {tr('CONTACT_EMAIL_DESC')}
             <br><br>
-            <a href="mailto:karim.osman@example.com">karim.osman@example.com</a>
+            <a href="mailto:karim.programmer2020@gmail.com">karim.programmer2020@gmail.com</a>
         </p>
     </div>
     """, unsafe_allow_html=True)
