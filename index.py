@@ -12,8 +12,12 @@ import contact
 import importlib
 import random
 import time
-from utils import tr, language_selector
+from utils import tr, language_selector, get_browser_lang
 
+
+if 'lang' not in st.session_state:
+    st.session_state.lang = get_browser_lang()
+    
 # Configure the page
 st.set_page_config(page_title=tr("PAGE_TITLE"), layout="wide", initial_sidebar_state="expanded")
 logging.basicConfig(level=logging.INFO)
@@ -150,8 +154,7 @@ st.markdown("""
 # Sidebar Navigation - returns page key ("home", "about", etc.)
 page_key = language_selector()
 
-if 'lang' not in st.session_state:
-    st.session_state.lang = get_browser_lang()
+
     
 # Interactive AI Chat Bot Section
 def ai_chat_interface():
