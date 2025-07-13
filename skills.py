@@ -6,33 +6,10 @@ from PIL import Image
 import pandas as pd
 import numpy as np
 from utils import tr 
-import base64 
 
 # Get the directory of the current script
-current_dir = os.path.dirname(os.path.abspath(__file__))
+current_dir = os.path.dirname(__file__)
 
-# Function to convert image to base64
-def image_to_base64(image_path):
-    if not os.path.exists(image_path):
-        return ""
-    with open(image_path, "rb") as f:
-        return f"data:image/svg+xml;base64,{base64.b64encode(f.read()).decode()}"
-        
-
- # Preload all icons to base64 for better performance
-def preload_icons():
-    icon_cache = {}
-    for category in skills_data:
-        for skill in category['skills']:
-            # Construct absolute path to the icon
-            icon_path = skill['icon']
-            if os.path.exists(icon_path):
-                icon_cache[skill['name']] = image_to_base64(icon_path)
-            else:
-                st.warning(f"Missing icon: {icon_path}")
-                icon_cache[skill['name']] = ""
-    return icon_cache
-    
 # Enhanced Skills Data with proficiency levels and business impact
 skills_data = [
     {
@@ -92,9 +69,6 @@ skills_data = [
         ]
     }
 ]
-
-# Preload icons at the start
-icon_cache = preload_icons()
 
 # Set page style
 def set_style():
@@ -295,6 +269,7 @@ for category_data in skills_data:
     <div class="skill-category-card">
         <h3>{category_data['category']}</h3>
         <p style="color: #666; margin-bottom: 1.5rem;">{category_data['description']}</p>
+        <div class="skill-list">
     """, unsafe_allow_html=True)
     
     # Create columns for skills within each category
@@ -303,22 +278,17 @@ for category_data in skills_data:
     
     for i, skill in enumerate(category_data['skills']):
         with skill_cols[i % cols_per_row]:
-            # Get base64 encoded icon from cache
-            icon_base64 = icon_cache.get(skill['name'], "")
-            
-            # Create the skill item with proper HTML structure
             st.markdown(f"""
             <div class="skill-item">
-                <img src="{icon_base64}" alt="{skill['name']}" width="30" height="30" style="vertical-align: middle; margin-right: 10px;">
-                <span style="vertical-align: middle;">{skill['name']}</span>
-                <div style="display: inline-block; flex-grow: 1; margin-left: 1rem; background-color: #eee; border-radius: 5px; vertical-align: middle;">
+                <img src="{skill['icon']}" alt="{skill['name']}" title="{skill['name']}">
+                <span>{skill['name']}</span>
+                <div style="flex-grow: 1; margin-left: 1rem; background-color: #eee; border-radius: 5px;">
                     <div style="width: {skill['proficiency']}%; background-color: #667eea; height: 10px; border-radius: 5px;"></div>
                 </div>
-                <span style="margin-left: 0.5rem; font-weight: bold; vertical-align: middle;">{skill['proficiency']}%</span>
+                <span style="margin-left: 0.5rem; font-weight: bold;">{skill['proficiency']}%</span>
             </div>
             """, unsafe_allow_html=True)
-    
-    st.markdown("</div>", unsafe_allow_html=True)
+    st.markdown("</div></div>", unsafe_allow_html=True) # Close skill-list and skill-category-card divs
 
 # Deep Learning & AI Model Expertise
 st.markdown(f"## {tr('SKILLS_DL_TITLE')}")
