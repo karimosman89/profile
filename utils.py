@@ -19,23 +19,23 @@ def get_browser_lang():
 def load_translations(lang):
     """Handle case sensitivity and Norwegian variants"""
     try:
-        # Normalize language code
+        # Normalize language code to lowercase
         lang = lang.lower()
         
         # Handle Norwegian variants
         if lang in ["nb", "nn"]:
             lang = "no"
             
-        # Try exact match first
+        # Try a lowercase path first
         path = f"locales/{lang}/translation.json"
         if os.path.exists(path):
             with open(path, "r", encoding='utf-8') as f:
                 return json.load(f)
                 
-        # Try uppercase version if exists
-        path_upper = f"locales/{lang.upper()}/translation.json"
-        if os.path.exists(path_upper):
-            with open(path_upper, "r", encoding='utf-8') as f:
+        # Try title case as a fallback
+        path_title = f"locales/{lang.title()}/translation.json"
+        if os.path.exists(path_title):
+            with open(path_title, "r", encoding='utf-8') as f:
                 return json.load(f)
                 
         raise FileNotFoundError(f"No translation file for {lang}")
@@ -48,7 +48,7 @@ def load_translations(lang):
                 return json.load(f)
         except:
             return {}
-
+            
 def tr(key):
     if 'lang' not in st.session_state:
         st.session_state.lang = get_browser_lang()
