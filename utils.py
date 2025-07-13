@@ -68,26 +68,34 @@ def language_selector():
     selected_index = display_options.index(selected_display)
     st.session_state.lang = lang_keys[selected_index]
     
+    # Page navigation with keys
     st.sidebar.markdown(f"### 🚀 {tr('NAVIGATION')}")
+    
+    # Page configuration with keys
+    page_config = {
+        "home": tr("NAV_HOME"),
+        "about": tr("NAV_ABOUT"),
+        "projects": tr("NAV_PROJECTS"),
+        "skills": tr("NAV_SKILLS"),
+        "contact": tr("NAV_CONTACT"),
+        "resume": tr("NAV_RESUME")
+    }
+    
     # Initialize selected page
-    if 'selected_page' not in st.session_state:
-        st.session_state.selected_page = tr("NAV_HOME")
-        
-    # Create page options (translated)
-    page_options = [
-        tr("NAV_HOME"),
-        tr("NAV_ABOUT"),
-        tr("NAV_PROJECTS"),
-        tr("NAV_SKILLS"),
-        tr("NAV_CONTACT"),
-        tr("NAV_RESUME")
-    ]
-    # Update selected page
-    st.session_state.selected_page = st.sidebar.radio(
+    if "page" not in st.session_state:
+        st.session_state.page = "home"
+    
+    # Create radio buttons with translated labels
+    selected_label = st.sidebar.radio(
         "", 
-        page_options,
-        index=page_options.index(st.session_state.selected_page)
+        list(page_config.values()),
+        index=list(page_config.keys()).index(st.session_state.page)
     )
     
-    return st.session_state.selected_page
-    
+    # Find the key for the selected label
+    for key, label in page_config.items():
+        if label == selected_label:
+            st.session_state.page = key
+            break
+            
+    return st.session_state.page
