@@ -5,7 +5,7 @@ import plotly.express as px
 from PIL import Image
 import pandas as pd
 import numpy as np
-from utils import tr # Assuming utils.py is in the same directory or accessible in PYTHONPATH
+from utils import tr 
 
 # Get the directory of the current script
 current_dir = os.path.dirname(__file__)
@@ -292,7 +292,7 @@ for category_data in skills_data:
 
 # Deep Learning & AI Model Expertise
 st.markdown(f"## {tr('SKILLS_DL_TITLE')}")
-st.markdown(f"<h3>{tr('SKILLS_DL_APPLICATIONS')}</h3>")
+st.markdown(f"###{tr('SKILLS_DL_APPLICATIONS')}")
 st.markdown(f"""
 <div class="interactive-demo">
     <ul style="list-style-type: disc; padding-left: 20px;">
