@@ -217,7 +217,7 @@ with col1:
     <div class="contact-method-card">
         <h3>{tr('CONTACT_PROFESSIONAL_TITLE')}</h3>
         <p>{tr('CONTACT_PROFESSIONAL_DESC')}</p>
-        <a href="https://linkedin.com/in/karim-osman-ai" target="_blank" class="contact-button">
+        <a href="https://www.linkedin.com/in/karimosman89/" target="_blank" class="contact-button">
             {tr('CONTACT_PROFESSIONAL_BUTTON')}
         </a>
     </div>
@@ -227,7 +227,7 @@ with col1:
     <div class="contact-method-card">
         <h3>{tr('CONTACT_GITHUB_TITLE')}</h3>
         <p>{tr('CONTACT_GITHUB_DESC')}</p>
-        <a href="https://github.com/karim-osman" target="_blank" class="contact-button">
+        <a href="https://github.com/karimosman89" target="_blank" class="contact-button">
             {tr('CONTACT_GITHUB_BUTTON')}
         </a>
     </div>
@@ -238,7 +238,7 @@ with col2:
     <div class="contact-method-card">
         <h3>{tr('CONTACT_DIRECT_TITLE')}</h3>
         <p>{tr('CONTACT_DIRECT_DESC')}</p>
-        <a href="mailto:karim.osman@example.com" class="contact-button">
+        <a href="mailto:karim.programmer2020@gmail.com" class="contact-button">
             {tr('CONTACT_DIRECT_BUTTON')}
         </a>
     </div>
@@ -248,7 +248,7 @@ with col2:
     <div class="contact-method-card">
         <h3>{tr('CONTACT_CALENDLY_TITLE')}</h3>
         <p>{tr('CONTACT_CALENDLY_DESC')}</p>
-        <a href="https://calendly.com/karim-osman" target="_blank" class="contact-button">
+        <a href="https://calendar.google.com/calendar/u/1/r" target="_blank" class="contact-button">
             {tr('CONTACT_CALENDLY_LINK_TEXT')}
         </a>
     </div>
@@ -324,7 +324,7 @@ Sent from your portfolio contact form on {datetime.now().strftime('%B %d, %Y at 
             """
             
             # Create mailto link
-            mailto_link = f"mailto:karim.osman@example.com?subject={urllib.parse.quote(email_subject)}&body={urllib.parse.quote(email_body)}"
+            mailto_link = f"mailto:karim.programmer2020@gmail.com?subject={urllib.parse.quote(email_subject)}&body={urllib.parse.quote(email_body)}"
             
             st.markdown(f"""
             <div class="form-success">
