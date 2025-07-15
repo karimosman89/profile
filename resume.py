@@ -246,10 +246,10 @@ experiences = [
         "technologies": ["Python", "TensorFlow", "PyTorch", "Scikit-learn", "Apache Spark", "MLflow", "GCP"]
     },
     {
-        "title": "AI Research Assistant",
-        "company": "University of Pisa",
-        "period": "2020 - 2022",
-        "location": "Pisa, Italy",
+        "title": "AI Research ",
+        "company": "Paris 1 Panthéon-Sorbonne University",
+        "period": "2023 - 2024",
+        "location": "Paris, France",
         "achievements": [
             "Developed emotion detection models that outperformed existing benchmarks by 15%",
             "Published 3 research papers in peer-reviewed AI conferences",
