@@ -3,7 +3,7 @@ import pandas as pd
 from datetime import datetime
 import plotly.graph_objects as go
 import plotly.express as px
-from utils import tr
+from app_utils import tr
 import base64
 import os
 
