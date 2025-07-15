@@ -6,7 +6,6 @@ from PIL import Image
 import pandas as pd
 import numpy as np
 from app_utils import tr 
-import cv2
 import torch
 from transformers import pipeline, AutoTokenizer, AutoModelForSequenceClassification
 from textblob import TextBlob
