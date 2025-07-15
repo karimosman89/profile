@@ -2,7 +2,7 @@ import streamlit as st
 from PIL import Image
 import json
 from streamlit_lottie import st_lottie
-from utils import tr
+from app_utils import tr
 import base64
 
 
