@@ -337,7 +337,7 @@ Sent from your portfolio contact form on {datetime.now().strftime('%B %d, %Y at 
             
             # Also show the prepared email content for copy-paste
             with st.expander("📋 Copy Email Content (Alternative)"):
-                st.text_input("Email Subject:", value=email_subject, key="subject_copy", height=50)
+                st.text_input("Email Subject:", value=email_subject, key="subject_copy")
                 st.text_area("Email Body:",  value=email_body, height=200, key="body_copy")
                 
         else:
