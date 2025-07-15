@@ -322,7 +322,7 @@ for project in cv_projects:
     if 'image' in project:
         try:
             img = Image.open(project['image'])
-            st.image(img, caption=f"{project['title']} - Visual Demo", use_column_width=True)
+            st.image(img, caption=f"{project['title']} - Visual Demo", use_container_width=True)  # FIXED HERE
         except:
             pass
 
@@ -445,7 +445,7 @@ for project in nlp_projects:
     if 'image' in project:
         try:
             img = Image.open(project['image'])
-            st.image(img, caption=f"{project['title']} - Architecture Overview", use_column_width=True)
+            st.image(img, caption=f"{project['title']} - Architecture Overview", use_container_width=True)  # FIXED HERE
         except:
             pass
 
@@ -682,7 +682,7 @@ for project in gen_ai_projects:
     if 'image' in project:
         try:
             img = Image.open(project['image'])
-            st.image(img, caption=f"{project['title']} - Creative Output", use_column_width=True)
+            st.image(img, caption=f"{project['title']} - Creative Output", use_container_width=True)  # FIXED HERE
         except:
             pass
 
@@ -729,4 +729,3 @@ st.markdown(f"""
 
 # Footer
 st.markdown("<p style='text-align: center; color: #666; margin-top: 2rem;'>© 2024 Karim Osman - AI Engineer Portfolio</p>", unsafe_allow_html=True)
-
