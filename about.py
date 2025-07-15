@@ -3,6 +3,9 @@ from PIL import Image
 import json
 from streamlit_lottie import st_lottie
 from utils import tr
+import base64
+
+
 
 # Enhanced styling
 def set_style():
@@ -107,6 +110,12 @@ def load_profile_photo():
         return Image.open("profile-photo.jpg")
     except FileNotFoundError:
         return None
+
+    try:
+        audio_data = base64.b64encode(open('karim_introduction.wav', 'rb').read()).decode()
+    except FileNotFoundError:
+        audio_data = ""
+        st.error("Audio file not found")
 
 profile_photo = load_profile_photo()
 
