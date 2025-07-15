@@ -1,16 +1,10 @@
 import streamlit as st
-import plotly.graph_objects as go
+import pandas as pd
 from datetime import datetime
-import time
-from utils import tr 
+import urllib.parse
+from utils import tr
 
-
-
-# Initialize session state for page
-if 'page' not in st.session_state:
-    st.session_state.page = 'contact'
-
-# Enhanced styling for modern contact page
+# Enhanced styling
 def set_style():
     st.markdown("""
     <style>
@@ -32,77 +26,166 @@ def set_style():
             text-align: center;
         }
         
-        .contact-card {
-            background: linear-gradient(145deg, #ffffff, #f0f0f0);
+        .availability-badge {
+            background: linear-gradient(145deg, #28a745, #20c997);
+            color: white;
+            border-radius: 25px;
+            padding: 1rem 2rem;
+            margin: 1.5rem 0;
+            display: inline-block;
+            box-shadow: 0 5px 15px rgba(40, 167, 69, 0.3);
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .contact-method-card {
+            background: linear-gradient(145deg, #ffffff, #f8f9fa);
             border-radius: 15px;
             padding: 2rem;
             margin: 1rem 0;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-left: 5px solid #667eea;
         }
-        .contact-card:hover {
+        .contact-method-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
         }
-        .contact-card h3 {
+        .contact-method-card h3 {
             color: #4a4a4a;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
         }
-        .contact-card p {
+        .contact-method-card p {
             color: #666;
             font-size: 1.05rem;
             line-height: 1.6;
-        }
-        .contact-card a {
-            color: #667eea;
-            text-decoration: none;
-            font-weight: 600;
-        }
-        .contact-card a:hover {
-            text-decoration: underline;
+            margin-bottom: 1.5rem;
         }
         
-        .social-stats-container {
-            display: flex;
-            justify-content: space-around;
-            margin-top: 2rem;
-            flex-wrap: wrap;
-        }
-        .social-stat {
-            background: rgba(255, 255, 255, 0.9);
-            border-radius: 15px;
-            padding: 1.5rem;
-            margin: 0.5rem;
-            flex: 1;
-            min-width: 180px;
-            text-align: center;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-        }
-        .social-number {
-            font-size: 2.2rem;
-            font-weight: 700;
-            color: #764ba2;
-        }
-        .social-label {
-            font-size: 0.9rem;
-            color: #555;
-            margin-top: 0.5rem;
-        }
-
-        .testimonial-card {
-            background: linear-gradient(145deg, #764ba2, #5d3f6a);
-            border-radius: 20px;
-            padding: 3rem;
-            margin: 2rem 0;
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
-            text-align: center;
+        .contact-button {
+            background: linear-gradient(145deg, #667eea, #764ba2);
             color: white;
+            border: none;
+            border-radius: 25px;
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .contact-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .response-info-card {
+            background: linear-gradient(145deg, #e3f2fd, #bbdefb);
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            color: #333;
+        }
+        .response-info-card h3 {
+            color: #1565c0;
+            margin-bottom: 1.5rem;
+        }
+        
+        .looking-for-card {
+            background: linear-gradient(145deg, #fff3e0, #ffe0b2);
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            color: #333;
+        }
+        .looking-for-card h3 {
+            color: #ef6c00;
+            margin-bottom: 1.5rem;
+        }
+        
+        .contact-form-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border-left: 5px solid #28a745;
+        }
+        
+        .social-stats-card {
+            background: linear-gradient(145deg, #f3e5f5, #e1bee7);
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            color: #333;
+        }
+        .social-stats-card h3 {
+            color: #7b1fa2;
+            margin-bottom: 1.5rem;
+        }
+        
+        .stat-item {
+            display: inline-block;
+            margin: 1rem;
+            text-align: center;
+        }
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #7b1fa2;
+            display: block;
+        }
+        .stat-label {
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .testimonial-card {
+            background: linear-gradient(145deg, #e8f5e8, #c8e6c9);
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             font-style: italic;
+            text-align: center;
+            color: #333;
         }
         .testimonial-card p {
-            color: rgba(255, 255, 255, 0.9);
-            font-size: 1.15rem;
-            line-height: 1.7;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+        .testimonial-author {
+            font-weight: 600;
+            color: #2e7d32;
+        }
+        
+        .form-success {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            border-radius: 10px;
+            padding: 1rem;
+            margin: 1rem 0;
+            color: #155724;
+        }
+        
+        .form-error {
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            border-radius: 10px;
+            padding: 1rem;
+            margin: 1rem 0;
+            color: #721c24;
         }
     </style>
     """, unsafe_allow_html=True)
@@ -114,159 +197,244 @@ st.markdown(f"""
 <div class="contact-hero">
     <h1>{tr('CONTACT_HERO_TITLE')}</h1>
     <p style="font-size: 1.2rem; color: #555;">{tr('CONTACT_HERO_SUBTITLE')}</p>
-</div>
-""", unsafe_allow_html=True)
-
-# Current availability status
-current_time = datetime.now()
-st.markdown(f"""
-<div class="availability-section pulse">
-    <h2 style="color: white; margin-bottom: 1rem;">{tr('CONTACT_AVAILABILITY_TITLE')}</h2>
-    <p style="font-size: 1.2rem; margin-bottom: 1rem;">
-        {tr('CONTACT_AVAILABILITY_TEXT')}
-    </p>
-    <p style="font-size: 1rem;">
-        {tr('CONTACT_AVAILABILITY_UPDATED')} {current_time.strftime('%B %d, %Y at %I:%M %p')} {tr('CONTACT_TIMEZONE_SHORT')}
+    <div class="availability-badge">
+        <strong>{tr('CONTACT_AVAILABILITY_TITLE')}</strong><br>
+        <span style="font-size: 0.9rem;">{tr('CONTACT_AVAILABILITY_TEXT')}</span>
+    </div>
+    <p style="font-size: 0.9rem; color: #666; margin-top: 1rem;">
+        {tr('CONTACT_AVAILABILITY_UPDATED')} {datetime.now().strftime('%B %d, %Y')} {tr('CONTACT_TIMEZONE_SHORT')}
     </p>
 </div>
 """, unsafe_allow_html=True)
 
+# Contact Methods
+st.markdown(f"## {tr('CONTACT_METHODS_TITLE')}")
 
-# Contact Information Section
-st.markdown(f"## {tr('CONTACT_METHODS_TITLE')}") # Using existing key from JSON
 col1, col2 = st.columns(2)
 
 with col1:
     st.markdown(f"""
-    <div class="contact-card">
+    <div class="contact-method-card">
         <h3>{tr('CONTACT_PROFESSIONAL_TITLE')}</h3>
-        <p>
-            {tr('CONTACT_PROFESSIONAL_DESC')}
-            <br><br>
-            <a href="https://www.linkedin.com/in/karimosman89" target="_blank">linkedin.com/in/karimosman89</a>
-        </p>
+        <p>{tr('CONTACT_PROFESSIONAL_DESC')}</p>
+        <a href="https://linkedin.com/in/karim-osman-ai" target="_blank" class="contact-button">
+            {tr('CONTACT_PROFESSIONAL_BUTTON')}
+        </a>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    st.markdown(f"""
+    <div class="contact-method-card">
+        <h3>{tr('CONTACT_GITHUB_TITLE')}</h3>
+        <p>{tr('CONTACT_GITHUB_DESC')}</p>
+        <a href="https://github.com/karim-osman" target="_blank" class="contact-button">
+            {tr('CONTACT_GITHUB_BUTTON')}
+        </a>
     </div>
     """, unsafe_allow_html=True)
 
 with col2:
     st.markdown(f"""
-    <div class="contact-card">
+    <div class="contact-method-card">
         <h3>{tr('CONTACT_DIRECT_TITLE')}</h3>
-        <p>
-            {tr('CONTACT_DIRECT_DESC')}
-            <br><br>
-            <a href="mailto:karim.programmer2020@gmail.com">karim.programmer2020@gmail.com</a>
-        </p>
+        <p>{tr('CONTACT_DIRECT_DESC')}</p>
+        <a href="mailto:karim.osman@example.com" class="contact-button">
+            {tr('CONTACT_DIRECT_BUTTON')}
+        </a>
     </div>
     """, unsafe_allow_html=True)
-
-col3, col4 = st.columns(2)
-with col3:
+    
     st.markdown(f"""
-    <div class="contact-card">
-        <h3>{tr('CONTACT_GITHUB_TITLE')}</h3>
-        <p>
-            {tr('CONTACT_GITHUB_DESC')}
-            <br><br>
-            <a href="https://github.com/karimosman89" target="_blank">github.com/karimosman89</a>
-        </p>
-    </div>
-    """, unsafe_allow_html=True)
-with col4:
-    st.markdown(f"""
-    <div class="contact-card">
+    <div class="contact-method-card">
         <h3>{tr('CONTACT_CALENDLY_TITLE')}</h3>
-        <p>
-            {tr('CONTACT_CALENDLY_DESC')}
-            <br><br>
-            <a href="https://calendly.com/karim-osman/30min" target="_blank">{tr('CONTACT_CALENDLY_LINK_TEXT')}</a>
-        </p>
+        <p>{tr('CONTACT_CALENDLY_DESC')}</p>
+        <a href="https://calendly.com/karim-osman" target="_blank" class="contact-button">
+            {tr('CONTACT_CALENDLY_LINK_TEXT')}
+        </a>
     </div>
     """, unsafe_allow_html=True)
 
-# Quick Contact Form (if applicable, simplified for demo)
-st.markdown(f"## {tr('CONTACT_FORM_TITLE')}")
-with st.form(key="contact_form"):
-    st.markdown(f"""
-    <div class="quick-contact-form">
-        <h3 style="margin-top: 0;">{tr('CONTACT_FORM_SUBTITLE')}</h3>
-    </div>
-    """, unsafe_allow_html=True)
+# Enhanced Contact Form
+st.markdown(f"""
+<div class="contact-form-card">
+    <h2>{tr('CONTACT_FORM_TITLE')}</h2>
+    <p style="color: #666; margin-bottom: 2rem;">{tr('CONTACT_FORM_SUBTITLE')}</p>
+</div>
+""", unsafe_allow_html=True)
+
+# Contact form
+with st.form("contact_form", clear_on_submit=True):
+    col1, col2 = st.columns(2)
     
-    col1_form, col2_form = st.columns(2)
+    with col1:
+        name = st.text_input(
+            tr('CONTACT_FORM_NAME'),
+            placeholder=tr('CONTACT_FORM_NAME_PLACEHOLDER')
+        )
+        
+        company = st.text_input(
+            tr('CONTACT_FORM_COMPANY'),
+            placeholder=tr('CONTACT_FORM_COMPANY_PLACEHOLDER')
+        )
     
-    with col1_form:
-        name = st.text_input(tr("CONTACT_FORM_NAME"), placeholder=tr("CONTACT_FORM_NAME_PLACEHOLDER"))
-        email = st.text_input(tr("CONTACT_FORM_EMAIL"), placeholder=tr("CONTACT_FORM_EMAIL_PLACEHOLDER"))
+    with col2:
+        email = st.text_input(
+            tr('CONTACT_FORM_EMAIL'),
+            placeholder=tr('CONTACT_FORM_EMAIL_PLACEHOLDER')
+        )
+        
+        subject = st.selectbox(
+            tr('CONTACT_FORM_SUBJECT'),
+            [
+                tr('CONTACT_FORM_SUBJECT_OPTION_JOB'),
+                tr('CONTACT_FORM_SUBJECT_OPTION_CONSULTING'),
+                tr('CONTACT_FORM_SUBJECT_OPTION_COLLABORATION'),
+                tr('CONTACT_FORM_SUBJECT_OPTION_TECHNICAL'),
+                tr('CONTACT_FORM_SUBJECT_OPTION_OTHER')
+            ]
+        )
     
-    with col2_form:
-        company = st.text_input(tr("CONTACT_FORM_COMPANY"), placeholder=tr("CONTACT_FORM_COMPANY_PLACEHOLDER"))
-        subject = st.selectbox(tr("CONTACT_FORM_SUBJECT"), [
-            tr("CONTACT_FORM_SUBJECT_OPTION_JOB"),
-            tr("CONTACT_FORM_SUBJECT_OPTION_CONSULTING"),
-            tr("CONTACT_FORM_SUBJECT_OPTION_COLLABORATION"),
-            tr("CONTACT_FORM_SUBJECT_OPTION_TECHNICAL"),
-            tr("CONTACT_FORM_SUBJECT_OPTION_OTHER")
-        ])
+    message = st.text_area(
+        tr('CONTACT_FORM_MESSAGE'),
+        placeholder=tr('CONTACT_FORM_MESSAGE_PLACEHOLDER'),
+        height=150
+    )
     
-    message = st.text_area(tr("CONTACT_FORM_MESSAGE"), placeholder=tr("CONTACT_FORM_MESSAGE_PLACEHOLDER"), height=150)
-    
-    submitted = st.form_submit_button(tr("CONTACT_FORM_SUBMIT"), use_container_width=True)
+    submitted = st.form_submit_button(tr('CONTACT_FORM_SUBMIT'))
     
     if submitted:
         if name and email and message:
-            # Create mailto link with pre-filled information
-            mailto_link = f"mailto:karim.programmer2020@gmail.com?subject={subject} - {name}&body=Name: {name}%0D%0AEmail: {email}%0D%0ACompany: {company}%0D%0A%0D%0AMessage:%0D%0A{message}"
-            
-            st.success(tr("CONTACT_FORM_SUCCESS"))
-            st.markdown(f"""
-            <a href="{mailto_link}" class="contact-button" style="display: block; text-align: center; margin: 1rem auto; max-width: 300px;">
-                📧 {tr('CONTACT_FORM_EMAIL_BUTTON')}
-            </a>
-            """, unsafe_allow_html=True)
-        else:
-            st.error(tr("CONTACT_FORM_ERROR"))
+            # Create email content
+            email_subject = f"Portfolio Contact: {subject} - {name}"
+            email_body = f"""
+Hello Karim,
 
-# Social Proof/Engagement Metrics (Example)
-st.markdown(f"## {tr('CONTACT_SOCIAL_TITLE')}") # Using existing key from JSON
+You have received a new message through your portfolio website:
+
+Name: {name}
+Email: {email}
+Company: {company if company else 'Not specified'}
+Subject: {subject}
+
+Message:
+{message}
+
+---
+Sent from your portfolio contact form on {datetime.now().strftime('%B %d, %Y at %I:%M %p')}
+            """
+            
+            # Create mailto link
+            mailto_link = f"mailto:karim.osman@example.com?subject={urllib.parse.quote(email_subject)}&body={urllib.parse.quote(email_body)}"
+            
+            st.markdown(f"""
+            <div class="form-success">
+                <h4>{tr('CONTACT_FORM_SUCCESS')}</h4>
+                <a href="{mailto_link}" class="contact-button" style="margin-top: 1rem;">
+                    {tr('CONTACT_FORM_EMAIL_BUTTON')}
+                </a>
+            </div>
+            """, unsafe_allow_html=True)
+            
+            # Also show the prepared email content for copy-paste
+            with st.expander("📋 Copy Email Content (Alternative)"):
+                st.text_area("Email Subject:", value=email_subject, height=50)
+                st.text_area("Email Body:", value=email_body, height=200)
+                
+        else:
+            st.markdown(f"""
+            <div class="form-error">
+                {tr('CONTACT_FORM_ERROR')}
+            </div>
+            """, unsafe_allow_html=True)
+
+# Response Time Information
 st.markdown(f"""
-<div class="social-stats-container">
-    <div class="social-stat">
-        <div class="social-number">{tr('CONTACT_REPOS')}</div>
-        <div class="social-label">{tr('CONTACT_REPOS_LABEL')}</div>
-    </div>
-    <div class="social-stat">
-        <div class="social-number">{tr('CONTACT_EXPERIENCE')}</div>
-        <div class="social-label">{tr('CONTACT_EXPERIENCE_LABEL')}</div>
-    </div>
-    <div class="social-stat">
-        <div class="social-number">{tr('CONTACT_RESPONSE_RATE')}</div>
-        <div class="social-label">{tr('CONTACT_RESPONSE_RATE_LABEL')}</div>
+<div class="response-info-card">
+    <h3>{tr('CONTACT_RESPONSE_TITLE')}</h3>
+    <div style="display: flex; justify-content: space-between; flex-wrap: wrap;">
+        <div style="flex: 1; margin: 0.5rem;">
+            <h4>{tr('CONTACT_QUICK_RESPONSE_TITLE')}</h4>
+            <ul style="list-style-type: none; padding: 0;">
+                <li>📧 {tr('CONTACT_EMAIL_RESPONSE')}</li>
+                <li>💼 {tr('CONTACT_LINKEDIN_RESPONSE')}</li>
+                <li>🚨 {tr('CONTACT_URGENT_RESPONSE')}</li>
+            </ul>
+        </div>
+        <div style="flex: 1; margin: 0.5rem;">
+            <h4>{tr('CONTACT_TIMEZONE_TITLE')}</h4>
+            <ul style="list-style-type: none; padding: 0;">
+                <li>🌍 {tr('CONTACT_TIMEZONE_PRIMARY')}</li>
+                <li>⏰ {tr('CONTACT_TIMEZONE_AVAILABLE')}</li>
+                <li>🤝 {tr('CONTACT_TIMEZONE_FLEXIBLE')}</li>
+            </ul>
+        </div>
     </div>
 </div>
 """, unsafe_allow_html=True)
 
-# Testimonial section
+# What I'm Looking For
+st.markdown(f"""
+<div class="looking-for-card">
+    <h3>{tr('CONTACT_LOOKING_TITLE')}</h3>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1rem; margin-top: 1.5rem;">
+        <div>
+            <h4>{tr('CONTACT_ROLES_TITLE')}</h4>
+            <p>{tr('CONTACT_ROLES_DESC')}</p>
+        </div>
+        <div>
+            <h4>{tr('CONTACT_CONSULTING_TITLE')}</h4>
+            <p>{tr('CONTACT_CONSULTING_DESC')}</p>
+        </div>
+        <div>
+            <h4>{tr('CONTACT_INNOVATION_TITLE')}</h4>
+            <p>{tr('CONTACT_INNOVATION_DESC')}</p>
+        </div>
+    </div>
+</div>
+""", unsafe_allow_html=True)
+
+# Professional Network Stats
+st.markdown(f"""
+<div class="social-stats-card">
+    <h3>{tr('CONTACT_SOCIAL_TITLE')}</h3>
+    <div style="display: flex; justify-content: space-around; flex-wrap: wrap;">
+        <div class="stat-item">
+            <span class="stat-number">{tr('CONTACT_CONNECTIONS')}</span>
+            <span class="stat-label">{tr('CONTACT_CONNECTIONS_LABEL')}</span>
+        </div>
+        <div class="stat-item">
+            <span class="stat-number">{tr('CONTACT_REPOS')}</span>
+            <span class="stat-label">{tr('CONTACT_REPOS_LABEL')}</span>
+        </div>
+        <div class="stat-item">
+            <span class="stat-number">{tr('CONTACT_EXPERIENCE')}</span>
+            <span class="stat-label">{tr('CONTACT_EXPERIENCE_LABEL')}</span>
+        </div>
+        <div class="stat-item">
+            <span class="stat-number">{tr('CONTACT_RESPONSE_RATE')}</span>
+            <span class="stat-label">{tr('CONTACT_RESPONSE_RATE_LABEL')}</span>
+        </div>
+    </div>
+</div>
+""", unsafe_allow_html=True)
+
+# Testimonial
 st.markdown(f"""
 <div class="testimonial-card">
-    <h3 style="color: white; margin-bottom: 2rem;">{tr('CONTACT_TESTIMONIAL_TITLE')}</h3>
-    <p style="font-size: 1.2rem; font-style: italic; margin-bottom: 1rem;">
-        {tr('CONTACT_TESTIMONIAL_TEXT')}
-    </p>
-    <p style="font-size: 1rem; opacity: 0.9;">
-        {tr('CONTACT_TESTIMONIAL_AUTHOR')}
-    </p>
+    <h3>{tr('CONTACT_TESTIMONIAL_TITLE')}</h3>
+    <p>"{tr('CONTACT_TESTIMONIAL_TEXT')}"</p>
+    <p class="testimonial-author">{tr('CONTACT_TESTIMONIAL_AUTHOR')}</p>
 </div>
 """, unsafe_allow_html=True)
 
-# Call to action
+# Call to Action
 st.markdown(f"""
 <div class="contact-hero">
     <h2>{tr('CONTACT_CALL_TITLE')}</h2>
-    <p style="font-size: 1.2rem; color: #555; margin: 2rem 0;">
+    <p style="font-size: 1.2rem; color: #555; margin-top: 2rem;">
         {tr('CONTACT_CALL_TEXT')}
     </p>
-    <p style="font-size: 1rem; color: #666;">
+    <p style="font-size: 1.1rem; color: #666; margin-top: 1rem;">
         {tr('CONTACT_CALL_TEXT2')}
     </p>
 </div>
@@ -274,3 +442,4 @@ st.markdown(f"""
 
 # Footer
 st.markdown(f"<p style='text-align: center; color: #666; margin-top: 2rem;'>{tr('CONTACT_FOOTER')}</p>", unsafe_allow_html=True)
+
