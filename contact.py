@@ -3,6 +3,10 @@ import pandas as pd
 from datetime import datetime
 import urllib.parse
 from app_utils import tr
+import smtplib
+from email.message import EmailMessage
+
+
 
 # Enhanced styling
 def set_style():
@@ -302,11 +306,35 @@ with st.form("contact_form", clear_on_submit=True):
     
     submitted = st.form_submit_button(tr('CONTACT_FORM_SUBMIT'))
     
-    if submitted:
-        if name and email and message:
+    if submitted and name and email and message:
+        try:
+            # Configure in Streamlit secrets
+            SMTP_SERVER = "smtp.gmail.com"
+            SMTP_PORT = 587
+            SMTP_USERNAME = st.secrets["gmail"]["username"]
+            SMTP_PASSWORD = st.secrets["gmail"]["password"]
+        
+            # Create email
+            msg = EmailMessage()
+            msg.set_content(email_body)
+            msg["Subject"] = email_subject
+            msg["From"] = SMTP_USERNAME
+            msg["To"] = "karim.programmer2020@gmail.com"
+        
+            # Send email
+            with smtplib.SMTP(SMTP_SERVER, SMTP_PORT) as server:
+                server.starttls()
+                server.login(SMTP_USERNAME, SMTP_PASSWORD)
+                server.send_message(msg)
+        
+            st.success("Message sent successfully!")
+    
+        except Exception as e:
+            st.error(f"Error sending email: {str(e)}")
+            # Fallback to mailto method    
             # Create email content
-            email_subject = f"Portfolio Contact: {subject} - {name}"
-            email_body = f"""
+    email_subject = f"Portfolio Contact: {subject} - {name}"
+    email_body = f"""
 Hello Karim,
 
 You have received a new message through your portfolio website:
