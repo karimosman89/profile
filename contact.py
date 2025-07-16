@@ -306,35 +306,11 @@ with st.form("contact_form", clear_on_submit=True):
     
     submitted = st.form_submit_button(tr('CONTACT_FORM_SUBMIT'))
     
-    if submitted and name and email and message:
-        try:
-            # Configure in Streamlit secrets
-            SMTP_SERVER = "smtp.gmail.com"
-            SMTP_PORT = 587
-            SMTP_USERNAME = st.secrets["gmail"]["username"]
-            SMTP_PASSWORD = st.secrets["gmail"]["password"]
-        
-            # Create email
-            msg = EmailMessage()
-            msg.set_content(email_body)
-            msg["Subject"] = email_subject
-            msg["From"] = SMTP_USERNAME
-            msg["To"] = "karim.programmer2020@gmail.com"
-        
-            # Send email
-            with smtplib.SMTP(SMTP_SERVER, SMTP_PORT) as server:
-                server.starttls()
-                server.login(SMTP_USERNAME, SMTP_PASSWORD)
-                server.send_message(msg)
-        
-            st.success("Message sent successfully!")
-    
-        except Exception as e:
-            st.error(f"Error sending email: {str(e)}")
-            # Fallback to mailto method    
+    if submitted:
+        if name and email and message:
             # Create email content
-    email_subject = f"Portfolio Contact: {subject} - {name}"
-    email_body = f"""
+            email_subject = f"Portfolio Contact: {subject} - {name}"
+            email_body = f"""
 Hello Karim,
 
 You have received a new message through your portfolio website:
@@ -351,30 +327,59 @@ Message:
 Sent from your portfolio contact form on {datetime.now().strftime('%B %d, %Y at %I:%M %p')}
             """
             
-            # Create mailto link
-            mailto_link = f"mailto:karim.programmer2020@gmail.com?subject={urllib.parse.quote(email_subject)}&body={urllib.parse.quote(email_body)}"
+            try:
+                # Configure in Streamlit secrets
+                SMTP_SERVER = "smtp.gmail.com"
+                SMTP_PORT = 587
+                SMTP_USERNAME = st.secrets["gmail"]["username"]
+                SMTP_PASSWORD = st.secrets["gmail"]["password"]
             
-            st.markdown(f"""
-            <div class="form-success">
-                <h4>{tr('CONTACT_FORM_SUCCESS')}</h4>
-                <a href="{mailto_link}" class="contact-button" style="margin-top: 1rem;">
-                    {tr('CONTACT_FORM_EMAIL_BUTTON')}
-                </a>
-            </div>
-            """, unsafe_allow_html=True)
+                # Create email
+                msg = EmailMessage()
+                msg.set_content(email_body)
+                msg["Subject"] = email_subject
+                msg["From"] = SMTP_USERNAME
+                msg["To"] = "karim.programmer2020@gmail.com"
             
-            # Also show the prepared email content for copy-paste
-            with st.expander("📋 Copy Email Content (Alternative)"):
-                st.text_input("Email Subject:", value=email_subject, key="subject_copy")
-                st.text_area("Email Body:",  value=email_body, height=200, key="body_copy")
+                # Send email
+                with smtplib.SMTP(SMTP_SERVER, SMTP_PORT) as server:
+                    server.starttls()
+                    server.login(SMTP_USERNAME, SMTP_PASSWORD)
+                    server.send_message(msg)
+            
+                st.markdown(f"""
+                <div class="form-success">
+                    <h4>Message Sent Successfully!</h4>
+                    <p>Your message has been delivered. I'll get back to you soon.</p>
+                </div>
+                """, unsafe_allow_html=True)
+            
+            except Exception as e:
+                st.error(f"Error sending email: {str(e)}")
+                # Fallback to mailto method    
+                mailto_link = f"mailto:karim.programmer2020@gmail.com?subject={urllib.parse.quote(email_subject)}&body={urllib.parse.quote(email_body)}"
                 
+                st.markdown(f"""
+                <div class="form-success">
+                    <h4>Alternative Option</h4>
+                    <p>Couldn't send automatically. Click below to open your email client:</p>
+                    <a href="{mailto_link}" class="contact-button" style="margin-top: 1rem;">
+                        Open Email Client
+                    </a>
+                </div>
+                """, unsafe_allow_html=True)
+                
+                # Also show the prepared email content for copy-paste
+                with st.expander("📋 Copy Email Content (Alternative)"):
+                    st.text_input("Email Subject:", value=email_subject, key="subject_copy")
+                    st.text_area("Email Body:",  value=email_body, height=200, key="body_copy")
         else:
             st.markdown(f"""
             <div class="form-error">
                 {tr('CONTACT_FORM_ERROR')}
             </div>
             """, unsafe_allow_html=True)
-
+            
 # Response Time Information
 st.markdown(f"""
 <div class="response-info-card">
