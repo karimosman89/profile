@@ -4,7 +4,7 @@ import plotly.graph_objects as go
 import plotly.express as px
 from PIL import Image
 import base64
-from utils import tr
+from app_utils import tr
 
 # Enhanced styling
 def set_style():
