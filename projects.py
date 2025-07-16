@@ -535,7 +535,7 @@ for project in ml_projects:
         </p>
         
         <div class="tech-stack">
-            {' '.join([f'<span class="tech-tag">{tech}</span>' for tech in project['tech_stack'])}
+            {' '.join([f'<span class="tech-tag">{tech}</span>' for tech in project['tech_stack']])}
         </div>
         
         <div class="impact-metrics">
@@ -650,7 +650,7 @@ for project in gen_ai_projects:
         </p>
         
         <div class="tech-stack">
-            {' '.join([f'<span class="tech-tag">{tech}</span>' for tech in project['tech_stack'])}
+            {' '.join([f'<span class="tech-tag">{tech}</span>' for tech in project['tech_stack']])}
         </div>
         
         <div class="impact-metrics">
