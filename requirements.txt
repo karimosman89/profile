@@ -8,7 +8,7 @@ opencv-python
 opencv-contrib-python
 opencv-python-headless==4.9.0.80
 librosa
-streamlit
+streamlit==1.46.0
 numpy<=2
 streamlit_lottie 
 streamlit_javascript
