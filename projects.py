@@ -413,7 +413,7 @@ for project in nlp_projects:
         </p>
         
         <div class="tech-stack">
-            {' '.join([f'<span class="tech-tag">{tech}</span>' for tech in project['tech_stack'])}
+            {' '.join([f'<span class="tech-tag">{tech}</span>' for tech in project['tech_stack']])}
         </div>
         
         <div class="impact-metrics">
