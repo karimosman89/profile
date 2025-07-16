@@ -10,12 +10,12 @@ from utils import tr
 def set_style():
     st.markdown("""
     <style>
-        @import url(\'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap\');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
         
         .main {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             padding: 2rem;
-            font-family: \'Inter\', sans-serif;
+            font-family: 'Inter', sans-serif;
         }
         
         .projects-hero {
@@ -47,7 +47,7 @@ def set_style():
         }
         
         .project-card::before {
-            content: \'\';
+            content: '';
             position: absolute;
             top: 0;
             left: 0;
@@ -278,37 +278,37 @@ for project in cv_projects:
     st.markdown(f"""
     <div class="project-card">
         <div class="project-header">
-            <div class="project-icon">{project[\'icon\']}</div>
+            <div class="project-icon">{project['icon']}</div>
             <div>
-                <h3 class="project-title">{project[\'title\']}</h3>
-                <p class="project-subtitle">{project[\'subtitle\]}</p>
+                <h3 class="project-title">{project['title']}</h3>
+                <p class="project-subtitle">{project['subtitle']}</p>
             </div>
         </div>
         
         <p style="font-size: 1.1rem; line-height: 1.6; margin-bottom: 1.5rem;">
-            {project[\'description\]}
+            {project['description']}
         </p>
         
         <div class="tech-stack">
-            {\' \'.join([f\'<span class="tech-tag">{tech}</span>\' for tech in project[\'tech_stack\']])}
+            {' '.join([f'<span class="tech-tag">{tech}</span>' for tech in project['tech_stack'])}
         </div>
         
         <div class="impact-metrics">
             <h4 style="color: #2e7d32; margin-bottom: 1rem;">📊 Impact Metrics:</h4>
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem;">
-                {\' \'.join([f\'<div><strong>{key.replace("_", " ").title()}:</strong><br>{value}</div>\' for key, value in project[\'impact\'].items()])}
+                {' '.join([f'<div><strong>{key.replace("_", " ").title()}:</strong><br>{value}</div>' for key, value in project['impact'].items()])}
             </div>
         </div>
         
         <div style="margin: 1.5rem 0;">
             <h4>✨ Key Features:</h4>
             <ul style="margin: 0.5rem 0; padding-left: 1.5rem;">
-                {\' \'.join([f\'<li>{feature}</li>\' for feature in project[\'features\']])}
+                {' '.join([f'<li>{feature}</li>' for feature in project['features']])}
             </ul>
         </div>
         
         <div style="margin-top: 1.5rem;">
-            <button class="live-demo-btn" onclick="alert(\'Live demo would be available in production deployment\')">
+            <button class="live-demo-btn" onclick="alert('Live demo would be available in production deployment')">
                 🚀 Live Demo
             </button>
             <a href="#" class="github-link">
@@ -319,10 +319,10 @@ for project in cv_projects:
     """, unsafe_allow_html=True)
     
     # Add project image if available
-    if \'image\' in project:
+    if 'image' in project:
         try:
-            img = Image.open(project[\'image\'])
-            st.image(img, caption=f"{project[\'title\]} - Visual Demo", use_column_width=True)
+            img = Image.open(project['image'])
+            st.image(img, caption=f"{project['title']} - Visual Demo", use_column_width=True)
         except:
             pass
 
@@ -401,37 +401,37 @@ for project in nlp_projects:
     st.markdown(f"""
     <div class="project-card">
         <div class="project-header">
-            <div class="project-icon">{project[\'icon\']}</div>
+            <div class="project-icon">{project['icon']}</div>
             <div>
-                <h3 class="project-title">{project[\'title\']}</h3>
-                <p class="project-subtitle">{project[\'subtitle\]}</p>
+                <h3 class="project-title">{project['title']}</h3>
+                <p class="project-subtitle">{project['subtitle']}</p>
             </div>
         </div>
         
         <p style="font-size: 1.1rem; line-height: 1.6; margin-bottom: 1.5rem;">
-            {project[\'description\]}
+            {project['description']}
         </p>
         
         <div class="tech-stack">
-            {\' \'.join([f\'<span class="tech-tag">{tech}</span>\' for tech in project[\'tech_stack\']])}
+            {' '.join([f'<span class="tech-tag">{tech}</span>' for tech in project['tech_stack'])}
         </div>
         
         <div class="impact-metrics">
             <h4 style="color: #2e7d32; margin-bottom: 1rem;">📊 Impact Metrics:</h4>
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem;">
-                {\' \'.join([f\'<div><strong>{key.replace("_", " ").title()}:</strong><br>{value}</div>\' for key, value in project[\'impact\'].items()])}
+                {' '.join([f'<div><strong>{key.replace("_", " ").title()}:</strong><br>{value}</div>' for key, value in project['impact'].items()])}
             </div>
         </div>
         
         <div style="margin: 1.5rem 0;">
             <h4>✨ Key Features:</h4>
             <ul style="margin: 0.5rem 0; padding-left: 1.5rem;">
-                {\' \'.join([f\'<li>{feature}</li>\' for feature in project[\'features\']])}
+                {' '.join([f'<li>{feature}</li>' for feature in project['features']])}
             </ul>
         </div>
         
         <div style="margin-top: 1.5rem;">
-            <button class="live-demo-btn" onclick="alert(\'Live demo would be available in production deployment\')">
+            <button class="live-demo-btn" onclick="alert('Live demo would be available in production deployment')">
                 🚀 Live Demo
             </button>
             <a href="#" class="github-link">
@@ -442,10 +442,10 @@ for project in nlp_projects:
     """, unsafe_allow_html=True)
     
     # Add project image if available
-    if \'image\' in project:
+    if 'image' in project:
         try:
-            img = Image.open(project[\'image\'])
-            st.image(img, caption=f"{project[\'title\]} - Architecture Overview", use_column_width=True)
+            img = Image.open(project['image'])
+            st.image(img, caption=f"{project['title']} - Architecture Overview", use_column_width=True)
         except:
             pass
 
@@ -523,37 +523,37 @@ for project in ml_projects:
     st.markdown(f"""
     <div class="project-card">
         <div class="project-header">
-            <div class="project-icon">{project[\'icon\']}</div>
+            <div class="project-icon">{project['icon']}</div>
             <div>
-                <h3 class="project-title">{project[\'title\']}</h3>
-                <p class="project-subtitle">{project[\'subtitle\]}</p>
+                <h3 class="project-title">{project['title']}</h3>
+                <p class="project-subtitle">{project['subtitle']}</p>
             </div>
         </div>
         
         <p style="font-size: 1.1rem; line-height: 1.6; margin-bottom: 1.5rem;">
-            {project[\'description\]}
+            {project['description']}
         </p>
         
         <div class="tech-stack">
-            {\' \'.join([f\'<span class="tech-tag">{tech}</span>\' for tech in project[\'tech_stack\']])}
+            {' '.join([f'<span class="tech-tag">{tech}</span>' for tech in project['tech_stack'])}
         </div>
         
         <div class="impact-metrics">
             <h4 style="color: #2e7d32; margin-bottom: 1rem;">📊 Impact Metrics:</h4>
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem;">
-                {\' \'.join([f\'<div><strong>{key.replace("_", " ").title()}:</strong><br>{value}</div>\' for key, value in project[\'impact\'].items()])}
+                {' '.join([f'<div><strong>{key.replace("_", " ").title()}:</strong><br>{value}</div>' for key, value in project['impact'].items()])}
             </div>
         </div>
         
         <div style="margin: 1.5rem 0;">
             <h4>✨ Key Features:</h4>
             <ul style="margin: 0.5rem 0; padding-left: 1.5rem;">
-                {\' \'.join([f\'<li>{feature}</li>\' for feature in project[\'features\']])}
+                {' '.join([f'<li>{feature}</li>' for feature in project['features']])}
             </ul>
         </div>
         
         <div style="margin-top: 1.5rem;">
-            <button class="live-demo-btn" onclick="alert(\'Live demo would be available in production deployment\')">
+            <button class="live-demo-btn" onclick="alert('Live demo would be available in production deployment')">
                 🚀 Live Demo
             </button>
             <a href="#" class="github-link">
@@ -638,37 +638,37 @@ for project in gen_ai_projects:
     st.markdown(f"""
     <div class="project-card">
         <div class="project-header">
-            <div class="project-icon">{project[\'icon\']}</div>
+            <div class="project-icon">{project['icon']}</div>
             <div>
-                <h3 class="project-title">{project[\'title\']}</h3>
-                <p class="project-subtitle">{project[\'subtitle\]}</p>
+                <h3 class="project-title">{project['title']}</h3>
+                <p class="project-subtitle">{project['subtitle']}</p>
             </div>
         </div>
         
         <p style="font-size: 1.1rem; line-height: 1.6; margin-bottom: 1.5rem;">
-            {project[\'description\]}
+            {project['description']}
         </p>
         
         <div class="tech-stack">
-            {\' \'.join([f\'<span class="tech-tag">{tech}</span>\' for tech in project[\'tech_stack\']])}
+            {' '.join([f'<span class="tech-tag">{tech}</span>' for tech in project['tech_stack'])}
         </div>
         
         <div class="impact-metrics">
             <h4 style="color: #2e7d32; margin-bottom: 1rem;">📊 Impact Metrics:</h4>
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem;">
-                {\' \'.join([f\'<div><strong>{key.replace("_", " ").title()}:</strong><br>{value}</div>\' for key, value in project[\'impact\'].items()])}
+                {' '.join([f'<div><strong>{key.replace("_", " ").title()}:</strong><br>{value}</div>' for key, value in project['impact'].items()])}
             </div>
         </div>
         
         <div style="margin: 1.5rem 0;">
             <h4>✨ Key Features:</h4>
             <ul style="margin: 0.5rem 0; padding-left: 1.5rem;">
-                {\' \'.join([f\'<li>{feature}</li>\' for feature in project[\'features\']])}
+                {' '.join([f'<li>{feature}</li>' for feature in project['features']])}
             </ul>
         </div>
         
         <div style="margin-top: 1.5rem;">
-            <button class="live-demo-btn" onclick="alert(\'Live demo would be available in production deployment\')">
+            <button class="live-demo-btn" onclick="alert('Live demo would be available in production deployment')">
                 🚀 Live Demo
             </button>
             <a href="#" class="github-link">
@@ -679,10 +679,10 @@ for project in gen_ai_projects:
     """, unsafe_allow_html=True)
     
     # Add project image if available
-    if \'image\' in project:
+    if 'image' in project:
         try:
-            img = Image.open(project[\'image\'])
-            st.image(img, caption=f"{project[\'title\]} - Creative Output", use_column_width=True)
+            img = Image.open(project['image'])
+            st.image(img, caption=f"{project['title']} - Creative Output", use_column_width=True)
         except:
             pass
 
@@ -722,12 +722,10 @@ st.markdown(f"""
         These projects showcase my ability to deliver AI solutions across the entire spectrum of artificial intelligence applications.
     </p>
     <p style="font-size: 1.1rem; color: #666; margin-top: 1rem;">
-        Let\'s discuss how I can bring similar innovation and impact to your organization.
+        Let's discuss how I can bring similar innovation and impact to your organization.
     </p>
 </div>
 """, unsafe_allow_html=True)
 
 # Footer
-st.markdown("<p style=\'text-align: center; color: #666; margin-top: 2rem;\'>© 2024 Karim Osman - AI Engineer Portfolio</p>", unsafe_allow_html=True)
-
-
+st.markdown("<p style='text-align: center; color: #666; margin-top: 2rem;'>© 2024 Karim Osman - AI Engineer Portfolio</p>", unsafe_allow_html=True)
