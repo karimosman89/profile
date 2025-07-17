@@ -339,7 +339,7 @@ Sent from your portfolio contact form on {datetime.now().strftime('%B %d, %Y at 
                 msg.set_content(email_body)
                 msg["Subject"] = email_subject
                 msg["From"] = SMTP_USERNAME
-                msg["To"] = "karim.programmer2020@gmail.com"
+                msg["To"] = "marschallarkan@gmail.com"
             
                 # Send email
                 with smtplib.SMTP(SMTP_SERVER, SMTP_PORT) as server:
@@ -357,7 +357,7 @@ Sent from your portfolio contact form on {datetime.now().strftime('%B %d, %Y at 
             except Exception as e:
                 st.error(f"Error sending email: {str(e)}")
                 # Fallback to mailto method    
-                mailto_link = f"mailto:karim.programmer2020@gmail.com?subject={urllib.parse.quote(email_subject)}&body={urllib.parse.quote(email_body)}"
+                mailto_link = f"mailto:marschallarkan@gmail.com?subject={urllib.parse.quote(email_subject)}&body={urllib.parse.quote(email_body)}"
                 
                 st.markdown(f"""
                 <div class="form-success">
