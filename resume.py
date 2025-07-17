@@ -261,6 +261,18 @@ experiences = [
 ]
 
 for exp in experiences:
+    # Build the achievements HTML
+    achievements_html = ""
+    for achievement in exp['achievements']:
+        achievements_html += f"""
+        <div class="achievement">
+            ✅ {achievement}
+        </div>
+        """
+    
+    # Build the technology tags HTML
+    tech_tags = "".join([f'<span class="skill-tag">{tech}</span>' for tech in exp['technologies']])
+
     with st.expander(f"🏢 {exp['title']} at {exp['company']} ({exp['period']})", expanded=True):
         st.markdown(f"""
         <div class="experience-item">
@@ -273,19 +285,12 @@ for exp in experiences:
             </div>
             
             <h4>🎯 Key Achievements:</h4>
+            {achievements_html}
+            
+            <h4>🛠️ Technologies Used:</h4>
+            <div>{tech_tags}</div>
+        </div>
         """, unsafe_allow_html=True)
-        
-        for achievement in exp['achievements']:
-            st.markdown(f"""
-            <div class="achievement">
-                ✅ {achievement}
-            </div>
-            """, unsafe_allow_html=True)
-        
-        st.markdown("<h4>🛠️ Technologies Used:</h4>", unsafe_allow_html=True)
-        tech_tags = "".join([f'<span class="skill-tag">{tech}</span>' for tech in exp['technologies']])
-        st.markdown(f"<div>{tech_tags}</div>", unsafe_allow_html=True)
-        st.markdown("</div>", unsafe_allow_html=True)
 
 # Education
 st.markdown("## 🎓 Education")
@@ -450,7 +455,7 @@ timeline_data = {
     'Role': ['Graduate', 'Junior Dev', 'Developer', 'Senior Dev', 'ML Engineer', 'ML Engineer', 
              'Research Assistant', 'ML Engineer', 'Senior ML Engineer', 'Senior AI Engineer', 'Senior AI Engineer'],
     'Company': ['University', 'Freelance', 'Startup', 'Tech Company', 'Configuratori', 'Configuratori',
-                'University of Pisa', 'Configuratori', 'Configuratori', 'Bakerhughes', 'Bakerhughes']
+                 'University of Pisa', 'Configuratori', 'Configuratori', 'Bakerhughes', 'Bakerhughes']
 }
 
 fig = go.Figure()
