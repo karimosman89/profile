@@ -1,731 +1,564 @@
 import streamlit as st
 import pandas as pd
-import plotly.graph_objects as go
 import plotly.express as px
-from PIL import Image
-import base64
-from app_utils import tr
+import plotly.graph_objects as go
+from datetime import datetime, date
+import json
+import numpy as np
 
-# Enhanced styling
-def set_style():
+def main():
+    """Enhanced Projects page with comprehensive case studies"""
+
+    # Page header
     st.markdown("""
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-        
-        .main {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            padding: 2rem;
-            font-family: 'Inter', sans-serif;
-        }
-        
-        .projects-hero {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 20px;
-            padding: 3rem;
-            margin: 2rem 0;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-            backdrop-filter: blur(10px);
-            text-align: center;
-        }
-        
-        .project-card {
-            background: linear-gradient(145deg, #ffffff, #f0f0f0);
-            border-radius: 15px;
-            padding: 2rem;
-            margin: 1.5rem 0;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
-            border-left: 5px solid #667eea;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .project-card:hover {
-            transform: translateY(-8px) scale(1.02);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-            border-left-color: #764ba2;
-        }
-        
-        .project-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: linear-gradient(90deg, #667eea, #764ba2, #667eea);
-            background-size: 200% 100%;
-            animation: gradient-shift 3s ease-in-out infinite;
-        }
-        
-        @keyframes gradient-shift {
-            0%, 100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-        }
-        
-        .project-header {
-            display: flex;
-            align-items: center;
-            margin-bottom: 1.5rem;
-        }
-        
-        .project-icon {
-            font-size: 3rem;
-            margin-right: 1rem;
-            background: linear-gradient(145deg, #667eea, #764ba2);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        
-        .project-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: #333;
-            margin: 0;
-        }
-        
-        .project-subtitle {
-            font-size: 1rem;
-            color: #667eea;
-            font-weight: 500;
-            margin: 0;
-        }
-        
-        .tech-stack {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            margin: 1rem 0;
-        }
-        
-        .tech-tag {
-            background: linear-gradient(145deg, #667eea, #764ba2);
-            color: white;
-            padding: 0.25rem 0.75rem;
-            border-radius: 15px;
-            font-size: 0.8rem;
-            font-weight: 500;
-        }
-        
-        .impact-metrics {
-            background: linear-gradient(145deg, #e8f5e8, #c8e6c9);
-            border-radius: 10px;
-            padding: 1rem;
-            margin: 1rem 0;
-            border-left: 4px solid #28a745;
-        }
-        
-        .demo-section {
-            background: #f8f9fa;
-            border-radius: 10px;
-            padding: 1.5rem;
-            margin: 1rem 0;
-            border: 2px dashed #667eea;
-        }
-        
-        .field-category {
-            background: linear-gradient(145deg, #fff3e0, #ffe0b2);
-            border-radius: 15px;
-            padding: 2rem;
-            margin: 2rem 0;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            border-left: 5px solid #ff9800;
-        }
-        
-        .field-category h2 {
-            color: #e65100;
-            margin-bottom: 1.5rem;
-            text-align: center;
-        }
-        
-        .project-image {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-            border-radius: 10px;
-            margin: 1rem 0;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        }
-        
-        .github-link {
-            background: #333;
-            color: white;
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            text-decoration: none;
-            font-size: 0.9rem;
-            font-weight: 500;
-            display: inline-block;
-            margin: 0.5rem 0;
-            transition: all 0.3s ease;
-        }
-        
-        .github-link:hover {
-            background: #555;
-            transform: translateY(-2px);
-        }
-        
-        .live-demo-btn {
-            background: linear-gradient(145deg, #28a745, #20c997);
-            color: white;
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            text-decoration: none;
-            font-size: 0.9rem;
-            font-weight: 500;
-            display: inline-block;
-            margin: 0.5rem 0.5rem 0.5rem 0;
-            transition: all 0.3s ease;
-            border: none;
-            cursor: pointer;
-        }
-        
-        .live-demo-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(40, 167, 69, 0.3);
-        }
-    </style>
+    <div class="projects-hero">
+        <h1>💼 Project Portfolio</h1>
+        <p class="projects-tagline">AI Solutions That Drive Real Business Impact</p>
+    </div>
     """, unsafe_allow_html=True)
 
-set_style()
+    # Project statistics overview
+    create_project_statistics()
 
-# Hero Section
-st.markdown(f"""
-<div class="projects-hero">
-    <h1>🚀 AI Projects Portfolio</h1>
-    <p style="font-size: 1.2rem; color: #555; margin-bottom: 1rem;">
-        Comprehensive showcase of AI engineering across multiple domains
-    </p>
-    <p style="font-size: 1rem; color: #666;">
-        From Computer Vision to Generative AI - Real-world applications with measurable impact
-    </p>
-</div>
-""", unsafe_allow_html=True)
+    # Project filters and search
+    st.markdown("## 🔍 Explore My Projects")
 
-# Computer Vision Projects
-st.markdown("""
-<div class="field-category">
-    <h2>👁️ Computer Vision & Image Processing</h2>
-</div>
-""", unsafe_allow_html=True)
+    filters_col1, filters_col2, filters_col3 = st.columns(3)
 
-cv_projects = [
-    {
-        "title": "Real-Time Object Detection System",
-        "subtitle": "YOLO-based Multi-Object Recognition",
-        "icon": "📹",
-        "description": "Advanced real-time object detection system capable of identifying and tracking multiple objects simultaneously with 95% accuracy.",
-        "tech_stack": ["Python", "YOLO v8", "OpenCV", "PyTorch", "CUDA", "Flask"],
-        "impact": {
-            "accuracy": "95.2%",
-            "fps": "60 FPS",
-            "objects": "80+ Classes",
-            "deployment": "Production Ready"
+    with filters_col1:
+        category_filter = st.selectbox(
+            "Filter by Category",
+            ["All Categories", "AI/ML", "Computer Vision", "NLP", "Data Engineering", "Web Development"],
+            key="category_filter"
+        )
+
+    with filters_col2:
+        tech_filter = st.selectbox(
+            "Filter by Technology",
+            ["All Technologies", "Python", "TensorFlow", "PyTorch", "AWS", "Docker", "React"],
+            key="tech_filter"
+        )
+
+    with filters_col3:
+        impact_filter = st.selectbox(
+            "Sort by Impact",
+            ["Most Recent", "Highest Impact", "Most Complex", "Client Favorites"],
+            key="impact_filter"
+        )
+
+    # Search functionality
+    search_query = st.text_input("🔍 Search projects...", placeholder="Enter keywords, technologies, or business domains")
+
+    # Get filtered projects
+    projects = get_filtered_projects(category_filter, tech_filter, impact_filter, search_query)
+
+    # Display projects
+    st.markdown(f"### Found {len(projects)} Projects")
+
+    # Featured Projects Section
+    st.markdown("## 🌟 Featured AI Solutions")
+    display_featured_projects()
+
+    # All Projects with Pagination
+    st.markdown("## 📋 Complete Project Portfolio")
+    display_all_projects(projects)
+
+    # Project Impact Analysis
+    st.markdown("## 📊 Project Impact Analysis")
+    create_impact_analysis()
+
+def create_project_statistics():
+    """Create project statistics overview"""
+
+    st.markdown("## 📈 Portfolio Overview")
+
+    col1, col2, col3, col4, col5 = st.columns(5)
+
+    with col1:
+        st.metric("Total Projects", "70+", delta="12 this year")
+
+    with col2:
+        st.metric("Success Rate", "98%", delta="2% vs industry")
+
+    with col3:
+        st.metric("Avg. ROI", "340%", delta="85% above target")
+
+    with col4:
+        st.metric("Client Satisfaction", "4.9/5", delta="0.3 vs benchmark")
+
+    with col5:
+        st.metric("Technologies", "25+", delta="8 new this year")
+
+def get_filtered_projects(category, technology, impact, search):
+    """Get filtered projects based on selection criteria"""
+
+    # Project database
+    all_projects = [
+        {
+            "id": 1,
+            "title": "Enterprise RAG System for Legal Analysis",
+            "category": "AI/ML",
+            "description": "Developed a comprehensive Retrieval-Augmented Generation system for processing and analyzing legal documents with natural language queries.",
+            "detailed_description": """This enterprise-grade RAG system revolutionized how legal professionals interact with vast document repositories. The system processes over 100,000 legal documents, enabling lawyers to quickly find relevant information through natural language queries.
+
+Key innovations include:
+• Hybrid search combining semantic and keyword matching
+• Custom legal domain embeddings
+• Multi-level summarization capabilities
+• Real-time citation tracking and verification
+• Compliance with data privacy regulations""",
+            "technologies": ["Python", "LangChain", "FAISS", "HuggingFace", "AWS", "PostgreSQL", "Docker"],
+            "duration": "6 months",
+            "team_size": 4,
+            "client": "International Law Firm",
+            "industry": "Legal Services",
+            "business_impact": {
+                "cost_reduction": "85%",
+                "time_savings": "12 hours/day per lawyer",
+                "accuracy_improvement": "95%",
+                "roi": "450%"
+            },
+            "technical_challenges": [
+                "Processing documents in multiple languages",
+                "Maintaining legal accuracy and citations",
+                "Scaling to handle 100K+ documents",
+                "Ensuring data security and compliance"
+            ],
+            "solutions": [
+                "Implemented multilingual embeddings with legal domain fine-tuning",
+                "Built custom citation extraction and verification pipeline",
+                "Deployed distributed architecture on AWS with auto-scaling",
+                "Integrated enterprise-grade security with audit trails"
+            ],
+            "metrics": {
+                "documents_processed": 150000,
+                "queries_per_day": 5000,
+                "response_time": "< 2 seconds",
+                "accuracy": "95%"
+            },
+            "demo_url": "https://legal-rag-demo.streamlit.app",
+            "github_url": "https://github.com/karimosman89/legal-rag-system",
+            "image_url": "https://via.placeholder.com/600x300/667eea/ffffff?text=Legal+RAG+System",
+            "status": "Production",
+            "date": "2024-11-01"
         },
-        "features": [
-            "Real-time processing at 60 FPS",
-            "Multi-object tracking with unique IDs",
-            "Custom model training pipeline",
-            "REST API for integration",
-            "Mobile-optimized inference"
-        ],
-        "image": "assets/computer_vision_demo.png"
-    },
-    {
-        "title": "Medical Image Analysis Platform",
-        "subtitle": "AI-Powered Diagnostic Assistant",
-        "icon": "🏥",
-        "description": "Deep learning system for medical image analysis, specializing in X-ray and MRI scan interpretation with radiologist-level accuracy.",
-        "tech_stack": ["TensorFlow", "Keras", "DICOM", "NumPy", "Streamlit", "Docker"],
-        "impact": {
-            "accuracy": "97.8%",
-            "processing_time": "< 2 seconds",
-            "cases_analyzed": "10,000+",
-            "hospitals": "5 Deployed"
+        {
+            "id": 2,
+            "title": "Computer Vision Quality Control System",
+            "category": "Computer Vision",
+            "description": "Real-time defect detection system for manufacturing using advanced computer vision and deep learning techniques.",
+            "detailed_description": """Developed an automated quality control system that revolutionized manufacturing inspection processes. The system uses state-of-the-art computer vision algorithms to detect defects in real-time with superhuman accuracy.
+
+System capabilities:
+• Real-time defect detection on production lines
+• Multi-class defect classification and severity assessment
+• Integration with existing manufacturing systems
+• Automated reporting and analytics dashboard
+• Edge deployment for minimal latency""",
+            "technologies": ["PyTorch", "OpenCV", "YOLO", "TensorRT", "Docker", "Kubernetes", "MongoDB"],
+            "duration": "4 months",
+            "team_size": 3,
+            "client": "Manufacturing Corporation",
+            "industry": "Manufacturing",
+            "business_impact": {
+                "defect_detection": "98.7%",
+                "false_positive_rate": "0.3%",
+                "cost_savings": "$2M annually",
+                "production_efficiency": "+15%"
+            },
+            "technical_challenges": [
+                "Real-time processing requirements (30 FPS)",
+                "Varying lighting and environmental conditions",
+                "Integration with legacy manufacturing systems",
+                "Edge deployment constraints"
+            ],
+            "solutions": [
+                "Optimized YOLO architecture with TensorRT acceleration",
+                "Implemented adaptive preprocessing for lighting variations",
+                "Built REST API bridge for legacy system integration",
+                "Deployed containerized edge computing solution"
+            ],
+            "metrics": {
+                "processing_speed": "30 FPS",
+                "accuracy": "98.7%",
+                "uptime": "99.9%",
+                "defects_detected": 25000
+            },
+            "demo_url": "https://cv-quality-demo.streamlit.app",
+            "github_url": "https://github.com/karimosman89/cv-quality-control",
+            "image_url": "https://via.placeholder.com/600x300/764ba2/ffffff?text=Computer+Vision+QC",
+            "status": "Production",
+            "date": "2024-09-15"
         },
-        "features": [
-            "Multi-modal medical image support",
-            "Automated report generation",
-            "HIPAA-compliant data handling",
-            "Integration with hospital systems",
-            "Continuous learning pipeline"
-        ],
-        "image": "assets/ai_brain_network.png"
-    },
-    {
-        "title": "Facial Recognition & Emotion Detection",
-        "subtitle": "Advanced Biometric Analysis",
-        "icon": "😊",
-        "description": "Comprehensive facial analysis system combining recognition, emotion detection, and demographic analysis for security and marketing applications.",
-        "tech_stack": ["OpenCV", "dlib", "FaceNet", "TensorFlow", "Redis", "MongoDB"],
-        "impact": {
-            "recognition_accuracy": "99.1%",
-            "emotion_accuracy": "94.5%",
-            "processing_speed": "Real-time",
-            "database_size": "1M+ faces"
+        {
+            "id": 3,
+            "title": "Multilingual Sentiment Analysis Platform",
+            "category": "NLP",
+            "description": "Advanced sentiment analysis system supporting 12 languages with real-time processing and custom domain adaptation.",
+            "detailed_description": """Built a comprehensive sentiment analysis platform that processes multilingual text data in real-time. The system serves multiple clients across different industries, providing accurate sentiment insights for business decision-making.
+
+Platform features:
+• Support for 12 languages including Arabic, English, Italian, French, German
+• Real-time API with sub-second response times
+• Custom domain adaptation for different industries
+• Batch processing for large datasets
+• Interactive dashboard for analytics and insights""",
+            "technologies": ["Python", "Transformers", "FastAPI", "Redis", "PostgreSQL", "React", "Docker"],
+            "duration": "3 months",
+            "team_size": 2,
+            "client": "Social Media Analytics Company",
+            "industry": "Social Media",
+            "business_impact": {
+                "languages_supported": 12,
+                "accuracy": "92%",
+                "processing_speed": "10K texts/minute",
+                "client_retention": "95%"
+            },
+            "technical_challenges": [
+                "Handling multiple languages with varying characteristics",
+                "Real-time processing at scale",
+                "Domain adaptation across industries",
+                "Model interpretability and bias detection"
+            ],
+            "solutions": [
+                "Fine-tuned multilingual BERT models for each language",
+                "Implemented Redis caching and load balancing",
+                "Built modular pipeline for easy domain customization",
+                "Added SHAP explanations for model interpretability"
+            ],
+            "metrics": {
+                "texts_processed": 5000000,
+                "avg_response_time": "0.8 seconds",
+                "accuracy": "92%",
+                "languages": 12
+            },
+            "demo_url": "https://sentiment-platform-demo.streamlit.app",
+            "github_url": "https://github.com/karimosman89/multilingual-sentiment",
+            "image_url": "https://via.placeholder.com/600x300/2196f3/ffffff?text=Sentiment+Analysis",
+            "status": "Production",
+            "date": "2024-08-01"
         },
-        "features": [
-            "Multi-face detection and tracking",
-            "7-emotion classification system",
-            "Age and gender estimation",
-            "Anti-spoofing mechanisms",
-            "Privacy-preserving features"
-        ]
+        {
+            "id": 4,
+            "title": "Predictive Maintenance AI System",
+            "category": "AI/ML",
+            "description": "Machine learning system for predicting equipment failures in industrial settings with 88% accuracy.",
+            "detailed_description": """Developed an AI-powered predictive maintenance system that transforms how industrial facilities manage equipment maintenance. The system analyzes sensor data to predict failures before they occur, significantly reducing downtime and maintenance costs.
+
+System capabilities:
+• Real-time sensor data processing
+• Multi-modal failure prediction (mechanical, electrical, thermal)
+• Maintenance scheduling optimization
+• Cost-benefit analysis and ROI calculations
+• Integration with existing CMMS systems""",
+            "technologies": ["Python", "scikit-learn", "XGBoost", "TimeSeries", "InfluxDB", "Grafana", "Apache Kafka"],
+            "duration": "5 months",
+            "team_size": 3,
+            "client": "Industrial Manufacturing",
+            "industry": "Manufacturing",
+            "business_impact": {
+                "failure_prediction": "88%",
+                "maintenance_cost_reduction": "30%",
+                "unplanned_downtime": "-60%",
+                "equipment_lifespan": "+25%"
+            },
+            "technical_challenges": [
+                "Handling high-frequency sensor data streams",
+                "Dealing with imbalanced failure datasets",
+                "Integrating with legacy industrial systems",
+                "Ensuring system reliability in harsh environments"
+            ],
+            "solutions": [
+                "Implemented Apache Kafka for real-time data streaming",
+                "Used SMOTE and ensemble methods for imbalanced data",
+                "Built robust API layer with comprehensive error handling",
+                "Deployed on-premise solution with edge computing capabilities"
+            ],
+            "metrics": {
+                "sensors_monitored": 2500,
+                "prediction_accuracy": "88%",
+                "maintenance_savings": "$500K annually",
+                "uptime_improvement": "15%"
+            },
+            "demo_url": "https://predictive-maintenance-demo.streamlit.app",
+            "github_url": "https://github.com/karimosman89/predictive-maintenance",
+            "image_url": "https://via.placeholder.com/600x300/4caf50/ffffff?text=Predictive+Maintenance",
+            "status": "Production",
+            "date": "2024-06-01"
+        },
+        {
+            "id": 5,
+            "title": "Financial Trading Algorithm with ML",
+            "category": "AI/ML",
+            "description": "Advanced algorithmic trading system using machine learning for portfolio optimization and risk management.",
+            "detailed_description": """Created a sophisticated algorithmic trading system that combines machine learning with traditional financial analysis. The system manages portfolios autonomously while maintaining strict risk controls and regulatory compliance.
+
+Key features:
+• Multi-strategy portfolio optimization
+• Real-time market sentiment analysis
+• Risk management with dynamic position sizing
+• Regulatory compliance and audit trails
+• Backtesting framework with walk-forward analysis""",
+            "technologies": ["Python", "scikit-learn", "pandas", "NumPy", "SQLAlchemy", "FastAPI", "React"],
+            "duration": "8 months",
+            "team_size": 2,
+            "client": "Investment Management Firm",
+            "industry": "Finance",
+            "business_impact": {
+                "portfolio_return": "18.5% annually",
+                "sharpe_ratio": "1.8",
+                "max_drawdown": "-8.2%",
+                "assets_under_management": "$25M"
+            },
+            "technical_challenges": [
+                "Handling high-frequency financial data",
+                "Ensuring low-latency trade execution",
+                "Managing portfolio risk in volatile markets",
+                "Regulatory compliance and reporting"
+            ],
+            "solutions": [
+                "Optimized data pipeline with in-memory processing",
+                "Implemented direct market access (DMA) integration",
+                "Built comprehensive risk management framework",
+                "Created automated compliance reporting system"
+            ],
+            "metrics": {
+                "trades_executed": 50000,
+                "avg_execution_time": "50ms",
+                "win_rate": "68%",
+                "volatility": "12.5%"
+            },
+            "demo_url": "https://trading-algorithm-demo.streamlit.app",
+            "github_url": "https://github.com/karimosman89/trading-algorithm",
+            "image_url": "https://via.placeholder.com/600x300/ff9800/ffffff?text=Trading+Algorithm",
+            "status": "Production",
+            "date": "2024-03-01"
+        }
+    ]
+
+    # Apply filters
+    filtered_projects = all_projects
+
+    if category != "All Categories":
+        filtered_projects = [p for p in filtered_projects if p["category"] == category]
+
+    if technology != "All Technologies":
+        filtered_projects = [p for p in filtered_projects if technology in p["technologies"]]
+
+    if search:
+        search_lower = search.lower()
+        filtered_projects = [p for p in filtered_projects 
+                           if search_lower in p["title"].lower() 
+                           or search_lower in p["description"].lower()
+                           or any(search_lower in tech.lower() for tech in p["technologies"])]
+
+    # Apply sorting
+    if impact == "Most Recent":
+        filtered_projects.sort(key=lambda x: x["date"], reverse=True)
+    elif impact == "Highest Impact":
+        filtered_projects.sort(key=lambda x: float(x["business_impact"]["roi"].rstrip("%")), reverse=True)
+
+    return filtered_projects
+
+def display_featured_projects():
+    """Display featured projects with enhanced visualization"""
+
+    featured_ids = [1, 2, 3]  # Featured project IDs
+    projects = get_filtered_projects("All Categories", "All Technologies", "Most Recent", "")
+    featured_projects = [p for p in projects if p["id"] in featured_ids]
+
+    for project in featured_projects:
+        with st.container():
+            st.markdown(f"""
+            <div class="featured-project-card">
+                <div class="project-header">
+                    <h3>{project['title']}</h3>
+                    <span class="project-status {project['status'].lower()}">{project['status']}</span>
+                </div>
+                <div class="project-meta">
+                    <span class="project-category">{project['category']}</span>
+                    <span class="project-duration">{project['duration']}</span>
+                    <span class="project-team">Team of {project['team_size']}</span>
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
+
+            col1, col2 = st.columns([2, 1])
+
+            with col1:
+                st.markdown(project["detailed_description"])
+
+                # Technical details
+                with st.expander("🔧 Technical Implementation"):
+                    st.markdown("**Technologies Used:**")
+                    tech_cols = st.columns(4)
+                    for i, tech in enumerate(project["technologies"]):
+                        with tech_cols[i % 4]:
+                            st.markdown(f"`{tech}`")
+
+                    st.markdown("**Technical Challenges:**")
+                    for challenge in project["technical_challenges"]:
+                        st.markdown(f"• {challenge}")
+
+                    st.markdown("**Solutions Implemented:**")
+                    for solution in project["solutions"]:
+                        st.markdown(f"✓ {solution}")
+
+                # Business impact
+                with st.expander("📈 Business Impact & Results"):
+                    impact_cols = st.columns(2)
+                    with impact_cols[0]:
+                        for key, value in project["business_impact"].items():
+                            st.metric(key.replace("_", " ").title(), value)
+
+                    with impact_cols[1]:
+                        st.markdown("**Key Metrics:**")
+                        for key, value in project["metrics"].items():
+                            st.markdown(f"• **{key.replace('_', ' ').title()}**: {value}")
+
+            with col2:
+                # Project image
+                st.image(project["image_url"], caption=project["title"], use_container_width=True)
+
+                # Action buttons
+                btn_col1, btn_col2 = st.columns(2)
+                with btn_col1:
+                    if st.button(f"🔗 Live Demo", key=f"demo_{project['id']}"):
+                        st.success(f"Opening demo for {project['title']}")
+                        # In real implementation, this would open the demo URL
+
+                with btn_col2:
+                    if st.button(f"📝 GitHub", key=f"github_{project['id']}"):
+                        st.success(f"Opening GitHub repository")
+                        # In real implementation, this would open the GitHub URL
+
+                # Project stats
+                st.markdown("### 📊 Quick Stats")
+                st.markdown(f"**Client:** {project['client']}")
+                st.markdown(f"**Industry:** {project['industry']}")
+                st.markdown(f"**Duration:** {project['duration']}")
+                st.markdown(f"**Team Size:** {project['team_size']}")
+
+            st.markdown("---")
+
+def display_all_projects(projects):
+    """Display all projects with pagination"""
+
+    # Pagination
+    projects_per_page = 5
+    total_pages = (len(projects) - 1) // projects_per_page + 1
+
+    if total_pages > 1:
+        page = st.selectbox("Select Page", range(1, total_pages + 1), key="project_page")
+        start_idx = (page - 1) * projects_per_page
+        end_idx = start_idx + projects_per_page
+        page_projects = projects[start_idx:end_idx]
+    else:
+        page_projects = projects
+
+    # Display projects in cards
+    for project in page_projects:
+        with st.container():
+            col1, col2, col3 = st.columns([2, 1, 1])
+
+            with col1:
+                st.markdown(f"### {project['title']}")
+                st.markdown(project["description"])
+
+                # Technology badges
+                tech_html = ""
+                for tech in project["technologies"][:5]:  # Show first 5 technologies
+                    tech_html += f'<span class="tech-badge">{tech}</span> '
+                if len(project["technologies"]) > 5:
+                    tech_html += f'<span class="tech-badge">+{len(project["technologies"]) - 5} more</span>'
+
+                st.markdown(f'<div class="tech-badges">{tech_html}</div>', unsafe_allow_html=True)
+
+            with col2:
+                st.markdown("**Business Impact**")
+                impact_key = list(project["business_impact"].keys())[0]
+                impact_value = project["business_impact"][impact_key]
+                st.metric(impact_key.replace("_", " ").title(), impact_value)
+
+            with col3:
+                st.markdown("**Project Details**")
+                st.markdown(f"**Category:** {project['category']}")
+                st.markdown(f"**Status:** {project['status']}")
+                st.markdown(f"**Duration:** {project['duration']}")
+
+            # Expandable details
+            with st.expander("View Full Details"):
+                detail_col1, detail_col2 = st.columns([2, 1])
+
+                with detail_col1:
+                    st.markdown("**Detailed Description:**")
+                    st.markdown(project["detailed_description"])
+
+                    st.markdown("**Technologies:**")
+                    tech_cols = st.columns(4)
+                    for i, tech in enumerate(project["technologies"]):
+                        with tech_cols[i % 4]:
+                            st.markdown(f"`{tech}`")
+
+                with detail_col2:
+                    st.markdown("**Business Impact:**")
+                    for key, value in project["business_impact"].items():
+                        st.markdown(f"• **{key.replace('_', ' ').title()}**: {value}")
+
+                    st.markdown("**Technical Metrics:**")
+                    for key, value in project["metrics"].items():
+                        st.markdown(f"• **{key.replace('_', ' ').title()}**: {value}")
+
+            st.markdown("---")
+
+def create_impact_analysis():
+    """Create project impact analysis dashboard"""
+
+    # Sample impact data
+    impact_data = {
+        'Project': ['Legal RAG System', 'CV Quality Control', 'Sentiment Analysis', 'Predictive Maintenance', 'Trading Algorithm'],
+        'ROI (%)': [450, 280, 320, 380, 185],
+        'Cost Savings ($K)': [850, 2000, 450, 500, 1250],
+        'Time Savings (hrs/week)': [60, 40, 25, 35, 20],
+        'Accuracy (%)': [95, 98.7, 92, 88, 68]
     }
-]
 
-for project in cv_projects:
-    st.markdown(f"""
-    <div class="project-card">
-        <div class="project-header">
-            <div class="project-icon">{project['icon']}</div>
-            <div>
-                <h3 class="project-title">{project['title']}</h3>
-                <p class="project-subtitle">{project['subtitle']}</p>
-            </div>
-        </div>
-        
-        <p style="font-size: 1.1rem; line-height: 1.6; margin-bottom: 1.5rem;">
-            {project['description']}
-        </p>
-        
-        <div class="tech-stack">
-            {' '.join([f'<span class="tech-tag">{tech}</span>' for tech in project['tech_stack']])}
-        </div>
-        
-        <div class="impact-metrics">
-            <h4 style="color: #2e7d32; margin-bottom: 1rem;">📊 Impact Metrics:</h4>
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem;">
-                {' '.join([f'<div><strong>{key.replace("_", " ").title()}:</strong><br>{value}</div>' for key, value in project['impact'].items()])}
-            </div>
-        </div>
-        
-        <div style="margin: 1.5rem 0;">
-            <h4>✨ Key Features:</h4>
-            <ul style="margin: 0.5rem 0; padding-left: 1.5rem;">
-                {' '.join([f'<li>{feature}</li>' for feature in project['features']])}
-            </ul>
-        </div>
-        
-        <div style="margin-top: 1.5rem;">
-            <button class="live-demo-btn" onclick="alert('Live demo would be available in production deployment')">
-                🚀 Live Demo
-            </button>
-            <a href="#" class="github-link">
-                📂 View Code
-            </a>
-        </div>
-    </div>
-    """, unsafe_allow_html=True)
-    
-    # Add project image if available
-    if 'image' in project:
-        try:
-            img = Image.open(project['image'])
-            st.image(img, caption=f"{project['title']} - Visual Demo", use_container_width=True)
-        except:
-            pass
+    df = pd.DataFrame(impact_data)
 
-# Natural Language Processing Projects
-st.markdown("""
-<div class="field-category">
-    <h2>🗣️ Natural Language Processing & LLMs</h2>
-</div>
-""", unsafe_allow_html=True)
+    col1, col2 = st.columns(2)
 
-nlp_projects = [
-    {
-        "title": "Enterprise RAG System",
-        "subtitle": "Retrieval-Augmented Generation Platform",
-        "icon": "🧠",
-        "description": "Scalable RAG system that transforms enterprise knowledge bases into intelligent Q&A systems, serving 10,000+ daily queries.",
-        "tech_stack": ["LangChain", "OpenAI GPT-4", "Pinecone", "FastAPI", "Redis", "PostgreSQL"],
-        "impact": {
-            "daily_queries": "10,000+",
-            "accuracy": "92.5%",
-            "response_time": "< 3 seconds",
-            "cost_reduction": "60%"
-        },
-        "features": [
-            "Multi-document knowledge synthesis",
-            "Real-time vector search optimization",
-            "Context-aware response generation",
-            "Multi-language support (12 languages)",
-            "Enterprise security compliance"
-        ],
-        "image": "assets/nlp_processing.png"
-    },
-    {
-        "title": "Multilingual Sentiment Analysis API",
-        "subtitle": "Global Social Media Monitoring",
-        "icon": "🌍",
-        "description": "Advanced sentiment analysis system supporting 25+ languages with cultural context awareness for global brand monitoring.",
-        "tech_stack": ["Transformers", "BERT", "XLM-R", "FastAPI", "Kafka", "Elasticsearch"],
-        "impact": {
-            "languages": "25+",
-            "accuracy": "94.2%",
-            "throughput": "1M tweets/hour",
-            "clients": "50+ brands"
-        },
-        "features": [
-            "Cross-lingual sentiment transfer",
-            "Cultural context adaptation",
-            "Real-time stream processing",
-            "Aspect-based sentiment analysis",
-            "Trend detection and alerting"
-        ]
-    },
-    {
-        "title": "AI-Powered Content Generator",
-        "subtitle": "Creative Writing Assistant",
-        "icon": "✍️",
-        "description": "Intelligent content generation platform for marketing teams, creating personalized content at scale with brand voice consistency.",
-        "tech_stack": ["GPT-3.5/4", "LangChain", "Streamlit", "MongoDB", "Celery", "AWS"],
-        "impact": {
-            "content_pieces": "100,000+",
-            "time_saved": "80%",
-            "engagement_boost": "45%",
-            "active_users": "500+"
-        },
-        "features": [
-            "Brand voice customization",
-            "Multi-format content generation",
-            "SEO optimization integration",
-            "Plagiarism detection",
-            "A/B testing capabilities"
-        ]
+    with col1:
+        # ROI Chart
+        fig_roi = px.bar(df, x='Project', y='ROI (%)', 
+                        title='Return on Investment by Project',
+                        color='ROI (%)', 
+                        color_continuous_scale='viridis')
+        fig_roi.update_xaxis(tickangle=45)
+        st.plotly_chart(fig_roi, use_container_width=True)
+
+    with col2:
+        # Accuracy vs Cost Savings Scatter
+        fig_scatter = px.scatter(df, x='Accuracy (%)', y='Cost Savings ($K)',
+                               size='ROI (%)', hover_name='Project',
+                               title='Accuracy vs Cost Savings',
+                               color='ROI (%)', 
+                               color_continuous_scale='plasma')
+        st.plotly_chart(fig_scatter, use_container_width=True)
+
+    # Technology usage analysis
+    st.markdown("### 🛠️ Technology Stack Analysis")
+
+    # Sample technology data
+    tech_usage = {
+        'Python': 5, 'PyTorch': 2, 'TensorFlow': 2, 'Docker': 4, 'AWS': 3,
+        'FastAPI': 3, 'React': 2, 'PostgreSQL': 3, 'MongoDB': 1, 'Redis': 2
     }
-]
 
-for project in nlp_projects:
-    st.markdown(f"""
-    <div class="project-card">
-        <div class="project-header">
-            <div class="project-icon">{project['icon']}</div>
-            <div>
-                <h3 class="project-title">{project['title']}</h3>
-                <p class="project-subtitle">{project['subtitle']}</p>
-            </div>
-        </div>
-        
-        <p style="font-size: 1.1rem; line-height: 1.6; margin-bottom: 1.5rem;">
-            {project['description']}
-        </p>
-        
-        <div class="tech-stack">
-            {' '.join([f'<span class="tech-tag">{tech}</span>' for tech in project['tech_stack']])}
-        </div>
-        
-        <div class="impact-metrics">
-            <h4 style="color: #2e7d32; margin-bottom: 1rem;">📊 Impact Metrics:</h4>
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem;">
-                {' '.join([f'<div><strong>{key.replace("_", " ").title()}:</strong><br>{value}</div>' for key, value in project['impact'].items()])}
-            </div>
-        </div>
-        
-        <div style="margin: 1.5rem 0;">
-            <h4>✨ Key Features:</h4>
-            <ul style="margin: 0.5rem 0; padding-left: 1.5rem;">
-                {' '.join([f'<li>{feature}</li>' for feature in project['features']])}
-            </ul>
-        </div>
-        
-        <div style="margin-top: 1.5rem;">
-            <button class="live-demo-btn" onclick="alert('Live demo would be available in production deployment')">
-                🚀 Live Demo
-            </button>
-            <a href="#" class="github-link">
-                📂 View Code
-            </a>
-        </div>
-    </div>
-    """, unsafe_allow_html=True)
-    
-    # Add project image if available
-    if 'image' in project:
-        try:
-            img = Image.open(project['image'])
-            st.image(img, caption=f"{project['title']} - Architecture Overview", use_container_width=True)
-        except:
-            pass
+    fig_tech = px.bar(x=list(tech_usage.keys()), y=list(tech_usage.values()),
+                     title='Technology Usage Across Projects',
+                     labels={'x': 'Technology', 'y': 'Number of Projects'})
+    fig_tech.update_traces(marker_color='#667eea')
+    st.plotly_chart(fig_tech, use_container_width=True)
 
-# Machine Learning & Data Science Projects
-st.markdown("""
-<div class="field-category">
-    <h2>📊 Machine Learning & Predictive Analytics</h2>
-</div>
-""", unsafe_allow_html=True)
-
-ml_projects = [
-    {
-        "title": "Predictive Maintenance System",
-        "subtitle": "Industrial IoT Analytics",
-        "icon": "🏭",
-        "description": "ML-powered predictive maintenance system for manufacturing equipment, reducing downtime by 40% through early failure detection.",
-        "tech_stack": ["Scikit-learn", "XGBoost", "Apache Spark", "Kafka", "InfluxDB", "Grafana"],
-        "impact": {
-            "downtime_reduction": "40%",
-            "cost_savings": "$2.5M/year",
-            "prediction_accuracy": "89.3%",
-            "equipment_monitored": "500+ units"
-        },
-        "features": [
-            "Real-time sensor data processing",
-            "Anomaly detection algorithms",
-            "Failure prediction with confidence intervals",
-            "Maintenance scheduling optimization",
-            "Interactive monitoring dashboards"
-        ]
-    },
-    {
-        "title": "Financial Risk Assessment AI",
-        "subtitle": "Credit Scoring & Fraud Detection",
-        "icon": "💰",
-        "description": "Advanced ML system for financial risk assessment, combining credit scoring and fraud detection with explainable AI features.",
-        "tech_stack": ["Python", "LightGBM", "SHAP", "MLflow", "Docker", "Kubernetes"],
-        "impact": {
-            "fraud_detection": "96.8%",
-            "false_positives": "< 2%",
-            "processing_speed": "< 100ms",
-            "loans_processed": "1M+"
-        },
-        "features": [
-            "Real-time fraud scoring",
-            "Explainable AI decisions",
-            "Regulatory compliance (GDPR, CCPA)",
-            "A/B testing framework",
-            "Continuous model monitoring"
-        ]
-    },
-    {
-        "title": "Customer Behavior Analytics",
-        "subtitle": "E-commerce Personalization Engine",
-        "icon": "🛒",
-        "description": "Comprehensive customer analytics platform driving personalized shopping experiences and increasing conversion rates by 35%.",
-        "tech_stack": ["TensorFlow", "Pandas", "Redis", "Apache Airflow", "BigQuery", "Tableau"],
-        "impact": {
-            "conversion_increase": "35%",
-            "revenue_boost": "$5M+",
-            "customers_analyzed": "2M+",
-            "recommendations": "Real-time"
-        },
-        "features": [
-            "Real-time recommendation engine",
-            "Customer lifetime value prediction",
-            "Churn prediction and prevention",
-            "Dynamic pricing optimization",
-            "Multi-channel attribution modeling"
-        ]
-    }
-]
-
-for project in ml_projects:
-    st.markdown(f"""
-    <div class="project-card">
-        <div class="project-header">
-            <div class="project-icon">{project['icon']}</div>
-            <div>
-                <h3 class="project-title">{project['title']}</h3>
-                <p class="project-subtitle">{project['subtitle']}</p>
-            </div>
-        </div>
-        
-        <p style="font-size: 1.1rem; line-height: 1.6; margin-bottom: 1.5rem;">
-            {project['description']}
-        </p>
-        
-        <div class="tech-stack">
-            {' '.join([f'<span class="tech-tag">{tech}</span>' for tech in project['tech_stack']])}
-        </div>
-        
-        <div class="impact-metrics">
-            <h4 style="color: #2e7d32; margin-bottom: 1rem;">📊 Impact Metrics:</h4>
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem;">
-                {' '.join([f'<div><strong>{key.replace("_", " ").title()}:</strong><br>{value}</div>' for key, value in project['impact'].items()])}
-            </div>
-        </div>
-        
-        <div style="margin: 1.5rem 0;">
-            <h4>✨ Key Features:</h4>
-            <ul style="margin: 0.5rem 0; padding-left: 1.5rem;">
-                {' '.join([f'<li>{feature}</li>' for feature in project['features']])}
-            </ul>
-        </div>
-        
-        <div style="margin-top: 1.5rem;">
-            <button class="live-demo-btn" onclick="alert('Live demo would be available in production deployment')">
-                🚀 Live Demo
-            </button>
-            <a href="#" class="github-link">
-                📂 View Code
-            </a>
-        </div>
-    </div>
-    """, unsafe_allow_html=True)
-
-# Generative AI Projects
-st.markdown("""
-<div class="field-category">
-    <h2>🎨 Generative AI & Creative Applications</h2>
-</div>
-""", unsafe_allow_html=True)
-
-gen_ai_projects = [
-    {
-        "title": "AI Art Generation Platform",
-        "subtitle": "Text-to-Image Creative Studio",
-        "icon": "🎨",
-        "description": "Advanced generative AI platform for creating custom artwork, logos, and designs from text descriptions with commercial licensing.",
-        "tech_stack": ["Stable Diffusion", "DALL-E", "Midjourney API", "FastAPI", "React", "AWS S3"],
-        "impact": {
-            "images_generated": "500,000+",
-            "active_artists": "10,000+",
-            "revenue": "$100K+/month",
-            "generation_time": "< 30 seconds"
-        },
-        "features": [
-            "Multiple AI model integration",
-            "Style transfer and customization",
-            "Batch generation capabilities",
-            "Commercial licensing management",
-            "Community gallery and sharing"
-        ],
-        "image": "assets/generative_ai_art.png"
-    },
-    {
-        "title": "AI Music Composition Assistant",
-        "subtitle": "Intelligent Music Creation Tool",
-        "icon": "🎵",
-        "description": "AI-powered music composition platform helping musicians create original melodies, harmonies, and full arrangements across multiple genres.",
-        "tech_stack": ["Magenta", "TensorFlow", "MIDI", "PyTorch", "Flask", "MongoDB"],
-        "impact": {
-            "compositions": "50,000+",
-            "musicians": "5,000+",
-            "genres": "20+",
-            "avg_rating": "4.8/5"
-        },
-        "features": [
-            "Multi-genre composition support",
-            "Real-time collaboration tools",
-            "MIDI export and integration",
-            "Style adaptation algorithms",
-            "Copyright-safe generation"
-        ]
-    },
-    {
-        "title": "Synthetic Data Generation Suite",
-        "subtitle": "Privacy-Preserving Data Creation",
-        "icon": "🔒",
-        "description": "Enterprise-grade synthetic data generation platform creating realistic datasets while preserving privacy and regulatory compliance.",
-        "tech_stack": ["GANs", "VAEs", "Differential Privacy", "PyTorch", "Kubernetes", "PostgreSQL"],
-        "impact": {
-            "datasets_created": "1,000+",
-            "privacy_score": "99.9%",
-            "enterprises": "50+",
-            "data_points": "100M+"
-        },
-        "features": [
-            "Multi-modal data synthesis",
-            "Differential privacy guarantees",
-            "Statistical fidelity preservation",
-            "Regulatory compliance (GDPR, HIPAA)",
-            "Custom model training"
-        ]
-    }
-]
-
-for project in gen_ai_projects:
-    st.markdown(f"""
-    <div class="project-card">
-        <div class="project-header">
-            <div class="project-icon">{project['icon']}</div>
-            <div>
-                <h3 class="project-title">{project['title']}</h3>
-                <p class="project-subtitle">{project['subtitle']}</p>
-            </div>
-        </div>
-        
-        <p style="font-size: 1.1rem; line-height: 1.6; margin-bottom: 1.5rem;">
-            {project['description']}
-        </p>
-        
-        <div class="tech-stack">
-            {' '.join([f'<span class="tech-tag">{tech}</span>' for tech in project['tech_stack']])}
-        </div>
-        
-        <div class="impact-metrics">
-            <h4 style="color: #2e7d32; margin-bottom: 1rem;">📊 Impact Metrics:</h4>
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem;">
-                {' '.join([f'<div><strong>{key.replace("_", " ").title()}:</strong><br>{value}</div>' for key, value in project['impact'].items()])}
-            </div>
-        </div>
-        
-        <div style="margin: 1.5rem 0;">
-            <h4>✨ Key Features:</h4>
-            <ul style="margin: 0.5rem 0; padding-left: 1.5rem;">
-                {' '.join([f'<li>{feature}</li>' for feature in project['features']])}
-            </ul>
-        </div>
-        
-        <div style="margin-top: 1.5rem;">
-            <button class="live-demo-btn" onclick="alert('Live demo would be available in production deployment')">
-                🚀 Live Demo
-            </button>
-            <a href="#" class="github-link">
-                📂 View Code
-            </a>
-        </div>
-    </div>
-    """, unsafe_allow_html=True)
-    
-    # Add project image if available
-    if 'image' in project:
-        try:
-            img = Image.open(project['image'])
-            st.image(img, caption=f"{project['title']} - Creative Output", use_container_width=True)
-        except:
-            pass
-
-# Portfolio Summary
-st.markdown(f"""
-<div class="projects-hero">
-    <h2>🎯 Portfolio Impact Summary</h2>
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; margin: 2rem 0;">
-        <div style="text-align: center;">
-            <h3 style="color: #667eea; font-size: 2.5rem; margin: 0;">15+</h3>
-            <p style="margin: 0; color: #666;">Major Projects</p>
-        </div>
-        <div style="text-align: center;">
-            <h3 style="color: #667eea; font-size: 2.5rem; margin: 0;">$10M+</h3>
-            <p style="margin: 0; color: #666;">Business Value</p>
-        </div>
-        <div style="text-align: center;">
-            <h3 style="color: #667eea; font-size: 2.5rem; margin: 0;">95%+</h3>
-            <p style="margin: 0; color: #666;">Avg. Accuracy</p>
-        </div>
-        <div style="text-align: center;">
-            <h3 style="color: #667eea; font-size: 2.5rem; margin: 0;">100+</h3>
-            <p style="margin: 0; color: #666;">Enterprise Clients</p>
-        </div>
-    </div>
-    <p style="font-size: 1.1rem; color: #666; margin-top: 2rem;">
-        Each project represents real-world AI applications with measurable business impact across diverse industries and use cases.
-    </p>
-</div>
-""", unsafe_allow_html=True)
-
-# Call to Action
-st.markdown(f"""
-<div class="projects-hero">
-    <h2>🤝 Ready to Build the Future Together?</h2>
-    <p style="font-size: 1.2rem; color: #555; margin-top: 2rem;">
-        These projects showcase my ability to deliver AI solutions across the entire spectrum of artificial intelligence applications.
-    </p>
-    <p style="font-size: 1.1rem; color: #666; margin-top: 1rem;">
-        Let's discuss how I can bring similar innovation and impact to your organization.
-    </p>
-</div>
-""", unsafe_allow_html=True)
-
-# Footer
-st.markdown("<p style='text-align: center; color: #666; margin-top: 2rem;'>© 2024 Karim Osman - AI Engineer Portfolio</p>", unsafe_allow_html=True)
+if __name__ == "__main__":
+    main()
