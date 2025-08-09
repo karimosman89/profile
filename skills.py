@@ -491,7 +491,7 @@ def show_data_science_skills():
             st.plotly_chart(fig, use_container_width=True)
 
 def show_tools_frameworks():
-    """Tools and frameworks showcase"""
+    
     st.header("🔧 Tools & Frameworks Expertise")
 
     # Create comprehensive tools data
