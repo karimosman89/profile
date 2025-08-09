@@ -557,7 +557,7 @@ def show_tools_frameworks():
     st.plotly_chart(fig, use_container_width=True)
 
 def show_certifications():
-     """Professional certifications and achievements"""
+    """ Professional certifications and achievements"""
     st.header("🏆 Professional Certifications & Achievements")
 
     # Certifications data
