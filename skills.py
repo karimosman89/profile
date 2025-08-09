@@ -62,7 +62,7 @@ def show_skills():
         show_certifications()
 
 def show_ai_ml_demos():
-    """Interactive AI/ML demonstrations"""
+   
     st.header("🤖 Live AI/ML Demonstrations")
     st.write("Experience my AI/ML skills through interactive demonstrations:")
 
@@ -241,7 +241,7 @@ def show_ai_ml_demos():
                 st.metric("Prediction Quality", "Excellent" if r2 > 0.8 else "Good" if r2 > 0.6 else "Fair")
 
 def show_programming_skills():
-    """Programming skills with interactive code examples"""
+   
     st.header("💻 Programming Skills Portfolio")
 
     # Programming languages radar chart
@@ -294,7 +294,7 @@ class BST:
         self.root = None
 
     def insert(self, val):
-        """Insert value into BST with O(log n) average complexity"""
+        
         if not self.root:
             self.root = TreeNode(val)
         else:
@@ -313,7 +313,7 @@ class BST:
                 self._insert_recursive(node.right, val)
 
     def search(self, val):
-        """Search for value with O(log n) complexity"""
+        
         return self._search_recursive(self.root, val)
 
     def _search_recursive(self, node, val):
@@ -334,11 +334,11 @@ class HashTable:
         self.table = [[] for _ in range(size)]
 
     def _hash(self, key):
-        """Simple hash function using modulo"""
+      
         return hash(key) % self.size
 
     def insert(self, key, value):
-        """Insert with chaining collision resolution"""
+       
         index = self._hash(key)
         bucket = self.table[index]
 
@@ -352,7 +352,7 @@ class HashTable:
         bucket.append((key, value))
 
     def get(self, key):
-        """Retrieve value by key with O(1) average complexity"""
+       
         index = self._hash(key)
         bucket = self.table[index]
 
@@ -363,7 +363,7 @@ class HashTable:
         raise KeyError(f"Key '{key}' not found")
 
     def delete(self, key):
-        """Delete key-value pair"""
+       
         index = self._hash(key)
         bucket = self.table[index]
 
@@ -376,7 +376,7 @@ class HashTable:
             """, language='python')
 
 def show_data_science_skills():
-    """Data Science skills with interactive visualizations"""
+   
     st.header("📊 Data Science & Analytics Portfolio")
 
     # Skills heatmap
@@ -583,7 +583,7 @@ def show_certifications():
         {
             "title": "Microsoft Azure AI Engineer Associate",
             "issuer": "Microsoft",
-            "date": "2022",
+            "date": "2023",
             "status": "Active",
             "category": "Artificial Intelligence",
             "description": "Implement AI solutions using Azure Cognitive Services",
@@ -601,7 +601,7 @@ def show_certifications():
         {
             "title": "TensorFlow Developer Certificate",
             "issuer": "TensorFlow",
-            "date": "2021",
+            "date": "2022",
             "status": "Active",
             "category": "Machine Learning",
             "description": "Building and training neural network models",
