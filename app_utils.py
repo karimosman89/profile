@@ -1,7 +1,3 @@
-"""
-Professional Utility Functions for Karim Osman's Portfolio
-Advanced helper functions, data processing, and analytics
-"""
 
 import streamlit as st
 import pandas as pd
@@ -574,3 +570,17 @@ __all__ = [
     'calculate_experience_years',
     'generate_professional_id'
 ]
+def get_browser_lang() -> str:
+    """Detect browser language preference"""
+    # In a real app, you would detect the browser language
+    # This is a simplified version that always returns English
+    return 'en'
+
+def language_selector() -> None:
+    """Render language selector UI component"""
+    # This function would create a language selection UI
+    # Since it's not implemented, we'll just create a placeholder
+    with st.sidebar:
+        st.markdown("---")
+        st.markdown("**Language Settings**")
+        st.radio("Language", ["English", "French", "German", "Swedish", "Dutch", "Japanese"], key='lang', index=0)
