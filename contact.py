@@ -538,8 +538,8 @@ def show_meeting_scheduler():
                         2. You'll receive a calendar invitation with meeting link
                         3. I'll send a brief preparation guide
 
-                        **Meeting ID**: MTG-{}-{}
-                        """.format(datetime.now().strftime("%Y%m%d"), hash(meeting_email) % 10000))
+                        **Meeting ID**: MTG-{datetime.now().strftime("%Y%m%d")}-{hash(meeting_email) % 10000}
+                        """)
 
                         # Show preparation checklist
                         with st.expander("📋 Meeting Preparation Checklist", expanded=True):
