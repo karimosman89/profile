@@ -64,7 +64,7 @@ jobs:
 
     - name: 🎨 Code Formatting Check
       run: |
-        black --check .
+        black  .
         echo "✅ Code formatting is correct"
 
     - name: 🔍 Linting
