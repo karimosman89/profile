@@ -14,10 +14,10 @@ import importlib
 import random
 import time
 import base64
-from app_utils import  language_selector, get_browser_lang
+#from app_utils import  language_selector, get_browser_lang
 
 if 'lang' not in st.session_state:
-    st.session_state.lang = get_browser_lang()
+    st.session_state.lang = 'en' 
     
 # Configure the page
 st.set_page_config(
