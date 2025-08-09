@@ -373,7 +373,7 @@ class HashTable:
                 return
 
         raise KeyError(f"Key '{key}' not found")
-            """, language='python')
+            "", language='python')
 
 def show_data_science_skills():
    
