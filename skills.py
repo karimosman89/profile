@@ -282,7 +282,7 @@ def show_programming_skills():
         st.subheader("📚 Advanced Data Structures Implementation")
 
         with st.expander("🌳 Binary Search Tree Implementation"):
-            st.code("""
+            st.code(""")
 class TreeNode:
     def __init__(self, val=0, left=None, right=None):
         self.val = val
