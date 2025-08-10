@@ -322,7 +322,7 @@ for project in cv_projects:
     # Add project image if available
     if 'image' in project:
         try:
-            img = Image.open(project[\'image\'])
+            img = Image.open(project['image'])
             st.image(img, caption=f"{project[\'title\]} - Visual Demo", use_column_width=True)
         except:
             pass
