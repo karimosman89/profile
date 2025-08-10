@@ -463,7 +463,7 @@ fig.add_trace(go.Scatter(
     name='Experience Level',
     line=dict(color='#667eea', width=3),
     marker=dict(size=8, color='#764ba2'),
-    hovertemplate='<b>%{text}</b><br>Year: %{x}<br>Experience Level: %{y}<extra></extra>\',
+    hovertemplate='<b>%{text}</b><br>Year: %{x}<br>Experience Level: %{y}<extra></extra>',
     text=[f"{role} at {company}" for role, company in zip(timeline_data['Role'], timeline_data['Company'])]
 ))
 
