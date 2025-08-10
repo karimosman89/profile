@@ -402,7 +402,7 @@ for project in nlp_projects:
     st.markdown(f"""
     <div class="project-card">
         <div class="project-header">
-            <div class="project-icon">{project[\'icon\']}</div>
+            <div class="project-icon">{project['icon']}</div>
             <div>
                 <h3 class="project-title">{project[\'title\']}</h3>
                 <p class="project-subtitle">{project[\'subtitle\]}</p>
