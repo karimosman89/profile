@@ -147,7 +147,7 @@ st.markdown(f"""
             {tr('ABOUT_VIDEO_PLACEHOLDER')}
         </p>
         <audio controls style="width: 100%; margin-top: 1rem;">
-            <source src="data:audio/wav;base64,{base64.b64encode(open(\'karim_introduction.wav\', \'rb\').read()).decode()}" type="audio/wav">
+            <source src="data:audio/wav;base64,{base64.b64encode(open('karim_introduction.wav', 'rb').read()).decode()}" type="audio/wav">
             Your browser does not support the audio element.
         </audio>
     </div>
