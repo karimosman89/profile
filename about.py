@@ -3,6 +3,7 @@ from PIL import Image
 import json
 from streamlit_lottie import st_lottie
 from app_utils  import tr
+import base64
 
 # Enhanced styling
 def set_style():
