@@ -186,7 +186,7 @@ st.markdown(f"""
     <h1>📄 Professional Resume</h1>
     <p style="font-size: 1.2rem; color: #555;">Comprehensive overview of my experience, skills, and achievements</p>
     <p style="font-size: 1rem; color: #666; margin-top: 1rem;">
-        Last updated: {datetime.now().strftime(\'%B %d, %Y\')}
+        Last updated: {datetime.now().strftime('%B %d, %Y')}
     </p>
 </div>
 """, unsafe_allow_html=True)
@@ -261,21 +261,21 @@ experiences = [
 ]
 
 for exp in experiences:
-    with st.expander(f"🏢 {exp[\'title\']} at {exp[\'company\']} ({exp[\'period\]})", expanded=True):
+    with st.expander(f"🏢 {exp['title']} at {exp['company']} ({exp['period']})", expanded=True):
         st.markdown(f"""
         <div class="experience-item">
             <div class="experience-header">
                 <div>
-                    <div class="job-title">{exp[\'title\']}</div>
-                    <div class="company-name">{exp[\'company\']} • {exp[\'location\]}</div>
+                    <div class="job-title">{exp['title']}</div>
+                    <div class="company-name">{exp['company']} • {exp['location']}</div>
                 </div>
-                <div class="date-range">{exp[\'period\]}</div>
+                <div class="date-range">{exp['period']}</div>
             </div>
             
             <h4>🎯 Key Achievements:</h4>
         """, unsafe_allow_html=True)
         
-        for achievement in exp[\'achievements\']:
+        for achievement in exp['achievements']:
             st.markdown(f"""
             <div class="achievement">
                 ✅ {achievement}
@@ -283,7 +283,7 @@ for exp in experiences:
             """, unsafe_allow_html=True)
         
         st.markdown("<h4>🛠️ Technologies Used:</h4>", unsafe_allow_html=True)
-        tech_tags = "".join([f\'<span>{tech}</span>\' for tech in exp[\'technologies\']])
+        tech_tags = "".join([f\'<span>{tech}</span>\' for tech in exp['technologies']])
         st.markdown(f"<div>{tech_tags}</div>", unsafe_allow_html=True)
         st.markdown("</div>", unsafe_allow_html=True)
 
@@ -324,9 +324,9 @@ education_data = [
 for edu in education_data:
     st.markdown(f"""
     <div class="education-item">
-        <h4>{edu[\'degree\']}</h4>
-        <p><strong>{edu[\'institution\']}</strong> • {edu[\'period\]} • {edu[\'location\]}</p>
-        <p>{edu[\'details\]}</p>
+        <h4>{edu['degree']}</h4>
+        <p><strong>{edu['institution']}</strong> • {edu['period']} • {edu['location']}</p>
+        <p>{edu['details']}</p>
     </div>
     """, unsafe_allow_html=True)
 
@@ -393,8 +393,8 @@ certifications = [
 for cert in certifications:
     st.markdown(f"""
     <div class="achievement">
-        <strong>🎖️ {cert[\'name\']}</strong><br>
-        <em>{cert[\'issuer\]}</em> • {cert[\'date\]} • ID: {cert[\'credential\]}
+        <strong>🎖️ {cert['name']}</strong><br>
+        <em>{cert['issuer']}</em> • {cert['date']} • ID: {cert['credential']}
     </div>
     """, unsafe_allow_html=True)
 
@@ -412,11 +412,11 @@ for lang in languages:
     st.markdown(f"""
     <div style="margin: 1rem 0;">
         <div style="display: flex; justify-content: space-between; align-items: center;">
-            <span style="font-weight: 500;">🗣️ {lang[\'language\]}</span>
-            <span style="color: #666;">{lang[\'level\]}</span>
+            <span style="font-weight: 500;">🗣️ {lang['language']}</span>
+            <span style="color: #666;">{lang['level']}</span>
         </div>
         <div style="background-color: #e9ecef; border-radius: 10px; height: 6px; margin-top: 0.25rem;">
-            <div style="width: {lang[\'proficiency\]}%; background: linear-gradient(90deg, #28a745, #20c997); height: 100%; border-radius: 10px;"></div>
+            <div style="width: {lang['proficiency']}%; background: linear-gradient(90deg, #28a745, #20c997); height: 100%; border-radius: 10px;"></div>
         </div>
     </div>
     """, unsafe_allow_html=True)
@@ -435,7 +435,7 @@ st.markdown("""
         📝 Download Word Version
     </a>
     <p style="font-size: 0.9rem; margin-top: 1rem; opacity: 0.8;">
-        Last updated: {datetime.now().strftime(\'%B %d, %Y\')} • File size: ~250KB
+        Last updated: {datetime.now().strftime('%B %d, %Y')} • File size: ~250KB
     </p>
 </div>
 """, unsafe_allow_html=True)
@@ -445,36 +445,36 @@ st.markdown("## 📈 Career Timeline Visualization")
 
 # Create timeline data
 timeline_data = {
-    \'Year\': [2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024],
-    \'Experience_Level\': [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
-    \'Role\': [\'Graduate\', \'Junior Dev\', \'Developer\', \'Senior Dev\', \'ML Engineer\', \'ML Engineer\', 
-             \'Research Assistant\', \'ML Engineer\', \'Senior ML Engineer\', \'Senior AI Engineer\', \'Senior AI Engineer\'],
-    \'Company\': [\'University\', \'Freelance\', \'Startup\', \'Tech Company\', \'Configuratori\', \'Configuratori\',
-                \'University of Pisa\', \'Configuratori\', \'Configuratori\', \'Bakerhughes\', \'Bakerhughes\']
+    'Year': [2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024],
+    'Experience_Level': [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
+    'Role': ['Graduate', 'Junior Dev', 'Developer', 'Senior Dev', 'ML Engineer', 'ML Engineer', 
+             'Research Assistant', 'ML Engineer', 'Senior ML Engineer', 'Senior AI Engineer', 'Senior AI Engineer'],
+    'Company': ['University', 'Freelance', 'Startup', 'Tech Company', 'Configuratori', 'Configuratori',
+                'University of Siena', 'Configuratori', 'Configuratori', 'Bakerhughes', 'Bakerhughes']
 }
 
 fig = go.Figure()
 
 # Add experience level line
 fig.add_trace(go.Scatter(
-    x=timeline_data[\'Year\'],
-    y=timeline_data[\'Experience_Level\'],
-    mode=\'lines+markers\',
-    name=\'Experience Level\',
-    line=dict(color=\'#667eea\', width=3),
-    marker=dict(size=8, color=\'#764ba2\'),
-    hovertemplate=\'<b>%{text}</b><br>Year: %{x}<br>Experience Level: %{y}<extra></extra>\',
-    text=[f\"{role} at {company}\" for role, company in zip(timeline_data[\'Role\'], timeline_data[\'Company\'])]
+    x=timeline_data['Year'],
+    y=timeline_data['Experience_Level'],
+    mode='lines+markers',
+    name='Experience Level',
+    line=dict(color='#667eea', width=3),
+    marker=dict(size=8, color='#764ba2'),
+    hovertemplate='<b>%{text}</b><br>Year: %{x}<br>Experience Level: %{y}<extra></extra>\',
+    text=[f"{role} at {company}" for role, company in zip(timeline_data['Role'], timeline_data['Company'])]
 ))
 
 fig.update_layout(
-    title=\"Professional Growth Timeline\",
-    xaxis_title=\"Year\",
-    yaxis_title=\"Experience Level\",
-    hovermode=\'x unified\',
-    paper_bgcolor=\'rgba(0,0,0,0)\',
-    plot_bgcolor=\'rgba(0,0,0,0)\',
-    font=dict(family=\'Inter\', color=\'#333\'),
+    title="Professional Growth Timeline",
+    xaxis_title="Year",
+    yaxis_title="Experience Level",
+    hovermode='x unified',
+    paper_bgcolor='rgba(0,0,0,0)',
+    plot_bgcolor='rgba(0,0,0,0)',
+    font=dict(family='Inter', color='#333'),
     height=400
 )
 
