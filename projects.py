@@ -647,7 +647,7 @@ for project in gen_ai_projects:
         </div>
         
         <p style="font-size: 1.1rem; line-height: 1.6; margin-bottom: 1.5rem;">
-            {project[\'description\]}
+            {project['description']}
         </p>
         
         <div class="tech-stack">
