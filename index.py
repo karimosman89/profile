@@ -14,7 +14,7 @@ import importlib
 import random
 import time
 import base64
-from app_utils import  language_selector, get_browser_lang
+from utils import tr, language_selector, get_browser_lang
 
 if 'lang' not in st.session_state:
     st.session_state.lang = get_browser_lang()
@@ -26,8 +26,8 @@ st.set_page_config(
     initial_sidebar_state="expanded",
     page_icon="🤖",
     menu_items={
-        'Get Help': 'mailto:karim.programmer2020@gmail.com',
-        'Report a bug': 'mailto:karim.programmer2020@gmail.com',
+        'Get Help': 'mailto:karim.osman@example.com',
+        'Report a bug': 'mailto:karim.osman@example.com',
         'About': "AI Engineer Portfolio - Karim Osman"
     }
 )
@@ -50,37 +50,70 @@ def load_profile_photo():
     except FileNotFoundError:
         return None
 
-# Professional CSS Styles - All inline to avoid missing modules
-PROFESSIONAL_CSS = """
+# Load AI showcase images
+@st.cache_resource
+def load_ai_images():
+    """Load AI showcase images"""
+    images = {}
+    image_files = [
+        'assets/ai_brain_network.png',
+        'assets/computer_vision_demo.png', 
+        'assets/nlp_processing.png',
+        'assets/generative_ai_art.png'
+    ]
+    
+    for file in image_files:
+        try:
+            images[file.split('/')[-1].split('.')[0]] = Image.open(file)
+        except FileNotFoundError:
+            images[file.split('/')[-1].split('.')[0]] = None
+    
+    return images
 
+# Load Lottie animations (with error handling)
+animations = {}
+animation_files = [
+    'data-analyisis.json', 'data-engineer.json', 'ai-engineering.json',
+    'ai.json', 'deep-learning.json', 'devops.json'
+]
+
+for file in animation_files:
+    animations[file.split('.')[0]] = load_lottie_local(file)
+
+profile_photo = load_profile_photo()
+ai_images = load_ai_images()
+
+# Enhanced styles with modern design and better responsiveness
+st.markdown("""
+<style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
     
     .main {
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        padding: 1rem;
         font-family: 'Inter', sans-serif;
     }
     
-    .hero-container {
-        background: rgba(255, 255, 255, 0.98);
+    .hero-section {
+        background: rgba(255, 255, 255, 0.95);
         border-radius: 20px;
         padding: 3rem 2rem;
         margin: 2rem 0;
-        box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
         backdrop-filter: blur(10px);
         text-align: center;
         position: relative;
         overflow: hidden;
-        border: 1px solid rgba(255, 255, 255, 0.2);
     }
     
-    .hero-container::before {
+    .hero-section::before {
         content: '';
         position: absolute;
         top: 0;
         left: 0;
         right: 0;
         height: 4px;
-        background: linear-gradient(90deg, #667eea, #764ba2, #f093fb);
+        background: linear-gradient(90deg, #667eea, #764ba2, #667eea);
         background-size: 200% 100%;
         animation: gradient-shift 3s ease-in-out infinite;
     }
@@ -90,77 +123,97 @@ PROFESSIONAL_CSS = """
         50% { background-position: 100% 50%; }
     }
     
-    .ai-expertise-grid {
+    .ai-showcase-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
         gap: 2rem;
         margin: 3rem 0;
     }
     
-    .expertise-card {
-        background: linear-gradient(145deg, #ffffff, #f8fafc);
+    .ai-field-card {
+        background: linear-gradient(145deg, #ffffff, #f0f0f0);
         border-radius: 20px;
         padding: 2rem;
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
-        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        transition: all 0.4s ease;
         cursor: pointer;
         border: 1px solid rgba(102, 126, 234, 0.1);
         position: relative;
         overflow: hidden;
     }
     
-    .expertise-card::before {
+    .ai-field-card::before {
         content: '';
         position: absolute;
-        top: -50%;
-        left: -50%;
-        width: 200%;
-        height: 200%;
-        background: radial-gradient(circle, rgba(102, 126, 234, 0.05) 0%, transparent 70%);
-        opacity: 0;
-        transition: opacity 0.4s ease;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(102, 126, 234, 0.1), transparent);
+        transition: left 0.5s ease;
     }
     
-    .expertise-card:hover::before {
-        opacity: 1;
+    .ai-field-card:hover::before {
+        left: 100%;
     }
     
-    .expertise-card:hover {
-        transform: translateY(-15px) scale(1.02);
-        box-shadow: 0 35px 70px rgba(0, 0, 0, 0.15);
+    .ai-field-card:hover {
+        transform: translateY(-10px) scale(1.03);
+        box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
         border-color: rgba(102, 126, 234, 0.3);
     }
     
-    .expertise-icon {
-        font-size: 3.5rem;
-        margin-bottom: 1.5rem;
-        background: linear-gradient(135deg, #667eea, #764ba2);
+    .ai-field-icon {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+        background: linear-gradient(145deg, #667eea, #764ba2);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
-        display: block;
-        position: relative;
-        z-index: 1;
+        text-align: center;
     }
     
-    .metrics-container {
+    .interactive-demo-section {
+        background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+        border-radius: 20px;
+        padding: 3rem 2rem;
+        margin: 2rem 0;
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        position: relative;
+    }
+    
+    .demo-card {
+        background: white;
+        border-radius: 15px;
+        padding: 2rem;
+        margin: 1rem 0;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+        border-left: 5px solid #2196f3;
+    }
+    
+    .demo-card:hover {
+        transform: translateX(10px);
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+    }
+    
+    .stats-showcase {
         background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
         color: white;
-        border-radius: 25px;
-        padding: 4rem 2rem;
-        margin: 3rem 0;
+        border-radius: 20px;
+        padding: 3rem 2rem;
+        margin: 2rem 0;
         position: relative;
         overflow: hidden;
-        box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
     }
     
-    .metrics-container::before {
+    .stats-showcase::before {
         content: '';
         position: absolute;
         top: -50%;
         left: -50%;
         width: 200%;
         height: 200%;
-        background: conic-gradient(from 0deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1), rgba(240, 147, 251, 0.1), rgba(102, 126, 234, 0.1));
+        background: radial-gradient(circle, rgba(102, 126, 234, 0.1) 0%, transparent 70%);
         animation: rotate 20s linear infinite;
     }
     
@@ -169,46 +222,35 @@ PROFESSIONAL_CSS = """
         100% { transform: rotate(360deg); }
     }
     
-    .metrics-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 3rem;
+    .stat-item {
+        text-align: center;
+        margin: 1rem;
         position: relative;
         z-index: 1;
     }
     
-    .metric-item {
-        text-align: center;
-        padding: 1.5rem;
-        background: rgba(255, 255, 255, 0.05);
-        border-radius: 15px;
-        backdrop-filter: blur(10px);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-    }
-    
-    .metric-number {
-        font-size: 3.5rem;
+    .stat-number {
+        font-size: 3rem;
         font-weight: 800;
-        background: linear-gradient(135deg, #667eea, #f093fb);
+        background: linear-gradient(145deg, #667eea, #764ba2);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         display: block;
         margin-bottom: 0.5rem;
     }
     
-    .cta-section {
-        background: linear-gradient(135deg, #ff6b6b, #ee5a24, #ff9ff3);
+    .creative-showcase {
+        background: linear-gradient(135deg, #ff6b6b, #ee5a24);
         color: white;
-        border-radius: 25px;
-        padding: 4rem 2rem;
-        margin: 3rem 0;
+        border-radius: 20px;
+        padding: 3rem 2rem;
+        margin: 2rem 0;
         text-align: center;
         position: relative;
         overflow: hidden;
-        box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
     }
     
-    .cta-section::before {
+    .creative-showcase::before {
         content: '';
         position: absolute;
         top: -50%;
@@ -216,7 +258,7 @@ PROFESSIONAL_CSS = """
         width: 200%;
         height: 200%;
         background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
-        animation: float 8s ease-in-out infinite;
+        animation: float 6s ease-in-out infinite;
     }
     
     @keyframes float {
@@ -224,64 +266,35 @@ PROFESSIONAL_CSS = """
         50% { transform: translate(-50%, -50%) rotate(180deg); }
     }
     
-    .action-button {
-        background: rgba(255, 255, 255, 0.2);
-        color: white;
-        border: 2px solid rgba(255, 255, 255, 0.3);
-        border-radius: 50px;
-        padding: 1rem 2rem;
-        margin: 0.5rem;
-        font-weight: 600;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        backdrop-filter: blur(10px);
-        position: relative;
-        z-index: 1;
-    }
-    
-    .action-button:hover {
-        background: rgba(255, 255, 255, 0.3);
-        border-color: rgba(255, 255, 255, 0.5);
-        transform: translateY(-3px);
-        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-    }
-    
-    .feature-highlight {
-        background: linear-gradient(135deg, #e3f2fd, #bbdefb);
-        border-radius: 20px;
-        padding: 3rem 2rem;
-        margin: 2rem 0;
-        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
-    }
-    
-    .highlight-grid {
+    .ai-capability-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 2rem;
-        margin-top: 2rem;
+        gap: 1.5rem;
+        margin: 2rem 0;
     }
     
-    .highlight-card {
-        background: white;
+    .capability-card {
+        background: rgba(255, 255, 255, 0.9);
         border-radius: 15px;
-        padding: 2rem;
-        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+        padding: 1.5rem;
+        text-align: center;
         transition: all 0.3s ease;
-        border-left: 4px solid #2196f3;
+        border: 2px solid transparent;
     }
     
-    .highlight-card:hover {
-        transform: translateY(-8px);
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+    .capability-card:hover {
+        background: white;
+        border-color: rgba(102, 126, 234, 0.3);
+        transform: translateY(-5px);
     }
     
-    .typing-animation {
+    .typing-effect {
         overflow: hidden;
-        border-right: 3px solid #667eea;
+        border-right: .15em solid #667eea;
         white-space: nowrap;
         margin: 0 auto;
-        letter-spacing: .1em;
-        animation: typing 4s steps(40, end), blink-caret .75s step-end infinite;
+        letter-spacing: .05em;
+        animation: typing 3.5s steps(40, end), blink-caret .75s step-end infinite;
     }
     
     @keyframes typing {
@@ -294,301 +307,312 @@ PROFESSIONAL_CSS = """
         50% { border-color: #667eea; }
     }
     
-    h1, h2, h3 {
-        font-family: 'Inter', sans-serif;
+    .quick-action-btn {
+        background: linear-gradient(145deg, #667eea, #764ba2);
+        color: white;
+        border: none;
+        border-radius: 25px;
+        padding: 0.75rem 1.5rem;
+        margin: 0.5rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+    }
+    
+    .quick-action-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+    }
+    
+    .ai-image-showcase {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+        border-radius: 10px;
+        margin: 1rem 0;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+    }
+    
+    .ai-image-showcase:hover {
+        transform: scale(1.05);
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
     }
     
     h1 {
-        font-size: clamp(2.5rem, 5vw, 4rem);
+        font-size: clamp(2rem, 5vw, 3.5rem);
         font-weight: 800;
         background: linear-gradient(135deg, #667eea, #764ba2);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
+        text-align: center;
         margin-bottom: 1rem;
         letter-spacing: -0.02em;
     }
     
-    /* Mobile Optimizations */
+    /* Responsive design improvements */
     @media (max-width: 768px) {
-        .hero-container, .metrics-container, .cta-section {
+        .hero-section {
             padding: 2rem 1rem;
             margin: 1rem 0;
         }
         
-        .ai-expertise-grid {
+        .ai-showcase-grid {
             grid-template-columns: 1fr;
             gap: 1rem;
         }
         
-        .expertise-card {
+        .ai-field-card {
             padding: 1.5rem;
         }
-        
-        .metrics-grid {
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1.5rem;
-        }
     }
+</style>
+""", unsafe_allow_html=True)
 
-"""
-
-# Apply the professional CSS
-st.markdown(PROFESSIONAL_CSS, unsafe_allow_html=True)
-
-# Load animations and images
-animations = {}
-animation_files = [
-    'data-analyisis.json', 'data-engineer.json', 'ai-engineering.json',
-    'ai.json', 'deep-learning.json', 'devops.json'
-]
-
-for file in animation_files:
-    animations[file.split('.')[0]] = load_lottie_local(file)
-
-profile_photo = load_profile_photo()
-
-# Sidebar Navigation - returns page key
+# Sidebar Navigation - returns page key ("home", "about", etc.)
 page_key = language_selector()
 
 # Main page rendering using page keys
 if page_key == "home":
-    # Professional Hero Section
+    # Hero section with enhanced typing effect
     st.markdown(f"""
-    
-        🤖 AI Engineer & Innovation Catalyst
-        
-            Transforming Complex Business Challenges into Intelligent AI Solutions
-        
-        
+    <div class="hero-section">
+        <h1 class="typing-effect">🤖 AI Engineer & Innovation Catalyst</h1>
+        <p style="text-align: center; font-size: 1.3rem; color: #555; margin-top: 2rem;">
+            Transforming Complex Challenges into Intelligent Solutions Across All AI Domains
+        </p>
+        <p style="text-align: center; font-size: 1.1rem; color: #666; margin-top: 1rem;">
             From Computer Vision to Generative AI • From NLP to Predictive Analytics • From Research to Production
-        
-        
-            
-                🔬 5+ Years Experience
-            
-            
-                💼 50+ Projects Delivered
-            
-            
-                🌍 International Experience
-            
-        
-    
+        </p>
+    </div>
     """, unsafe_allow_html=True)
     
-    # AI Expertise Showcase
+    # AI Fields Showcase
     st.markdown("## 🚀 AI Expertise Across All Domains")
     
-    ai_domains = [
+    ai_fields = [
         {
             "icon": "👁️",
             "title": "Computer Vision",
-            "description": "Advanced image processing, object detection, medical imaging analysis, and autonomous systems development",
-            "metrics": ["15+ Projects", "98%+ Accuracy", "Real-time Processing"],
-            "color": "linear-gradient(135deg, #667eea, #764ba2)"
+            "description": "Real-time object detection, medical imaging, facial recognition, autonomous systems",
+            "projects": "15+ Projects",
+            "accuracy": "95%+ Accuracy",
+            "image": "computer_vision_demo"
         },
         {
             "icon": "🗣️", 
             "title": "Natural Language Processing",
-            "description": "RAG systems, sentiment analysis, chatbots, multilingual processing, and advanced content generation",
-            "metrics": ["25+ Projects", "94%+ Accuracy", "Multi-language"],
-            "color": "linear-gradient(135deg, #ff6b6b, #ee5a24)"
+            "description": "RAG systems, sentiment analysis, chatbots, multilingual processing, content generation",
+            "projects": "20+ Projects",
+            "accuracy": "92%+ Accuracy",
+            "image": "nlp_processing"
         },
         {
             "icon": "🎨",
             "title": "Generative AI",
-            "description": "Text-to-image generation, AI art creation, synthetic data generation, and creative content automation",
-            "metrics": ["12+ Projects", "Enterprise Scale", "Creative Solutions"],
-            "color": "linear-gradient(135deg, #51cf66, #40c057)"
+            "description": "Text-to-image, AI art, synthetic data, creative content, style transfer",
+            "projects": "10+ Projects", 
+            "accuracy": "High Quality",
+            "image": "generative_ai_art"
         },
         {
             "icon": "📊",
             "title": "Machine Learning",
-            "description": "Predictive analytics, recommendation systems, fraud detection, and advanced optimization algorithms",
-            "metrics": ["30+ Projects", "92%+ Accuracy", "Business Impact"],
-            "color": "linear-gradient(135deg, #f093fb, #f5576c)"
+            "description": "Predictive analytics, recommendation systems, fraud detection, optimization",
+            "projects": "25+ Projects",
+            "accuracy": "89%+ Accuracy",
+            "image": "ai_brain_network"
         },
         {
-            "icon": "🧠",
+            "icon": "🤖",
             "title": "Deep Learning",
-            "description": "Neural networks, transformers, CNNs, RNNs, and custom architecture development for complex problems",
-            "metrics": ["35+ Models", "SOTA Results", "Production Ready"],
-            "color": "linear-gradient(135deg, #4c6ef5, #364fc7)"
+            "description": "Neural networks, transformers, CNNs, RNNs, custom architectures",
+            "projects": "30+ Models",
+            "accuracy": "SOTA Results",
+            "image": "ai_brain_network"
         },
         {
             "icon": "🔬",
             "title": "AI Research",
-            "description": "Published research, novel algorithms, experimental AI applications, and cutting-edge innovation",
-            "metrics": ["Research Papers", "Novel Approaches", "Innovation Focus"],
-            "color": "linear-gradient(135deg, #845ec2, #b197fc)"
+            "description": "Published papers, novel algorithms, experimental AI, cutting-edge research",
+            "projects": "5+ Papers",
+            "accuracy": "Peer Reviewed",
+            "image": "ai_brain_network"
         }
     ]
     
-    st.markdown('', unsafe_allow_html=True)
+    st.markdown('<div class="ai-showcase-grid">', unsafe_allow_html=True)
     
-    for domain in ai_domains:
-        metrics_html = ""
-        for metric in domain["metrics"]:
-            metrics_html += f'{metric}'
+    for field in ai_fields:
+        # Display AI field image if available
+        field_image = ""
+        if field["image"] in ai_images and ai_images[field["image"]] is not None:
+            # Convert image to base64 for embedding
+            import io
+            img_buffer = io.BytesIO()
+            ai_images[field["image"]].save(img_buffer, format='PNG')
+            img_str = base64.b64encode(img_buffer.getvalue()).decode()
+            field_image = f'<img src="data:image/png;base64,{img_str}" class="ai-image-showcase">'
         
         st.markdown(f"""
-        
-            {domain['icon']}
-            {domain['title']}
-            
-                {domain['description']}
-            
-            
-                {metrics_html}
-            
-        
+        <div class="ai-field-card">
+            <div class="ai-field-icon">{field['icon']}</div>
+            <h3 style="color: #333; margin-bottom: 1rem; text-align: center;">{field['title']}</h3>
+            {field_image}
+            <p style="color: #666; line-height: 1.6; margin-bottom: 1.5rem; text-align: center;">
+                {field['description']}
+            </p>
+            <div style="display: flex; justify-content: space-between; margin-top: 1rem;">
+                <span style="background: #e3f2fd; color: #1976d2; padding: 0.25rem 0.75rem; border-radius: 15px; font-size: 0.8rem;">
+                    {field['projects']}
+                </span>
+                <span style="background: #e8f5e8; color: #2e7d32; padding: 0.25rem 0.75rem; border-radius: 15px; font-size: 0.8rem;">
+                    {field['accuracy']}
+                </span>
+            </div>
+        </div>
         """, unsafe_allow_html=True)
     
-    st.markdown('', unsafe_allow_html=True)
+    st.markdown('</div>', unsafe_allow_html=True)
     
-    # Interactive Features Preview
+    # Interactive AI Capabilities Demo
     st.markdown(f"""
-    
-        🎯 Interactive AI Capabilities
-        
-            Experience cutting-edge AI solutions through live demonstrations and interactive showcases
-        
-    
+    <div class="interactive-demo-section">
+        <h2 style="color: #1565c0; text-align: center; margin-bottom: 2rem;">🎯 Live AI Capabilities</h2>
+        <p style="text-align: center; font-size: 1.1rem; color: #333; margin-bottom: 2rem;">
+            Experience my AI expertise through interactive demonstrations
+        </p>
+    </div>
     """, unsafe_allow_html=True)
     
-    demo_features = [
+    demo_capabilities = [
         {
-            "title": "🧠 Real-time Sentiment Analysis",
-            "description": "Advanced emotion detection using state-of-the-art transformer models",
-            "action": "Try Live Demo"
+            "title": "🧠 Sentiment Analysis Engine",
+            "description": "Real-time emotion detection in text using state-of-the-art transformers",
+            "demo_text": "Try it with any text input"
         },
         {
             "title": "🔍 Zero-Shot Classification",
-            "description": "Classify text into any categories without prior training examples",
-            "action": "Explore Feature"
+            "description": "Classify text into any categories without prior training",
+            "demo_text": "Dynamic category classification"
         },
         {
-            "title": "☁️ Intelligent Word Clouds",
-            "description": "Semantic text visualization with advanced NLP processing",
-            "action": "Generate Now"
+            "title": "☁️ Word Cloud Generator", 
+            "description": "Intelligent text visualization with semantic analysis",
+            "demo_text": "Visual text insights"
         },
         {
-            "title": "🎨 AI Art Generation",
-            "description": "Creative AI applications for generative art and visual content",
-            "action": "Create Art"
+            "title": "🎨 AI Art Concepts",
+            "description": "Creative AI applications and generative art examples",
+            "demo_text": "Explore creative AI"
         }
     ]
     
-    st.markdown('', unsafe_allow_html=True)
-    
-    for feature in demo_features:
+    for demo in demo_capabilities:
         st.markdown(f"""
-        
-            {feature['title']}
-            {feature['description']}
-            
-                {feature['action']} →
-            
-        
+        <div class="demo-card">
+            <h4 style="color: #1976d2; margin-bottom: 1rem;">{demo['title']}</h4>
+            <p style="color: #666; margin-bottom: 1rem;">{demo['description']}</p>
+            <button class="quick-action-btn" onclick="alert('Navigate to Skills page to try this demo!')">
+                {demo['demo_text']} →
+            </button>
+        </div>
         """, unsafe_allow_html=True)
     
-    st.markdown('', unsafe_allow_html=True)
-    
-    # Professional Metrics Dashboard
+    # Performance Statistics
     st.markdown(f"""
-    
-        📈 Professional Impact Metrics
-        
-            
-                50+
-                AI Projects Delivered
-                Enterprise & Startup
-            
-            
-                95%
-                Average Model Accuracy
-                Production Systems
-            
-            
-                $5M+
-                Business Value Created
-                Cost Savings & Revenue
-            
-            
-                15+
-                Technologies Mastered
-                AI/ML Stack
-            
-        
-    
+    <div class="stats-showcase">
+        <h2 style="text-align: center; margin-bottom: 2rem; position: relative; z-index: 1;">📈 Performance Metrics</h2>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; position: relative; z-index: 1;">
+            <div class="stat-item">
+                <span class="stat-number">50+</span>
+                <p style="margin: 0; opacity: 0.9;">AI Projects Delivered</p>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">95%</span>
+                <p style="margin: 0; opacity: 0.9;">Average Model Accuracy</p>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">$10M+</span>
+                <p style="margin: 0; opacity: 0.9;">Business Value Created</p>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">100+</span>
+                <p style="margin: 0; opacity: 0.9;">Enterprise Clients</p>
+            </div>
+        </div>
+    </div>
     """, unsafe_allow_html=True)
     
-    # Quick Navigation
-    st.markdown("### 🚀 Explore My Professional Journey")
+    # Creative AI Showcase
+    st.markdown(f"""
+    <div class="creative-showcase">
+        <h2 style="margin-bottom: 2rem; position: relative; z-index: 1;">🎨 Creative AI Innovation</h2>
+        <p style="font-size: 1.2rem; margin-bottom: 2rem; position: relative; z-index: 1;">
+            Pushing the boundaries of what's possible with artificial intelligence
+        </p>
+        <div class="ai-capability-grid" style="position: relative; z-index: 1;">
+            <div class="capability-card">
+                <h4 style="color: #333;">🖼️ Generative Art</h4>
+                <p style="color: #666; font-size: 0.9rem;">Text-to-image generation with custom styles</p>
+            </div>
+            <div class="capability-card">
+                <h4 style="color: #333;">🎵 AI Music</h4>
+                <p style="color: #666; font-size: 0.9rem;">Intelligent composition and arrangement</p>
+            </div>
+            <div class="capability-card">
+                <h4 style="color: #333;">📝 Content Creation</h4>
+                <p style="color: #666; font-size: 0.9rem;">Automated writing with brand voice</p>
+            </div>
+            <div class="capability-card">
+                <h4 style="color: #333;">🔒 Synthetic Data</h4>
+                <p style="color: #666; font-size: 0.9rem;">Privacy-preserving data generation</p>
+            </div>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # Quick navigation buttons
+    st.markdown("### 🚀 Explore My AI Universe")
     nav_col1, nav_col2, nav_col3, nav_col4 = st.columns(4)
     
     with nav_col1:
-        if st.button("🧠 Interactive AI Demos", key="nav_skills", help="Experience live AI demonstrations", use_container_width=True):
+        if st.button("🧠 Interactive AI Demos", key="nav_skills", help="Experience live AI demonstrations"):
             st.session_state.page = "skills"
             st.rerun()
     
     with nav_col2:
-        if st.button("🚀 Project Portfolio", key="nav_projects", help="Explore comprehensive AI projects", use_container_width=True):
+        if st.button("🚀 Project Portfolio", key="nav_projects", help="Explore comprehensive AI projects"):
             st.session_state.page = "projects"
             st.rerun()
     
     with nav_col3:
-        if st.button("👨‍💻 Professional Background", key="nav_about", help="Learn about my AI journey", use_container_width=True):
+        if st.button("👨‍💻 My AI Journey", key="nav_about", help="Learn about my path in AI"):
             st.session_state.page = "about"
             st.rerun()
     
     with nav_col4:
-        if st.button("📞 Let's Collaborate", key="nav_contact", help="Connect for AI opportunities", use_container_width=True):
+        if st.button("📞 Let's Collaborate", key="nav_contact", help="Connect for AI opportunities"):
             st.session_state.page = "contact"
             st.rerun()
     
-    # Professional Call to Action
+    # Call to Action
     st.markdown(f"""
-    
-        🤝 Ready to Transform Your Business with AI?
-        
-            I deliver cutting-edge AI solutions that drive real business results - from concept to production scale.
-        
-        
-            Let's discuss how AI can unlock unprecedented growth and innovation for your organization.
-        
-        
-            
+    <div class="hero-section">
+        <h2>🤝 Ready to Transform Your Business with AI?</h2>
+        <p style="font-size: 1.2rem; color: #555; margin-top: 2rem;">
+            I bring cutting-edge AI solutions across all domains - from research to production, from concept to scale.
+        </p>
+        <p style="font-size: 1.1rem; color: #666; margin-top: 1rem;">
+            Let's discuss how AI can drive unprecedented growth and innovation for your organization.
+        </p>
+        <div style="margin-top: 2rem;">
+            <button class="quick-action-btn" onclick="alert('Navigate to Contact page to get in touch!')">
                 🚀 Start Your AI Transformation
-            
-            
-                📞 Schedule Consultation
-            
-        
-    
-    """, unsafe_allow_html=True)
-    
-    # Testimonial Section
-    st.markdown(f"""
-    
-        👥 What Industry Leaders Say
-        
-            
-                
-                    "Karim's AI solutions transformed our document processing workflow, reducing manual work by 85% and improving accuracy significantly."
-                
-                Sarah Johnson
-                CTO, TechCorp International
-            
-            
-                
-                    "Working with Karim on our computer vision project was exceptional. His expertise and attention to detail exceeded expectations."
-                
-                Michael Chen
-                Head of Innovation, DataTech Solutions
-            
-        
-    
+            </button>
+        </div>
+    </div>
     """, unsafe_allow_html=True)
 
 elif page_key == "about":
@@ -610,3 +634,4 @@ elif page_key == "contact":
 elif page_key == "resume":
     logging.info("Loading Resume Page")
     importlib.reload(resume)
+
