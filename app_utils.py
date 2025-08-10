@@ -578,9 +578,26 @@ def get_browser_lang() -> str:
 
 def language_selector() -> None:
     """Render language selector UI component"""
-    # This function would create a language selection UI
-    # Since it's not implemented, we'll just create a placeholder
+    # A dictionary to map language names to their codes for internal use
+    lang_map = {
+        "English": "en",
+        "French": "fr",
+        "German": "de",
+        "Swedish": "sv",
+        "Dutch": "nl",
+        "Japanese": "ja"
+    }
+    
+    
+    if 'lang' not in st.session_state or st.session_state.lang not in lang_map.keys():
+        st.session_state.lang = "English"
+
+    # Find the index of the current session state language to set the default
+    default_index = list(lang_map.keys()).index(st.session_state.lang)
+
     with st.sidebar:
         st.markdown("---")
         st.markdown("**Language Settings**")
-        st.radio("Language", ["English", "French", "German", "Swedish", "Dutch", "Japanese"], key='lang', index=0)
+        
+        # Now, st.radio will correctly initialize to the value in session state
+        st.radio("Language", list(lang_map.keys()), key='lang', index=default_index)
