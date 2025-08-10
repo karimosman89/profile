@@ -220,7 +220,7 @@ with col1:
     st.markdown(f"""
     <div class="interactive-card">
         <div class="lottie-container">
-            {st_lottie(load_lottie_local(\'ai.json\'), height=150, key=\'ai_lottie\')}
+            {st_lottie(load_lottie_local('ai.json'), height=150, key='ai_lottie')}
         </div>
         <h4>{tr('DRIVES_AI_TITLE')}</h4>
         <p>{tr('DRIVES_AI_TEXT')}</p>
@@ -231,7 +231,7 @@ with col2:
     st.markdown(f"""
     <div class="interactive-card">
         <div class="lottie-container">
-            {st_lottie(load_lottie_local(\'data-analyisis.json\'), height=150, key=\'data_lottie\')}
+            {st_lottie(load_lottie_local('data-analyisis.json'), height=150, key='data_lottie')}
         </div>
         <h4>{tr('DRIVES_DATA_TITLE')}</h4>
         <p>{tr('DRIVES_DATA_TEXT')}</p>
@@ -244,7 +244,7 @@ with col3:
     st.markdown(f"""
     <div class="interactive-card">
         <div class="lottie-container">
-            {st_lottie(load_lottie_local(\'deep-learning.json\'), height=150, key=\'dl_lottie\')}
+            {st_lottie(load_lottie_local('deep-learning.json'), height=150, key='dl_lottie')}
         </div>
         <h4>{tr('DRIVES_DL_TITLE')}</h4>
         <p>{tr('DRIVES_DL_TEXT')}</p>
@@ -255,7 +255,7 @@ with col4:
     st.markdown(f"""
     <div class="interactive-card">
         <div class="lottie-container">
-            {st_lottie(load_lottie_local(\'devops.json\'), height=150, key=\'devops_lottie\')}
+            {st_lottie(load_lottie_local('devops.json'), height=150, key='devops_lottie')}
         </div>
         <h4>{tr('DRIVES_DEVOPS_TITLE')}</h4>
         <p>{tr('DRIVES_DEVOPS_TEXT')}</p>
