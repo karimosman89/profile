@@ -410,24 +410,24 @@ for project in nlp_projects:
         </div>
         
         <p style="font-size: 1.1rem; line-height: 1.6; margin-bottom: 1.5rem;">
-            {project[\'description\']}
+            {project['description']}
         </p>
         
         <div class="tech-stack">
-            {\' \'.join([f\'<span class="tech-tag">{tech}</span>\' for tech in project[\'tech_stack\']])}
+            {\' \'.join([f\'<span class="tech-tag">{tech}</span>\' for tech in project['tech_stack']])}
         </div>
         
         <div class="impact-metrics">
             <h4 style="color: #2e7d32; margin-bottom: 1rem;">📊 Impact Metrics:</h4>
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem;">
-                {\' \'.join([f\'<div><strong>{key.replace("_", " ").title()}:</strong><br>{value}</div>\' for key, value in project[\'impact\'].items()])}
+                {\' \'.join([f\'<div><strong>{key.replace("_", " ").title()}:</strong><br>{value}</div>\' for key, value in project['impact'].items()])}
             </div>
         </div>
         
         <div style="margin: 1.5rem 0;">
             <h4>✨ Key Features:</h4>
             <ul style="margin: 0.5rem 0; padding-left: 1.5rem;">
-                {\' \'.join([f\'<li>{feature}</li>\' for feature in project[\'features\']])}
+                {\' \'.join([f\'<li>{feature}</li>\' for feature in project['features']])}
             </ul>
         </div>
         
@@ -443,10 +443,10 @@ for project in nlp_projects:
     """, unsafe_allow_html=True)
     
     # Add project image if available
-    if \'image\' in project:
+    if 'image' in project:
         try:
-            img = Image.open(project[\'image\'])
-            st.image(img, caption=f"{project[\'title\]} - Architecture Overview", use_column_width=True)
+            img = Image.open(project['image'])
+            st.image(img, caption=f"{project['title']} - Architecture Overview", use_column_width=True)
         except:
             pass
 
@@ -524,32 +524,32 @@ for project in ml_projects:
     st.markdown(f"""
     <div class="project-card">
         <div class="project-header">
-            <div class="project-icon">{project[\'icon\']}</div>
+            <div class="project-icon">{project['icon']}</div>
             <div>
-                <h3 class="project-title">{project[\'title\']}</h3>
-                <p class="project-subtitle">{project[\'subtitle\]}</p>
+                <h3 class="project-title">{project['title']}</h3>
+                <p class="project-subtitle">{project['subtitle']}</p>
             </div>
         </div>
         
         <p style="font-size: 1.1rem; line-height: 1.6; margin-bottom: 1.5rem;">
-            {project[\'description\]}
+            {project['description']}
         </p>
         
         <div class="tech-stack">
-            {\' \'.join([f\'<span class="tech-tag">{tech}</span>\' for tech in project[\'tech_stack\']])}
+            {\' \'.join([f\'<span class="tech-tag">{tech}</span>\' for tech in project['tech_stack']])}
         </div>
         
         <div class="impact-metrics">
             <h4 style="color: #2e7d32; margin-bottom: 1rem;">📊 Impact Metrics:</h4>
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem;">
-                {\' \'.join([f\'<div><strong>{key.replace("_", " ").title()}:</strong><br>{value}</div>\' for key, value in project[\'impact\'].items()])}
+                {\' \'.join([f\'<div><strong>{key.replace("_", " ").title()}:</strong><br>{value}</div>\' for key, value in project['impact'].items()])}
             </div>
         </div>
         
         <div style="margin: 1.5rem 0;">
             <h4>✨ Key Features:</h4>
             <ul style="margin: 0.5rem 0; padding-left: 1.5rem;">
-                {\' \'.join([f\'<li>{feature}</li>\' for feature in project[\'features\']])}
+                {\' \'.join([f\'<li>{feature}</li>\' for feature in project['features']])}
             </ul>
         </div>
         
@@ -639,10 +639,10 @@ for project in gen_ai_projects:
     st.markdown(f"""
     <div class="project-card">
         <div class="project-header">
-            <div class="project-icon">{project[\'icon\']}</div>
+            <div class="project-icon">{project['icon']}</div>
             <div>
-                <h3 class="project-title">{project[\'title\']}</h3>
-                <p class="project-subtitle">{project[\'subtitle\]}</p>
+                <h3 class="project-title">{project['title']}</h3>
+                <p class="project-subtitle">{project['subtitle']}</p>
             </div>
         </div>
         
@@ -651,20 +651,20 @@ for project in gen_ai_projects:
         </p>
         
         <div class="tech-stack">
-            {\' \'.join([f\'<span class="tech-tag">{tech}</span>\' for tech in project[\'tech_stack\']])}
+            {\' \'.join([f\'<span class="tech-tag">{tech}</span>\' for tech in project['tech_stack']])}
         </div>
         
         <div class="impact-metrics">
             <h4 style="color: #2e7d32; margin-bottom: 1rem;">📊 Impact Metrics:</h4>
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem;">
-                {\' \'.join([f\'<div><strong>{key.replace("_", " ").title()}:</strong><br>{value}</div>\' for key, value in project[\'impact\'].items()])}
+                {\' \'.join([f\'<div><strong>{key.replace("_", " ").title()}:</strong><br>{value}</div>\' for key, value in project['impact'].items()])}
             </div>
         </div>
         
         <div style="margin: 1.5rem 0;">
             <h4>✨ Key Features:</h4>
             <ul style="margin: 0.5rem 0; padding-left: 1.5rem;">
-                {\' \'.join([f\'<li>{feature}</li>\' for feature in project[\'features\']])}
+                {\' \'.join([f\'<li>{feature}</li>\' for feature in project['features']])}
             </ul>
         </div>
         
@@ -680,10 +680,10 @@ for project in gen_ai_projects:
     """, unsafe_allow_html=True)
     
     # Add project image if available
-    if \'image\' in project:
+    if 'image' in project:
         try:
-            img = Image.open(project[\'image\'])
-            st.image(img, caption=f"{project[\'title\]} - Creative Output", use_column_width=True)
+            img = Image.open(project['image'])
+            st.image(img, caption=f"{project['title']} - Creative Output", use_column_width=True)
         except:
             pass
 
