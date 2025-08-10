@@ -114,18 +114,18 @@ profile_photo = load_profile_photo()
 st.markdown(f"""
 <div class="about-hero">
     <h1>{tr('ABOUT_HERO_TITLE')}</h1>
-    <p style="font-size: 1.2rem; color: #555;">{tr(\'ABOUT_HERO_SUBTITLE\')}</p>
+    <p style="font-size: 1.2rem; color: #555;">{tr('ABOUT_HERO_SUBTITLE')}</p>
 </div>
 """, unsafe_allow_html=True)
 
 # Introduction Section
 st.markdown(f"""
 <div class="about-section">
-    <h3>{tr(\'ABOUT_INTRO_TITLE\')}</h3>
+    <h3>{tr('ABOUT_INTRO_TITLE')}</h3>
     <div style="display: flex; flex-direction: column; align-items: center;">
         {f'<img src="data:image/jpeg;base64,{base64.b64encode(open("profile-photo.jpg", "rb").read()).decode()}" class="profile-photo">' if profile_photo else ''}
         <p style="font-size: 1.1rem; line-height: 1.8; text-align: center;">
-            {tr(\'ABOUT_INTRO_TEXT\')}
+            {tr('ABOUT_INTRO_TEXT')}
         </p>
     </div>
 </div>
@@ -134,9 +134,9 @@ st.markdown(f"""
 # Video Introduction Section
 st.markdown(f"""
 <div class="about-section">
-    <h3>{tr(\'ABOUT_VIDEO_TITLE\')}</h3>
+    <h3>{tr('ABOUT_VIDEO_TITLE')}</h3>
     <p style="font-size: 1.1rem; margin-bottom: 1.5rem;">
-        {tr(\'ABOUT_VIDEO_TEXT\')}
+        {tr('ABOUT_VIDEO_TEXT')}
     </p>
     <div class="video-container">
         <!-- This is a placeholder for your self-made video. -->
@@ -144,7 +144,7 @@ st.markdown(f"""
         <!-- For example: <iframe src="https://www.youtube.com/embed/YOUR_VIDEO_ID" frameborder="0" allowfullscreen></iframe> -->
         <!-- For now, we'll use a generic placeholder or a link to the audio. -->
         <p style="color: white; text-align: center; padding-top: 25%; font-size: 1.2rem;">
-            {tr(\'ABOUT_VIDEO_PLACEHOLDER\')}
+            {tr('ABOUT_VIDEO_PLACEHOLDER')}
         </p>
         <audio controls style="width: 100%; margin-top: 1rem;">
             <source src="data:audio/wav;base64,{base64.b64encode(open(\'karim_introduction.wav\', \'rb\').read()).decode()}" type="audio/wav">
@@ -152,7 +152,7 @@ st.markdown(f"""
         </audio>
     </div>
     <p style="font-size: 0.9rem; color: #666; margin-top: 1rem;">
-        {tr(\'ABOUT_VIDEO_GUIDANCE\')}
+        {tr('ABOUT_VIDEO_GUIDANCE')}
     </p>
 </div>
 """, unsafe_allow_html=True)
@@ -160,13 +160,13 @@ st.markdown(f"""
 # My Journey Section
 st.markdown(f"""
 <div class="about-section">
-    <h3>{tr(\'ABOUT_JOURNEY_TITLE\')}</h3>
+    <h3>{tr('ABOUT_JOURNEY_TITLE')}</h3>
     <p style="font-size: 1.1rem; line-height: 1.8;">
-        {tr(\'ABOUT_JOURNEY_TEXT\')}
+        {tr('ABOUT_JOURNEY_TEXT')}
     </p>
     <div class="highlight-box">
-        <h4>{tr(\'ABOUT_JOURNEY_HIGHLIGHT_TITLE\')}</h4>
-        <p>{tr(\'ABOUT_JOURNEY_HIGHLIGHT_TEXT\')}</p>
+        <h4>{tr('ABOUT_JOURNEY_HIGHLIGHT_TITLE')}</h4>
+        <p>{tr('ABOUT_JOURNEY_HIGHLIGHT_TEXT')}</p>
     </div>
 </div>
 """, unsafe_allow_html=True)
@@ -174,7 +174,7 @@ st.markdown(f"""
 # Education Section
 st.markdown(f"""
 <div class="about-section">
-    <h3>{tr(\'ABOUT_EDUCATION_TITLE\')}</h3>
+    <h3>{tr('ABOUT_EDUCATION_TITLE')}</h3>
     <p style="font-size: 1.1rem; line-height: 1.8;">
         **Machine Learning Engineering**<br>
         Paris 1 Panthéon-Sorbonne University [09/2023 – 08/2024]<br>
@@ -201,18 +201,18 @@ st.markdown(f"""
 # Philosophy Section
 st.markdown(f"""
 <div class="about-section">
-    <h2>{tr(\'ABOUT_PHILOSOPHY_TITLE\')}</h2>
+    <h2>{tr('ABOUT_PHILOSOPHY_TITLE')}</h2>
     <p style="font-size: 1.2rem; margin-bottom: 2rem;">
-        {tr(\'ABOUT_PHILOSOPHY_QUOTE\')}
+        {tr('ABOUT_PHILOSOPHY_QUOTE')}
     </p>
     <p style="font-size: 1.1rem;">
-        {tr(\'ABOUT_PHILOSOPHY_BELIEF\')}
+        {tr('ABOUT_PHILOSOPHY_BELIEF')}
     </p>
 </div>
 """, unsafe_allow_html=True)
 
 # What Drives Me Section
-st.markdown(f"## {tr(\'ABOUT_DRIVES_TITLE\')}")
+st.markdown(f"## {tr('ABOUT_DRIVES_TITLE')}")
 
 col1, col2 = st.columns(2)
 
@@ -222,8 +222,8 @@ with col1:
         <div class="lottie-container">
             {st_lottie(load_lottie_local(\'ai.json\'), height=150, key=\'ai_lottie\')}
         </div>
-        <h4>{tr(\'DRIVES_AI_TITLE\')}</h4>
-        <p>{tr(\'DRIVES_AI_TEXT\')}</p>
+        <h4>{tr('DRIVES_AI_TITLE')}</h4>
+        <p>{tr('DRIVES_AI_TEXT')}</p>
     </div>
     """, unsafe_allow_html=True)
 
@@ -233,8 +233,8 @@ with col2:
         <div class="lottie-container">
             {st_lottie(load_lottie_local(\'data-analyisis.json\'), height=150, key=\'data_lottie\')}
         </div>
-        <h4>{tr(\'DRIVES_DATA_TITLE\')}</h4>
-        <p>{tr(\'DRIVES_DATA_TEXT\')}</p>
+        <h4>{tr('DRIVES_DATA_TITLE')}</h4>
+        <p>{tr('DRIVES_DATA_TEXT')}</p>
     </div>
     """, unsafe_allow_html=True)
 
@@ -246,8 +246,8 @@ with col3:
         <div class="lottie-container">
             {st_lottie(load_lottie_local(\'deep-learning.json\'), height=150, key=\'dl_lottie\')}
         </div>
-        <h4>{tr(\'DRIVES_DL_TITLE\')}</h4>
-        <p>{tr(\'DRIVES_DL_TEXT\')}</p>
+        <h4>{tr('DRIVES_DL_TITLE')}</h4>
+        <p>{tr('DRIVES_DL_TEXT')}</p>
     </div>
     """, unsafe_allow_html=True)
 
@@ -257,25 +257,25 @@ with col4:
         <div class="lottie-container">
             {st_lottie(load_lottie_local(\'devops.json\'), height=150, key=\'devops_lottie\')}
         </div>
-        <h4>{tr(\'DRIVES_DEVOPS_TITLE\')}</h4>
-        <p>{tr(\'DRIVES_DEVOPS_TEXT\')}</p>
+        <h4>{tr('DRIVES_DEVOPS_TITLE')}</h4>
+        <p>{tr('DRIVES_DEVOPS_TEXT')}</p>
     </div>
     """, unsafe_allow_html=True)
 
 # Call to Action
 st.markdown(f"""
 <div class="about-hero">
-    <h2>{tr(\'ABOUT_CALL_TITLE\')}</h2>
+    <h2>{tr('ABOUT_CALL_TITLE')}</h2>
     <p style="font-size: 1.2rem; color: #555; margin-top: 2rem;">
-        {tr(\'ABOUT_CALL_TEXT\')}
+        {tr('ABOUT_CALL_TEXT')}
     </p>
     <p style="font-size: 1.1rem; color: #666; margin-top: 1rem;">
-        {tr(\'ABOUT_CALL_TEXT2\')}
+        {tr('ABOUT_CALL_TEXT2')}
     </p>
 </div>
 """, unsafe_allow_html=True)
 
 # Footer
-st.markdown(f"<p style=\'text-align: center; color: #666; margin-top: 2rem;\'>{tr(\'ABOUT_FOOTER\')}</p>", unsafe_allow_html=True)
+st.markdown(f"<p style=\'text-align: center; color: #666; margin-top: 2rem;\'>{tr('ABOUT_FOOTER')}</p>", unsafe_allow_html=True)
 
 
