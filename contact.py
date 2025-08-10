@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 from datetime import datetime
 import urllib.parse
-from utils import tr
+from app_utils  import tr
 
 # Enhanced styling
 def set_style():
