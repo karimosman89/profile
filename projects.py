@@ -420,14 +420,14 @@ for project in nlp_projects:
         <div class="impact-metrics">
             <h4 style="color: #2e7d32; margin-bottom: 1rem;">📊 Impact Metrics:</h4>
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem;">
-                {\' \'.join([f\'<div><strong>{key.replace("_", " ").title()}:</strong><br>{value}</div>\' for key, value in project['impact'].items()])}
+                {' '.join([f'<div><strong>{key.replace("_", " ").title()}:</strong><br>{value}</div>' for key, value in project['impact'].items()])}
             </div>
         </div>
         
         <div style="margin: 1.5rem 0;">
             <h4>✨ Key Features:</h4>
             <ul style="margin: 0.5rem 0; padding-left: 1.5rem;">
-                {\' \'.join([f\'<li>{feature}</li>\' for feature in project['features']])}
+                {' '.join([f'<li>{feature}</li>' for feature in project['features']])}
             </ul>
         </div>
         
@@ -536,20 +536,20 @@ for project in ml_projects:
         </p>
         
         <div class="tech-stack">
-            {\' \'.join([f\'<span class="tech-tag">{tech}</span>\' for tech in project['tech_stack']])}
+            {' '.join([f'<span class="tech-tag">{tech}</span>' for tech in project['tech_stack']])}
         </div>
         
         <div class="impact-metrics">
             <h4 style="color: #2e7d32; margin-bottom: 1rem;">📊 Impact Metrics:</h4>
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem;">
-                {\' \'.join([f\'<div><strong>{key.replace("_", " ").title()}:</strong><br>{value}</div>\' for key, value in project['impact'].items()])}
+                {' '.join([f'<div><strong>{key.replace("_", " ").title()}:</strong><br>{value}</div>' for key, value in project['impact'].items()])}
             </div>
         </div>
         
         <div style="margin: 1.5rem 0;">
             <h4>✨ Key Features:</h4>
             <ul style="margin: 0.5rem 0; padding-left: 1.5rem;">
-                {\' \'.join([f\'<li>{feature}</li>\' for feature in project['features']])}
+                {' '.join([f'<li>{feature}</li>' for feature in project['features']])}
             </ul>
         </div>
         
@@ -651,20 +651,20 @@ for project in gen_ai_projects:
         </p>
         
         <div class="tech-stack">
-            {\' \'.join([f\'<span class="tech-tag">{tech}</span>\' for tech in project['tech_stack']])}
+            {' '.join([f'<span class="tech-tag">{tech}</span>' for tech in project['tech_stack']])}
         </div>
         
         <div class="impact-metrics">
             <h4 style="color: #2e7d32; margin-bottom: 1rem;">📊 Impact Metrics:</h4>
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem;">
-                {\' \'.join([f\'<div><strong>{key.replace("_", " ").title()}:</strong><br>{value}</div>\' for key, value in project['impact'].items()])}
+                {' '.join([f'<div><strong>{key.replace("_", " ").title()}:</strong><br>{value}</div>' for key, value in project['impact'].items()])}
             </div>
         </div>
         
         <div style="margin: 1.5rem 0;">
             <h4>✨ Key Features:</h4>
             <ul style="margin: 0.5rem 0; padding-left: 1.5rem;">
-                {\' \'.join([f\'<li>{feature}</li>\' for feature in project['features']])}
+                {' '.join([f'<li>{feature}</li>' for feature in project['features']])}
             </ul>
         </div>
         
