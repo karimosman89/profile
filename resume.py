@@ -283,7 +283,7 @@ for exp in experiences:
             """, unsafe_allow_html=True)
         
         st.markdown("<h4>🛠️ Technologies Used:</h4>", unsafe_allow_html=True)
-        tech_tags = "".join([f\'<span>{tech}</span>\' for tech in exp['technologies']])
+        tech_tags = "".join([f'<span>{tech}</span>' for tech in exp['technologies']])
         st.markdown(f"<div>{tech_tags}</div>", unsafe_allow_html=True)
         st.markdown("</div>", unsafe_allow_html=True)
 
