@@ -278,19 +278,19 @@ for project in cv_projects:
     st.markdown(f"""
     <div class="project-card">
         <div class="project-header">
-            <div class="project-icon">{project[\'icon\']}</div>
+            <div class="project-icon">{project['icon']}</div>
             <div>
-                <h3 class="project-title">{project[\'title\']}</h3>
-                <p class="project-subtitle">{project[\'subtitle\]}</p>
+                <h3 class="project-title">{project['title']}</h3>
+                <p class="project-subtitle">{project['subtitle']}</p>
             </div>
         </div>
         
         <p style="font-size: 1.1rem; line-height: 1.6; margin-bottom: 1.5rem;">
-            {project[\'description\]}
+            {project['description']}
         </p>
         
         <div class="tech-stack">
-            {\' \'.join([f\'<span class="tech-tag">{tech}</span>\' for tech in project[\'tech_stack\']])}
+            {' '.join([f'<span class="tech-tag">{tech}</span>' for tech in project['tech_stack']])}
         </div>
         
         <div class="impact-metrics">
