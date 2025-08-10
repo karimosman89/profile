@@ -113,7 +113,7 @@ profile_photo = load_profile_photo()
 # Hero Section
 st.markdown(f"""
 <div class="about-hero">
-    <h1>{tr(\'ABOUT_HERO_TITLE\')}</h1>
+    <h1>{tr('ABOUT_HERO_TITLE')}</h1>
     <p style="font-size: 1.2rem; color: #555;">{tr(\'ABOUT_HERO_SUBTITLE\')}</p>
 </div>
 """, unsafe_allow_html=True)
