@@ -103,3 +103,4 @@ beautifulsoup4>=4.12.0
 
 # API Documentation
 swagger-ui-bundle>=0.0.9
+wordcloud
