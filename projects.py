@@ -304,7 +304,7 @@ for project in cv_projects:
         <div style="margin: 1.5rem 0;">
             <h4>✨ Key Features:</h4>
             <ul style="margin: 0.5rem 0; padding-left: 1.5rem;">
-                {\' \'.join([f\'<li>{feature}</li>\' for feature in project[\'features\']])}
+                {''.join([f'<li>{feature}</li>' for feature in project['features']])}
             </ul>
         </div>
         
