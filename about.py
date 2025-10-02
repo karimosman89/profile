@@ -162,13 +162,13 @@ except Exception as e:
     with col2:
         st.video("website_video.mp4")
 
-st.markdown(f"""
-<div class="about-section">
-    <p style="font-size: 0.9rem; color: #666; margin-top: 1rem;">
-        {tr('ABOUT_VIDEO_GUIDANCE')}
-    </p>
-</div>
-""", unsafe_allow_html=True)
+#st.markdown(f"""
+#<div class="about-section">
+ #   <p style="font-size: 0.9rem; color: #666; margin-top: 1rem;">
+  #      {tr('ABOUT_VIDEO_GUIDANCE')}
+   # </p>
+#</div>
+#""", unsafe_allow_html=True)
 
 # Education Section
 st.markdown(f"""
