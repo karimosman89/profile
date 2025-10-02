@@ -142,10 +142,25 @@ st.markdown(f"""
 </div>
 """, unsafe_allow_html=True)
 
-# Control video size using columns
-col1, col2, col3 = st.columns([1, 2, 1])  # Adjust ratios to change size
-with col2:
-    st.video("website_video.mp4", start_time=0)
+# Compact video with custom HTML
+try:
+    video_data = open('website_video.mp4', 'rb').read()
+    video_b64 = base64.b64encode(video_data).decode()
+    
+    st.markdown(f"""
+    <div style="display: flex; justify-content: center; margin: 2rem 0;">
+        <video width="400" height="300" controls autoplay muted loop style="border-radius: 10px; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);">
+            <source src="data:video/mp4;base64,{video_b64}" type="video/mp4">
+            Your browser does not support the video element.
+        </video>
+    </div>
+    """, unsafe_allow_html=True)
+    
+except Exception as e:
+    # Fallback with even smaller columns
+    col1, col2, col3 = st.columns([1.5, 1, 1.5])
+    with col2:
+        st.video("website_video.mp4")
 
 st.markdown(f"""
 <div class="about-section">
