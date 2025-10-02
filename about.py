@@ -142,45 +142,16 @@ st.markdown(f"""
 </div>
 """, unsafe_allow_html=True)
 
-# Custom video with autoplay and controlled size
-try:
-    video_data = open('website_video.mp4', 'rb').read()
-    video_b64 = base64.b64encode(video_data).decode()
-    
-    st.markdown(f"""
-    <div style="display: flex; justify-content: center; margin: 2rem 0;">
-        <video width="600" height="400" controls autoplay muted loop style="border-radius: 15px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);">
-            <source src="data:video/mp4;base64,{video_b64}" type="video/mp4">
-            Your browser does not support the video element.
-        </video>
-    </div>
-    """, unsafe_allow_html=True)
-    
-except Exception as e:
-    # Fallback to Streamlit's native video player with column to control width
-    col1, col2, col3 = st.columns([1, 2, 1])
-    with col2:
-        st.video("website_video.mp4")
+# Control video size using columns
+col1, col2, col3 = st.columns([1, 2, 1])  # Adjust ratios to change size
+with col2:
+    st.video("website_video.mp4", start_time=0)
 
 st.markdown(f"""
 <div class="about-section">
     <p style="font-size: 0.9rem; color: #666; margin-top: 1rem;">
         {tr('ABOUT_VIDEO_GUIDANCE')}
     </p>
-</div>
-""", unsafe_allow_html=True)
-
-# My Journey Section
-st.markdown(f"""
-<div class="about-section">
-    <h3>{tr('ABOUT_JOURNEY_TITLE')}</h3>
-    <p style="font-size: 1.1rem; line-height: 1.8;">
-        {tr('ABOUT_JOURNEY_TEXT')}
-    </p>
-    <div class="highlight-box">
-        <h4>{tr('ABOUT_JOURNEY_HIGHLIGHT_TITLE')}</h4>
-        <p>{tr('ABOUT_JOURNEY_HIGHLIGHT_TEXT')}</p>
-    </div>
 </div>
 """, unsafe_allow_html=True)
 
