@@ -140,17 +140,10 @@ st.markdown(f"""
         {tr('ABOUT_VIDEO_TEXT')}
     </p>
     <div class="video-container">
-        <!-- This is a placeholder for your self-made video. -->
-        <!-- You can upload your video to YouTube or Vimeo and embed it here. -->
-        <!-- For example: <iframe src="https://www.youtube.com/embed/YOUR_VIDEO_ID" frameborder="0" allowfullscreen></iframe> -->
-        <!-- For now, we'll use a generic placeholder or a link to the audio. -->
-        <p style="color: white; text-align: center; padding-top: 25%; font-size: 1.2rem;">
-            {tr('ABOUT_VIDEO_PLACEHOLDER')}
-        </p>
-        <audio controls style="width: 100%; margin-top: 1rem;">
-            <source src="data:audio/wav;base64,{base64.b64encode(open('karim_introduction.wav', 'rb').read()).decode()}" type="audio/wav">
-            Your browser does not support the audio element.
-        </audio>
+        <video controls style="width: 100%; height: 100%; border-radius: 15px;">
+            <source src="data:video/mp4;base64,{base64.b64encode(open('website_video.mp4', 'rb').read()).decode()}" type="video/mp4">
+            Your browser does not support the video element.
+        </video>
     </div>
     <p style="font-size: 0.9rem; color: #666; margin-top: 1rem;">
         {tr('ABOUT_VIDEO_GUIDANCE')}
