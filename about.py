@@ -139,12 +139,14 @@ st.markdown(f"""
     <p style="font-size: 1.1rem; margin-bottom: 1.5rem;">
         {tr('ABOUT_VIDEO_TEXT')}
     </p>
-    <div class="video-container">
-        <video controls style="width: 100%; height: 100%; border-radius: 15px;">
-            <source src="data:video/mp4;base64,{base64.b64encode(open('website_video.mp4', 'rb').read()).decode()}" type="video/mp4">
-            Your browser does not support the video element.
-        </video>
-    </div>
+</div>
+""", unsafe_allow_html=True)
+
+# Display video using Streamlit's native function
+st.video("website_video.mp4")
+
+st.markdown(f"""
+<div class="about-section">
     <p style="font-size: 0.9rem; color: #666; margin-top: 1rem;">
         {tr('ABOUT_VIDEO_GUIDANCE')}
     </p>
