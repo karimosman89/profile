@@ -94,9 +94,8 @@ class AppConfig:
     owner_location: str = os.getenv('OWNER_LOCATION', 'Alexandria, Egypt')
 
     # Social Links
-    linkedin_url: str = os.getenv('LINKEDIN_URL', 'https://linkedin.com/in/karim-osman')
+    linkedin_url: str = os.getenv('LINKEDIN_URL', 'https://www.linkedin.com/in/karimosman89/')
     github_url: str = os.getenv('GITHUB_URL', 'https://github.com/karimosman89')
-    twitter_url: str = os.getenv('TWITTER_URL', 'https://twitter.com/karim_ai')
     website_url: str = os.getenv('WEBSITE_URL', 'https://kosman.streamlit.app')
 
     # Performance Settings

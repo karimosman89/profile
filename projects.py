@@ -323,7 +323,7 @@ for project in cv_projects:
     if 'image' in project:
         try:
             img = Image.open(project['image'])
-            st.image(img, caption=f'{project["title"]} - Visual Demo', use_column_width=True)
+            st.image(img, caption=f'{project["title"]} - Visual Demo', width='stretch')
         except:
             pass
 
@@ -446,7 +446,7 @@ for project in nlp_projects:
     if 'image' in project:
         try:
             img = Image.open(project['image'])
-            st.image(img, caption=f"{project['title']} - Architecture Overview", use_column_width=True)
+            st.image(img, caption=f"{project['title']} - Architecture Overview", width='stretch')
         except:
             pass
 
@@ -683,7 +683,7 @@ for project in gen_ai_projects:
     if 'image' in project:
         try:
             img = Image.open(project['image'])
-            st.image(img, caption=f"{project['title']} - Creative Output", use_column_width=True)
+            st.image(img, caption=f"{project['title']} - Creative Output", width='stretch')
         except:
             pass
 
