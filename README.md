@@ -1,4 +1,3 @@
-=== LINKEDIN POST ===
 
 🏢 AI MODELS & COMPANIES UPDATE
 Attention ISN'T all you need?! New Qwen3 variant Brumby-14B-Base leverages Power Retention technique
@@ -21,9 +20,9 @@ Latest developments in AI models, frameworks, and company strategies shaping the
    ┗ ... (full stack available in documentation)
 
 
-                🏗️ **Interactive Tech Stack: LLM Application Stack**
+🏗️ **Interactive Tech Stack: LLM Application Stack**
 
-Modern large language model applications with RAG and agents
+   Modern large language model applications with RAG and agents
 
 **🔄 Interactive Features:**
 - 🎯 Performance metrics
@@ -35,9 +34,9 @@ Modern large language model applications with RAG and agents
 - **Excalidraw**: Great for quick, collaborative diagramming
 - **React Flow**: Enables building fully interactive, customizable node editors
 
-graph TD
-    subgraph Tech Stack
-    subgraph LLM Providers
+ graph TD
+     subgraph Tech Stack
+      subgraph LLM Providers
         L0[LLM Providers<br/>OpenAI GPT-4<br/>Anthropic Claude<br/>Meta Llama]
     end
     subgraph Orchestration
