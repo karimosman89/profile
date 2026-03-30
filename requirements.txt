@@ -96,7 +96,7 @@ pyjwt>=2.8.0
 # Image Processing
 imageio>=2.31.0
 scikit-image>=0.21.0
-
+libgl1-mesa-glx
 # Professional Styling
 jinja2>=3.1.2
 beautifulsoup4>=4.12.0
