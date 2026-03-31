@@ -4,7 +4,7 @@ streamlit>=1.28.0
 streamlit-option-menu>=0.3.6
 streamlit-lottie>=0.0.5
 streamlit-elements>=0.1.0
-
+opencv-python-headless
 # Data Science and Analytics
 pandas>=2.0.0
 numpy>=1.24.0
@@ -104,7 +104,7 @@ beautifulsoup4>=4.12.0
 # API Documentation
 swagger-ui-bundle>=0.0.9
 wordcloud
-opencv-python-headless
+
 ultralytics  # For your YOLO v8 work
 streamlit
 langchain
