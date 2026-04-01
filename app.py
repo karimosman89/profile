@@ -1,13 +1,12 @@
-import streamlit as st
+"""
+Elite AI Architect Portfolio — Entry Point
+Karim Osman · Senior AI Engineer
+"""
 import sys
 import os
 
-# Add the current directory to the Python path
 sys.path.append(os.path.dirname(__file__))
 
-# Import the main index module
-import index
-
-# This file serves as the main entry point for the Streamlit app
-# All the logic is handled in index.py
-
+# Import and run main from index
+from index import main
+main()
