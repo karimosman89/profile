@@ -224,6 +224,171 @@ def t(key: str) -> str:
 
 
 # ─────────────────────────────────────────────────────────────────────────────
+#  VISUAL ASSETS — Tech icons, images, demo visuals  (no YouTube)
+# ─────────────────────────────────────────────────────────────────────────────
+
+# YouTube embeds removed — replaced with static demo visual cards below
+
+# img_card replaced by img_banner (defined below)
+
+# ── Tech icon URLs — using devicons CDN (reliable, versioned) ────────────────
+# Each key maps to a devicon SVG URL.  Any missing key falls back to an emoji.
+TECH_ICONS = {
+    # Languages
+    "Python":       ("https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg",       "#3572A5"),
+    "TypeScript":   ("https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/typescript/typescript-original.svg","#2b7489"),
+    "JavaScript":   ("https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg","#f1e05a"),
+    "C++":          ("https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/cplusplus/cplusplus-original.svg",  "#f34b7d"),
+    "Java":         ("https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/java/java-original.svg",            "#b07219"),
+    "Go":           ("https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/go/go-original.svg",               "#00ADD8"),
+    "Bash":         ("https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/bash/bash-original.svg",           "#89e051"),
+    "Rust":         ("https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/rust/rust-original.svg",           "#dea584"),
+    # Frameworks & DL
+    "PyTorch":      ("https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/pytorch/pytorch-original.svg",     "#ee4c2c"),
+    "TensorFlow":   ("https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tensorflow/tensorflow-original.svg","#ff8000"),
+    "FastAPI":      ("https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/fastapi/fastapi-original.svg",     "#009688"),
+    "OpenCV":       ("https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/opencv/opencv-original.svg",       "#5C3EE8"),
+    "Jupyter":      ("https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/jupyter/jupyter-original.svg",     "#DA5B0B"),
+    # Cloud
+    "AWS":          ("https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/amazonwebservices/amazonwebservices-original.svg","#FF9900"),
+    "GCP":          ("https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/googlecloud/googlecloud-original.svg","#4285F4"),
+    "Azure":        ("https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/azure/azure-original.svg",         "#0089D6"),
+    # DevOps / Infra
+    "Docker":       ("https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/docker/docker-original.svg",       "#2496ED"),
+    "Kubernetes":   ("https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/kubernetes/kubernetes-original.svg","#326CE5"),
+    "Git":          ("https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/git/git-original.svg",             "#F05032"),
+    "Linux":        ("https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/linux/linux-original.svg",         "#FCC624"),
+    "Grafana":      ("https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/grafana/grafana-original.svg",     "#F46800"),
+    # Data
+    "PostgreSQL":   ("https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postgresql/postgresql-original.svg","#336791"),
+    "MongoDB":      ("https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mongodb/mongodb-original.svg",     "#47A248"),
+    "Redis":        ("https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/redis/redis-original.svg",         "#DC382D"),
+    "Kafka":        ("https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/apachekafka/apachekafka-original.svg","#231F20"),
+}
+
+# ── Unique per-section icon lists (no duplicates) ─────────────────────────────
+ICONS_CORE_AI   = ["Python","PyTorch","TensorFlow","OpenCV","FastAPI","Jupyter"]
+ICONS_CLOUD     = ["Docker","Kubernetes","AWS","GCP","Azure","Grafana","Git","Linux"]
+ICONS_DATA      = ["PostgreSQL","MongoDB","Redis","Kafka","Python","Jupyter"]
+ICONS_PROJECTS  = {
+    "RAG-as-a-Service Platform":          ["Python","FastAPI","Docker","Kubernetes","PostgreSQL","Redis"],
+    "Chunk-as-a-Service Engine":          ["Python","Kafka","Docker","Kubernetes","PostgreSQL"],
+    "Edge Vision Inspection":             ["Python","OpenCV","Docker","Linux"],
+    "Multilingual RAG Support Assistant": ["Python","FastAPI","Docker","Kubernetes","Redis"],
+    "LLM Fine-Tuning Pipeline":           ["Python","PyTorch","Docker","Git","Jupyter"],
+    "Predictive Analytics Platform":      ["Python","AWS","Docker","PostgreSQL","Jupyter"],
+}
+ICONS_HOME_STRIP = ["Python","PyTorch","TensorFlow","Docker","Kubernetes",
+                    "AWS","GCP","Azure","PostgreSQL","MongoDB","Redis",
+                    "FastAPI","OpenCV","Kafka","Git","Linux"]
+
+
+def tech_icon_grid(techs: list, size: int = 36) -> str:
+    """Render a flex row of tech icons with labels.  Falls back gracefully."""
+    items = []
+    for tech in techs:
+        entry = TECH_ICONS.get(tech)
+        if entry:
+            url, _color = entry
+            items.append(
+                f'<div class="tech-icon-item">'
+                f'<img src="{url}" alt="{tech}" width="{size}" height="{size}" />'
+                f'<span>{tech}</span>'
+                f'</div>'
+            )
+        else:
+            # Fallback: coloured pill
+            items.append(
+                f'<div class="tech-icon-item">'
+                f'<div style="width:{size}px;height:{size}px;border-radius:8px;background:#1E2D40;'
+                f'border:1px solid #253347;display:flex;align-items:center;justify-content:center;'
+                f'font-size:0.9rem;">⚙️</div>'
+                f'<span>{tech}</span>'
+                f'</div>'
+            )
+    return f'<div class="tech-icon-grid">{"".join(items)}</div>'
+
+
+def lang_icon(lang_name: str) -> str:
+    """Return an img tag for a language icon or a coloured dot."""
+    entry = TECH_ICONS.get(lang_name)
+    if entry:
+        url, color = entry
+        return (f'<img src="{url}" width="14" height="14" '
+                f'style="vertical-align:middle;margin-right:3px;border-radius:3px;" />')
+    return f'<span style="color:{_LANG_COLOR.get(lang_name,"#9CA3AF")};">● </span>'
+
+_LANG_COLOR = {
+    "Python":"#3572A5","Jupyter Notebook":"#DA5B0B","C++":"#f34b7d",
+    "Java":"#b07219","JavaScript":"#f1e05a","TypeScript":"#2b7489",
+    "Go":"#00ADD8","Rust":"#dea584","Shell":"#89e051",
+}
+
+
+def img_banner(url: str, caption: str = "", height: int = 160) -> str:
+    """Full-width image banner with optional caption overlay."""
+    cap_html = (f'<div style="position:absolute;bottom:0;left:0;right:0;'
+                f'background:linear-gradient(transparent,rgba(8,12,20,0.92));'
+                f'padding:0.5rem 0.9rem;font-size:0.7rem;color:#94A3B8;'
+                f'font-family:\'JetBrains Mono\',monospace;">{caption}</div>'
+                if caption else "")
+    return (f'<div style="border-radius:12px;overflow:hidden;'
+            f'border:1px solid #1E2D40;margin:0.5rem 0;position:relative;">'
+            f'<img src="{url}" alt="{caption}" '
+            f'style="width:100%;height:{height}px;object-fit:cover;display:block;'
+            f'filter:brightness(0.75) saturate(1.2);" />'
+            f'{cap_html}</div>')
+
+
+# ── Static demo visual cards (replaces YouTube — works offline too) ───────────
+DEMO_VISUALS = {
+    "rag":        ("https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=600&q=80",
+                   "RAG Pipeline — Vector retrieval + LLM synthesis"),
+    "llm":        ("https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=600&q=80",
+                   "Large Language Models — Transformer architecture"),
+    "yolo":       ("https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=600&q=80",
+                   "YOLOv8 — Real-time object & defect detection"),
+    "robot_arm":  ("https://images.unsplash.com/photo-1561557944-6e7860d1a7eb?w=600&q=80",
+                   "Robotic arm — Inverse kinematics & motion control"),
+    "diffusion":  ("https://images.unsplash.com/photo-1686191128892-3b37add4c844?w=600&q=80",
+                   "Generative AI — Stable Diffusion & image synthesis"),
+    "timeseries": ("https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&q=80",
+                   "Time-Series Forecasting — LSTM & Prophet models"),
+    "path_plan":  ("https://images.unsplash.com/photo-1507413245164-6160d8298b31?w=600&q=80",
+                   "Autonomous Navigation — Path planning algorithms"),
+    "clustering": ("https://images.unsplash.com/photo-1502101872923-d48509bff386?w=600&q=80",
+                   "Clustering & Dimensionality Reduction"),
+    "anomaly":    ("https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=600&q=80",
+                   "Anomaly Detection — Streaming sensor data"),
+    "ros2":       ("https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=600&q=80",
+                   "ROS2 — Autonomous robot navigation stack"),
+    "cv_pipeline":("https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=600&q=80",
+                   "Computer Vision Pipeline — Edge inference"),
+    "genai":      ("https://images.unsplash.com/photo-1681566925234-b9c3a8a57e52?w=600&q=80",
+                   "Generative AI — Latest foundation models"),
+}
+
+# ── Project banner images ─────────────────────────────────────────────────────
+PROJECT_IMAGES = {
+    "RAG-as-a-Service Platform":          "https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=700&q=80",
+    "Chunk-as-a-Service Engine":          "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=700&q=80",
+    "Edge Vision Inspection":             "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=700&q=80",
+    "Multilingual RAG Support Assistant": "https://images.unsplash.com/photo-1546146830-2cca9512c68e?w=700&q=80",
+    "LLM Fine-Tuning Pipeline":           "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=700&q=80",
+    "Predictive Analytics Platform":      "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=700&q=80",
+}
+
+# ── Freelance service images (indexed list matching services order) ───────────
+FREELANCE_IMAGES = [
+    "https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=600&q=80",   # RAG & LLM
+    "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=600&q=80",   # LLM Fine-Tuning
+    "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=600&q=80",   # Computer Vision
+    "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=600&q=80",      # MLOps
+    "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=600&q=80",   # Robotics AI
+    "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&q=80",      # Data Science
+]
+
+# ─────────────────────────────────────────────────────────────────────────────
 #  HELPERS
 # ─────────────────────────────────────────────────────────────────────────────
 @st.cache_resource(show_spinner=False)
@@ -420,24 +585,33 @@ def page_home():
 
     # Quick-nav cards
     nav_items = [
-        ("impact",    "📊", "Production Impact",  "KPIs · Architecture · Charts"),
-        ("demos",     "🔬", "Live AI Demos",       "AI · Robotics · Data Science"),
-        ("freelance", "💼", "Freelance Services",  "Rates · Process · Availability"),
-        ("projects",  "🚀", "Projects",            "RAG · Vision · MLOps"),
-        ("skills",    "🛠️", "Tech Stack",          "Core AI · Cloud · Data"),
-        ("contact",   "📬", "Contact / Hire",      "Let's work together"),
+        ("impact",    "📊", "Production Impact",  "KPIs · Architecture · Charts",
+         "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&q=70"),
+        ("demos",     "🔬", "Live AI Demos",       "AI · Robotics · Data Science",
+         "https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=400&q=70"),
+        ("freelance", "💼", "Freelance Services",  "Rates · Process · Availability",
+         "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=400&q=70"),
+        ("projects",  "🚀", "Featured Projects",   "RAG · Vision · MLOps",
+         "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=400&q=70"),
+        ("skills",    "🛠️", "Tech Stack Map",      "Core AI · Cloud · Data Engineering",
+         "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=400&q=70"),
+        ("contact",   "📬", "Contact / Hire",      "Start a project or collaboration",
+         "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=400&q=70"),
     ]
     cols = st.columns(3)
-    for i, (page, icon, title, desc) in enumerate(nav_items):
+    for i, (page, icon, title, desc, bg_url) in enumerate(nav_items):
         with cols[i % 3]:
             st.markdown(f"""
-            <div class="kpi-card blue" style="text-align:left;">
-                <div style="font-size:1.6rem;margin-bottom:0.3rem;">{icon}</div>
-                <div style="font-weight:700;color:#F8FAFC;font-size:0.93rem;margin-bottom:0.2rem;">{title}</div>
-                <div style="font-size:0.7rem;color:#9CA3AF;">{desc}</div>
+            <div class="nav-card">
+                <img src="{bg_url}" alt="{title}" class="nav-card-bg" />
+                <div class="nav-card-body">
+                    <span class="nav-card-icon">{icon}</span>
+                    <div class="nav-card-title">{title}</div>
+                    <div class="nav-card-desc">{desc}</div>
+                </div>
             </div>
             """, unsafe_allow_html=True)
-            if st.button(f"Open", key=f"home_nav_{page}", use_container_width=True):
+            if st.button("Open →", key=f"home_nav_{page}", use_container_width=True):
                 st.session_state.page = page
                 st.rerun()
 
@@ -449,6 +623,19 @@ def page_home():
     with cb:
         b = load_lottie("deep-learning.json")
         if b: st_lottie(b, height=260, key="home_dl")
+
+    # Tech icon showcase strip
+    st.markdown("""
+    <div style="background:#111827;border:1px solid #1F2937;border-radius:14px;padding:1.1rem 1.5rem;margin:1rem 0;">
+        <div style="font-size:0.68rem;color:#6B7280;text-transform:uppercase;letter-spacing:0.1em;
+                     font-weight:700;margin-bottom:0.75rem;">⚡ Core Technologies</div>
+    """, unsafe_allow_html=True)
+    st.markdown(tech_icon_grid(
+        ["Python","PyTorch","TensorFlow","Docker","Kubernetes","AWS","GCP","Azure",
+         "PostgreSQL","MongoDB","Redis","FastAPI","OpenCV","Kafka","Git","Linux"],
+        size=34
+    ), unsafe_allow_html=True)
+    st.markdown("</div>", unsafe_allow_html=True)
 
     # Revenue hero
     st.markdown("""
@@ -481,6 +668,17 @@ def page_home():
 #  PAGE: LIVE TRENDING DEMOS
 # ─────────────────────────────────────────────────────────────────────────────
 def page_demos():
+    # Page hero strip
+    st.markdown("""
+    <div class="page-hero-strip">
+        <img src="https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=1200&q=70" alt="Live Demos" />
+        <div class="page-hero-strip-overlay">
+            <div class="page-hero-strip-title">🔬 Live Trending Demos</div>
+            <div class="page-hero-strip-sub">Hands-on AI · Robotics · Data Science · Computer Vision · GenAI</div>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
+
     st.markdown(f"""
     <div class="cyber-section-title"><span class="accent-bar"></span>{t('section_demos')}</div>
     <p style="color:#9CA3AF;font-size:0.9rem;margin:-0.5rem 0 1.5rem;">{t('section_demos_sub')}</p>
@@ -499,6 +697,16 @@ def page_demos():
         st.markdown("### 🤖 AI & LLM — Trending Demos")
         st.markdown("<p style='color:#9CA3AF;font-size:0.85rem;'>Live interactive demos of the latest LLM and AI trends.</p>", unsafe_allow_html=True)
 
+        # Visual preview cards
+        vc1, vc2 = st.columns(2)
+        with vc1:
+            _u, _c = DEMO_VISUALS["rag"]
+            st.markdown(img_banner(_u, _c, height=200), unsafe_allow_html=True)
+        with vc2:
+            _u, _c = DEMO_VISUALS["llm"]
+            st.markdown(img_banner(_u, _c, height=200), unsafe_allow_html=True)
+
+        st.markdown("---")
         ai_sub = st.tabs(["💬 RAG Q&A", "😊 Sentiment Analyser", "🏷️ Zero-Shot Classifier", "📝 Text Summariser"])
 
         # ── RAG Q&A Demo ──
@@ -792,6 +1000,17 @@ enabling domain-specific performance gains of 15-30% with minimal compute."""
     # ─── TAB 2: ROBOTICS ──────────────────────────────────────────────────
     with demo_tabs[1]:
         st.markdown("### 🦾 Robotics AI — Trending Demos")
+
+        # Video preview row
+        rv1, rv2 = st.columns(2)
+        with rv1:
+            _u, _c = DEMO_VISUALS["robot_arm"]
+            st.markdown(img_banner(_u, _c, height=200), unsafe_allow_html=True)
+        with rv2:
+            _u, _c = DEMO_VISUALS["ros2"]
+            st.markdown(img_banner(_u, _c, height=200), unsafe_allow_html=True)
+
+        st.markdown("---")
         rob_tabs = st.tabs(["🤖 Inverse Kinematics", "🧭 Path Planning Sim", "🔧 Force Control"])
 
         with rob_tabs[0]:
@@ -1026,6 +1245,16 @@ enabling domain-specific performance gains of 15-30% with minimal compute."""
     # ─── TAB 3: DATA SCIENCE ──────────────────────────────────────────────
     with demo_tabs[2]:
         st.markdown("### 📊 Data Science — Trending Demos")
+
+        dv1, dv2 = st.columns(2)
+        with dv1:
+            _u, _c = DEMO_VISUALS["anomaly"]
+            st.markdown(img_banner(_u, _c, height=200), unsafe_allow_html=True)
+        with dv2:
+            _u, _c = DEMO_VISUALS["timeseries"]
+            st.markdown(img_banner(_u, _c, height=200), unsafe_allow_html=True)
+
+        st.markdown("---")
         ds_tabs = st.tabs(["📈 Anomaly Detection", "📦 Clustering Explorer", "🔮 Time-Series Forecast"])
 
         with ds_tabs[0]:
@@ -1228,6 +1457,16 @@ enabling domain-specific performance gains of 15-30% with minimal compute."""
     # ─── TAB 4: COMPUTER VISION ───────────────────────────────────────────
     with demo_tabs[3]:
         st.markdown("### 👁️ Computer Vision — Trending Demos")
+
+        cvv1, cvv2 = st.columns(2)
+        with cvv1:
+            _u, _c = DEMO_VISUALS["yolo"]
+            st.markdown(img_banner(_u, _c, height=200), unsafe_allow_html=True)
+        with cvv2:
+            _u, _c = DEMO_VISUALS["cv_pipeline"]
+            st.markdown(img_banner(_u, _c, height=200), unsafe_allow_html=True)
+
+        st.markdown("---")
         cv_tabs = st.tabs(["🎯 Object Detector (YOLOv8)", "🎨 Style Transfer Sim", "📷 Image Stats"])
 
         with cv_tabs[0]:
@@ -1367,6 +1606,16 @@ enabling domain-specific performance gains of 15-30% with minimal compute."""
     # ─── TAB 5: GENERATIVE AI ─────────────────────────────────────────────
     with demo_tabs[4]:
         st.markdown("### 🧬 Generative AI — Trending Demos")
+
+        gv1, gv2 = st.columns(2)
+        with gv1:
+            _u, _c = DEMO_VISUALS["diffusion"]
+            st.markdown(img_banner(_u, _c, height=200), unsafe_allow_html=True)
+        with gv2:
+            _u, _c = DEMO_VISUALS["genai"]
+            st.markdown(img_banner(_u, _c, height=200), unsafe_allow_html=True)
+
+        st.markdown("---")
         gen_tabs = st.tabs(["✍️ Prompt Engineer", "🎨 Colour Palette Gen", "🎵 Token Visualiser"])
 
         with gen_tabs[0]:
@@ -1664,18 +1913,26 @@ def page_freelance():
     cols = st.columns(2)
     for i, svc in enumerate(srv_list):
         with cols[i % 2]:
+            img_url = FREELANCE_IMAGES[i] if i < len(FREELANCE_IMAGES) else ""
             deliverables_html = "".join(
-                f'<li style="font-size:0.78rem;color:#9CA3AF;margin:0.15rem 0;">{d}</li>'
+                f'<li style="font-size:0.78rem;color:#9CA3AF;margin:0.15rem 0;">✓ {d}</li>'
                 for d in svc["deliverables"]
             )
+            img_html = (f'<div style="border-radius:10px 10px 0 0;overflow:hidden;height:130px;">'
+                        f'<img src="{img_url}" alt="{svc["title"]}" '
+                        f'style="width:100%;height:130px;object-fit:cover;display:block;filter:brightness(0.7) saturate(1.2);" /></div>'
+                        if img_url else "")
             st.markdown(f"""
-            <div class="cyber-section" style="height:100%;min-height:240px;">
-                <div style="font-size:1.6rem;margin-bottom:0.4rem;">{svc['icon']}</div>
-                <div style="font-weight:800;color:#F8FAFC;font-size:1rem;margin-bottom:0.5rem;">{svc['title']}</div>
-                <div style="font-size:0.82rem;color:#9CA3AF;line-height:1.6;margin-bottom:0.75rem;">{svc['desc']}</div>
-                <ul style="padding-left:1rem;margin:0 0 0.75rem;">{deliverables_html}</ul>
-                <div style="margin-top:auto;">
-                    <span class="glow-tag">{svc['tag']}</span>
+            <div class="cyber-section" style="height:100%;min-height:240px;padding:0;overflow:hidden;">
+                {img_html}
+                <div style="padding:0.9rem 1rem 1rem;">
+                    <div style="font-size:1.8rem;margin-bottom:0.3rem;">{svc['icon']}</div>
+                    <div style="font-weight:800;color:#F8FAFC;font-size:1rem;margin-bottom:0.5rem;">{svc['title']}</div>
+                    <div style="font-size:0.82rem;color:#9CA3AF;line-height:1.6;margin-bottom:0.75rem;">{svc['desc']}</div>
+                    <ul style="padding-left:0;list-style:none;margin:0 0 0.75rem;">{deliverables_html}</ul>
+                    <div style="margin-top:auto;">
+                        <span class="glow-tag">{svc['tag']}</span>
+                    </div>
                 </div>
             </div>
             """, unsafe_allow_html=True)
@@ -1784,6 +2041,13 @@ def page_impact():
 
     st.markdown(f'<div class="cyber-section-title"><span class="accent-bar"></span>{t("section_impact")}</div>',
                 unsafe_allow_html=True)
+
+    # Visual banner
+    st.markdown(img_banner(
+        "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&q=80",
+        "Production AI Impact — Baker Hughes Enterprise Platform",
+        height=180
+    ), unsafe_allow_html=True)
 
     m1, m2, m3, m4, m5 = st.columns(5)
     m1.metric("Revenue Impact",     "€2M+",   "↑ Quantified")
@@ -1953,6 +2217,17 @@ def page_impact():
 def page_skills():
     from streamlit_lottie import st_lottie
 
+    # Page hero strip
+    st.markdown("""
+    <div class="page-hero-strip">
+        <img src="https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=1200&q=70" alt="Tech Stack" />
+        <div class="page-hero-strip-overlay">
+            <div class="page-hero-strip-title">🛠️ Tech Stack Map</div>
+            <div class="page-hero-strip-sub">Core AI · Cloud & MLOps · Data Engineering</div>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
+
     st.markdown(f'<div class="cyber-section-title"><span class="accent-bar"></span>{t("section_skills")}</div>',
                 unsafe_allow_html=True)
 
@@ -1989,6 +2264,9 @@ def page_skills():
             <span class="skill-pill core">OpenManipulator</span></div></div>
             </div>
             """, unsafe_allow_html=True)
+            st.markdown("**Core tech icons:**", unsafe_allow_html=False)
+            st.markdown(tech_icon_grid(["Python","PyTorch","TensorFlow","OpenCV","FastAPI","Jupyter","Git","Linux"], size=38),
+                        unsafe_allow_html=True)
         with c2:
             a = load_lottie("ai-engineering.json")
             if a: st_lottie(a, height=380, key="sk_ai")
@@ -2019,6 +2297,9 @@ def page_skills():
             <span class="skill-pill cloud">Datadog</span><span class="skill-pill cloud">OpenTelemetry</span></div></div>
             </div>
             """, unsafe_allow_html=True)
+            st.markdown("**Cloud & DevOps icons:**", unsafe_allow_html=False)
+            st.markdown(tech_icon_grid(["Docker","Kubernetes","AWS","GCP","Azure","Grafana","Git","Linux"], size=38),
+                        unsafe_allow_html=True)
         with c2:
             a = load_lottie("devops.json")
             if a: st_lottie(a, height=360, key="sk_devops")
@@ -2040,6 +2321,9 @@ def page_skills():
             <span class="skill-pill data">Prefect</span><span class="skill-pill data">GitHub Actions</span></div></div>
             </div>
             """, unsafe_allow_html=True)
+            st.markdown("**Data stack icons:**", unsafe_allow_html=False)
+            st.markdown(tech_icon_grid(["PostgreSQL","MongoDB","Redis","Kafka","Git","Jupyter","Docker","AWS"], size=38),
+                        unsafe_allow_html=True)
         with c2:
             a = load_lottie("data-engineer.json")
             if a: st_lottie(a, height=320, key="sk_data")
@@ -2070,6 +2354,17 @@ def page_skills():
 #  PAGE: PROJECTS
 # ─────────────────────────────────────────────────────────────────────────────
 def page_projects():
+    # Page hero strip
+    st.markdown("""
+    <div class="page-hero-strip">
+        <img src="https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=1200&q=70" alt="Projects" />
+        <div class="page-hero-strip-overlay">
+            <div class="page-hero-strip-title">🚀 Featured Projects</div>
+            <div class="page-hero-strip-sub">Production-grade AI systems · Baker Hughes & Enterprise</div>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
+
     st.markdown(f'<div class="cyber-section-title"><span class="accent-bar"></span>{t("section_projects")}</div>',
                 unsafe_allow_html=True)
 
@@ -2102,19 +2397,59 @@ def page_projects():
 
     cats = ["All"] + list(dict.fromkeys(p["category"] for p in featured))
     sel = st.selectbox("Filter", cats, key="proj_filter")
+
+    # ── Featured project cards with banner images ──────────────────────────
+    PROJ_TECH_ICONS = {
+        "RAG-as-a-Service Platform":          ["Python","FastAPI","Docker","Kubernetes","PostgreSQL","Redis"],
+        "Chunk-as-a-Service Engine":          ["Python","Kafka","Docker","Kubernetes","PostgreSQL","Jupyter"],
+        "Edge Vision Inspection":             ["Python","OpenCV","Docker","Linux"],
+        "Multilingual RAG Support Assistant": ["Python","FastAPI","Docker","Kubernetes","Redis"],
+        "LLM Fine-Tuning Pipeline":           ["Python","PyTorch","Docker","Git","Jupyter"],
+        "Predictive Analytics Platform":      ["Python","AWS","Docker","PostgreSQL","Jupyter"],
+    }
+
     for proj in featured:
         if sel != "All" and proj["category"] != sel:
             continue
-        with st.expander(f"🚀 **{proj['title']}** — {proj['org']}  `{proj['category']}`"):
-            c1, c2 = st.columns([2,1])
-            with c1:
-                st.markdown(f"**Description:** {proj['desc']}")
-                tags_html = " ".join(f'<span class="glow-tag">{tg}</span>' for tg in proj['tags'])
+        banner_url = PROJECT_IMAGES.get(proj["title"], "")
+        icon_techs  = PROJ_TECH_ICONS.get(proj["title"], [])
+        tags_html   = " ".join(f'<span class="glow-tag">{tg}</span>' for tg in proj['tags'])
+        metrics_html = "".join(f"""
+            <div style="text-align:center;padding:0.5rem 0.75rem;background:#0E1117;
+                         border-radius:8px;border:1px solid #1F2937;min-width:80px;">
+                <div style="font-size:1.1rem;font-weight:800;color:#00D4FF;">{val}</div>
+                <div style="font-size:0.62rem;color:#6B7280;text-transform:uppercase;letter-spacing:0.06em;">{lbl}</div>
+            </div>""" for lbl, val in proj["metrics"])
+
+        with st.expander(f"🚀 **{proj['title']}** — {proj['org']}  `{proj['category']}`", expanded=False):
+            col_img, col_detail = st.columns([1, 2])
+            with col_img:
+                if banner_url:
+                    st.markdown(img_banner(banner_url, proj["title"], height=170), unsafe_allow_html=True)
+                # Impact badge
+                st.markdown(f"""
+                <div style="background:linear-gradient(135deg,rgba(0,255,136,0.15),rgba(0,212,255,0.1));
+                             border:1px solid rgba(0,255,136,0.3);border-radius:10px;
+                             padding:0.75rem;text-align:center;margin-top:0.5rem;">
+                    <div style="font-size:0.65rem;color:#9CA3AF;text-transform:uppercase;
+                                 letter-spacing:0.08em;margin-bottom:0.2rem;">Impact</div>
+                    <div style="font-size:0.88rem;font-weight:800;color:#00FF88;">💹 {proj["impact"]}</div>
+                </div>""", unsafe_allow_html=True)
+                # Metric row
+                st.markdown(f"""
+                <div style="display:flex;flex-wrap:wrap;gap:0.4rem;margin-top:0.6rem;justify-content:center;">
+                    {metrics_html}
+                </div>""", unsafe_allow_html=True)
+
+            with col_detail:
+                st.markdown(f"""
+                <div style="font-size:0.88rem;color:#D1D5DB;line-height:1.7;margin-bottom:0.75rem;">
+                    {proj['desc']}
+                </div>""", unsafe_allow_html=True)
                 st.markdown(f"**Stack:** {tags_html}", unsafe_allow_html=True)
-            with c2:
-                st.markdown(f'<span class="success-tag">💹 {proj["impact"]}</span>', unsafe_allow_html=True)
-                for label, val in proj["metrics"]:
-                    st.metric(label, val)
+                # Tech icons row
+                if icon_techs:
+                    st.markdown(tech_icon_grid(icon_techs, size=32), unsafe_allow_html=True)
 
     # GitHub repos
     st.markdown("---")
@@ -2149,19 +2484,31 @@ def page_projects():
                 name   = repo.get("name", "repo")
                 topics = " ".join(f'<span class="repo-topic">{tp}</span>'
                                   for tp in repo.get("topics", [])[:4])
+                # Open Graph / social preview image
+                og_img = f"https://opengraph.githubassets.com/1/karimosman89/{name}"
+                _icon_entry = TECH_ICONS.get(lang)
+                lang_icon_html = (f'<img src="{_icon_entry[0]}" width="13" height="13" '
+                                  f'style="vertical-align:middle;margin-right:3px;border-radius:2px;" />'
+                                  if _icon_entry else "")
                 st.markdown(f"""
-                <div class="repo-card">
-                    <div class="repo-name">📦 {name}</div>
-                    <div class="repo-desc">{desc}</div>
-                    <div class="repo-meta">
-                        <span class="repo-lang" style="color:{color};">● {lang}</span>
-                        <span class="repo-star">⭐ {stars}</span>
-                        <span class="repo-star">🍴 {forks}</span>
+                <div class="repo-card" style="padding:0;overflow:hidden;">
+                    <div style="border-radius:10px 10px 0 0;overflow:hidden;height:110px;background:#111827;">
+                        <img src="{og_img}" alt="{name}"
+                             style="width:100%;height:110px;object-fit:cover;display:block;opacity:0.85;" />
                     </div>
-                    <div style="margin-top:0.4rem;">{topics}</div>
-                    <a href="{url}" target="_blank"
-                       style="font-size:0.72rem;color:#00D4FF;text-decoration:none;
-                              margin-top:0.5rem;display:block;">→ GitHub</a>
+                    <div style="padding:0.75rem 0.85rem 0.65rem;">
+                        <div class="repo-name">📦 {name}</div>
+                        <div class="repo-desc">{desc}</div>
+                        <div class="repo-meta" style="margin-top:0.4rem;">
+                            <span class="repo-lang" style="color:{color};">{lang_icon_html}● {lang}</span>
+                            <span class="repo-star">⭐ {stars}</span>
+                            <span class="repo-star">🍴 {forks}</span>
+                        </div>
+                        <div style="margin-top:0.4rem;">{topics}</div>
+                        <a href="{url}" target="_blank"
+                           style="font-size:0.72rem;color:#00D4FF;text-decoration:none;
+                                  margin-top:0.5rem;display:inline-block;">→ View on GitHub ↗</a>
+                    </div>
                 </div>
                 """, unsafe_allow_html=True)
 
@@ -2172,11 +2519,71 @@ def page_projects():
 def page_experience():
     from streamlit_lottie import st_lottie
 
+    # Page hero strip
+    st.markdown("""
+    <div class="page-hero-strip">
+        <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=1200&q=70" alt="Experience" />
+        <div class="page-hero-strip-overlay">
+            <div class="page-hero-strip-title">🗂️ Experience Timeline</div>
+            <div class="page-hero-strip-sub">7+ years · AI Engineering · MLOps · Research</div>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
+
     st.markdown(f'<div class="cyber-section-title"><span class="accent-bar"></span>{t("section_exp")}</div>',
                 unsafe_allow_html=True)
 
     col_tl, col_an = st.columns([3,1])
     with col_tl:
+        # Company logo strip — using text badges (reliable, no broken image URLs)
+        st.markdown("""
+        <div class="company-strip">
+            <div class="company-logo-item">
+                <div style="background:linear-gradient(135deg,#1A3A5C,#0D2035);border:1px solid #00D4FF;
+                             border-radius:8px;padding:0.3rem 0.75rem;font-weight:800;font-size:0.8rem;
+                             color:#00D4FF;font-family:'JetBrains Mono',monospace;letter-spacing:0.06em;">
+                    BH
+                </div>
+                <div>
+                    <div style="font-size:0.78rem;font-weight:700;color:#F8FAFC;">Baker Hughes</div>
+                    <div style="font-size:0.62rem;color:#6B7280;">2022 – Present · Firenze, Italy</div>
+                </div>
+            </div>
+            <div class="company-logo-item">
+                <div style="background:linear-gradient(135deg,#1A2040,#0D1830);border:1px solid #8B5CF6;
+                             border-radius:8px;padding:0.3rem 0.75rem;font-weight:800;font-size:0.8rem;
+                             color:#8B5CF6;font-family:'JetBrains Mono',monospace;letter-spacing:0.06em;">
+                    UM
+                </div>
+                <div>
+                    <div style="font-size:0.78rem;font-weight:700;color:#F8FAFC;">UniqMaster</div>
+                    <div style="font-size:0.62rem;color:#6B7280;">2020 – 2022 · Berlin, Germany</div>
+                </div>
+            </div>
+            <div class="company-logo-item">
+                <div style="background:linear-gradient(135deg,#1A1A3A,#0D0D2A);border:1px solid #FFB347;
+                             border-radius:8px;padding:0.3rem 0.75rem;font-weight:800;font-size:0.8rem;
+                             color:#FFB347;font-family:'JetBrains Mono',monospace;letter-spacing:0.06em;">
+                    P1
+                </div>
+                <div>
+                    <div style="font-size:0.78rem;font-weight:700;color:#F8FAFC;">Paris 1 Panthéon-Sorbonne</div>
+                    <div style="font-size:0.62rem;color:#6B7280;">2023 – 2024 · Paris, France</div>
+                </div>
+            </div>
+            <div class="company-logo-item">
+                <div style="background:linear-gradient(135deg,#1A1025,#100A20);border:1px solid #39FF14;
+                             border-radius:8px;padding:0.3rem 0.75rem;font-weight:800;font-size:0.8rem;
+                             color:#39FF14;font-family:'JetBrains Mono',monospace;letter-spacing:0.06em;">
+                    US
+                </div>
+                <div>
+                    <div style="font-size:0.78rem;font-weight:700;color:#F8FAFC;">Università di Siena</div>
+                    <div style="font-size:0.62rem;color:#6B7280;">2017 – 2022 · Italy</div>
+                </div>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
         st.markdown("""
         <ul class="timeline">
           <li class="timeline-item">
@@ -2236,29 +2643,59 @@ def page_experience():
 #  PAGE: CREDENTIALS
 # ─────────────────────────────────────────────────────────────────────────────
 def page_certs():
+    # Page hero strip
+    st.markdown("""
+    <div class="page-hero-strip">
+        <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=1200&q=70" alt="Credentials" />
+        <div class="page-hero-strip-overlay">
+            <div class="page-hero-strip-title">📜 Credential Vault</div>
+            <div class="page-hero-strip-sub">IBM · Microsoft · AWS · Google · DeepLearning.AI · CNCF</div>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
+
     st.markdown(f'<div class="cyber-section-title"><span class="accent-bar"></span>{t("section_certs")}</div>',
                 unsafe_allow_html=True)
 
     certs = [
-        {"title":"IBM Generative AI Professional Certificate","issuer":"IBM / Coursera","status":"completed","icon":"🤖","year":"2024"},
-        {"title":"DeepLearning.AI LLMOps Certificate","issuer":"DeepLearning.AI","status":"completed","icon":"🧠","year":"2024"},
-        {"title":"Microsoft Azure AI Engineer Associate","issuer":"Microsoft","status":"completed","icon":"☁️","year":"2023"},
-        {"title":"ML Engineering for Production (MLOps)","issuer":"DeepLearning.AI","status":"completed","icon":"🏭","year":"2023"},
-        {"title":"AWS Machine Learning Specialty","issuer":"Amazon Web Services","status":"in-progress","icon":"🔄","year":"2025"},
-        {"title":"Google Cloud Professional ML Engineer","issuer":"Google Cloud","status":"in-progress","icon":"🔄","year":"2025"},
-        {"title":"Databricks Certified ML Professional","issuer":"Databricks","status":"in-progress","icon":"🔄","year":"2025"},
-        {"title":"Kubernetes CKAD","issuer":"CNCF","status":"planned","icon":"📋","year":"2025"},
+        {"title":"IBM Generative AI Professional Certificate","issuer":"IBM / Coursera","status":"completed","year":"2024",
+         "logo_text":"IBM","logo_color":"#054ADA","icon":"🤖"},
+        {"title":"DeepLearning.AI LLMOps Certificate","issuer":"DeepLearning.AI","status":"completed","year":"2024",
+         "logo_text":"DL.AI","logo_color":"#0081FF","icon":"🧠"},
+        {"title":"Microsoft Azure AI Engineer Associate","issuer":"Microsoft","status":"completed","year":"2023",
+         "logo_text":"MSFT","logo_color":"#00A4EF","icon":"☁️"},
+        {"title":"ML Engineering for Production (MLOps)","issuer":"DeepLearning.AI / Coursera","status":"completed","year":"2023",
+         "logo_text":"MLOps","logo_color":"#FF6B35","icon":"🏭"},
+        {"title":"AWS Machine Learning Specialty","issuer":"Amazon Web Services","status":"in-progress","year":"2025",
+         "logo_text":"AWS","logo_color":"#FF9900","icon":"⚙️"},
+        {"title":"Google Cloud Professional ML Engineer","issuer":"Google Cloud","status":"in-progress","year":"2025",
+         "logo_text":"GCP","logo_color":"#4285F4","icon":"🔬"},
+        {"title":"Databricks Certified ML Professional","issuer":"Databricks","status":"in-progress","year":"2025",
+         "logo_text":"DB","logo_color":"#FF3621","icon":"📊"},
+        {"title":"Kubernetes CKAD","issuer":"CNCF","status":"planned","year":"2025",
+         "logo_text":"K8s","logo_color":"#326CE5","icon":"🐳"},
     ]
 
     label_map = {"completed":"✅ Completed","in-progress":"🔄 In Progress","planned":"📋 Planned"}
+    color_map  = {"completed":"rgba(0,255,136,0.12)","in-progress":"rgba(0,212,255,0.10)","planned":"rgba(255,179,71,0.10)"}
+    border_map = {"completed":"rgba(0,255,136,0.3)","in-progress":"rgba(0,212,255,0.3)","planned":"rgba(255,179,71,0.3)"}
 
     st.markdown('<div class="cert-grid">', unsafe_allow_html=True)
     for c in certs:
+        logo_html = (f'<div style="display:inline-flex;align-items:center;justify-content:center;'
+                     f'width:44px;height:44px;border-radius:10px;'
+                     f'background:linear-gradient(135deg,{c["logo_color"]}22,{c["logo_color"]}11);'
+                     f'border:1px solid {c["logo_color"]}44;'
+                     f'font-family:\'JetBrains Mono\',monospace;font-weight:800;font-size:0.6rem;'
+                     f'color:{c["logo_color"]};margin-bottom:0.6rem;letter-spacing:0.05em;">'
+                     f'{c["logo_text"]}</div>')
         st.markdown(f"""
-        <div class="cert-card {c['status']}">
-            <div class="cert-badge {c['status']}">{label_map[c['status']]}</div>
-            <div class="cert-title">{c['icon']} {c['title']}</div>
-            <div class="cert-issuer">{c['issuer']} · {c['year']}</div>
+        <div class="cert-card {c['status']}" style="background:{color_map[c['status']]};
+             border:1px solid {border_map[c['status']]};border-radius:12px;padding:1rem;">
+            {logo_html}
+            <div class="cert-badge {c['status']}" style="margin-bottom:0.4rem;">{label_map[c['status']]}</div>
+            <div class="cert-title" style="font-size:0.85rem;font-weight:700;color:#F8FAFC;margin-bottom:0.2rem;">{c['icon']} {c['title']}</div>
+            <div class="cert-issuer" style="font-size:0.72rem;color:#9CA3AF;">{c['issuer']} · {c['year']}</div>
         </div>
         """, unsafe_allow_html=True)
     st.markdown('</div>', unsafe_allow_html=True)
